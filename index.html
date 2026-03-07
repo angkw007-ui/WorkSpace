@@ -2,15 +2,50 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="에이모"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#7c3aed"/>
+<meta name="msapplication-TileColor" content="#7c3aed"/>
+<meta name="description" content="에이모(AI모음) — 학교업무 링크 허브"/>
+<link rel="manifest" id="manifestLink"/>
+<link rel="apple-touch-icon" id="appleTouchIcon"/>
 <title>에이모(AI모음)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#f7f8fc;--white:#fff;--surface2:#f0f2f8;--border:#e4e7f0;--border2:#d0d4e8;--accent:#2554c7;--accent-light:#eef1fc;--accent2:#0ea87e;--accent2-light:#e8f8f3;--accent3:#e05c2a;--accent3-light:#fdf0ea;--purple:#7c3aed;--purple-light:#f3eeff;--text:#1a1d2e;--text2:#4a4f6a;--muted:#9099b8;--shadow-sm:0 1px 3px rgba(30,40,100,.07);--shadow:0 4px 16px rgba(30,40,100,.09),0 1px 3px rgba(30,40,100,.06);--shadow-lg:0 12px 40px rgba(30,40,100,.13);--radius:14px}
+:root{--bg:#f7f8fc;--white:#fff;--surface2:#f0f2f8;--border:#e4e7f0;--border2:#d0d4e8;--accent:#2554c7;--accent-light:#eef1fc;--accent2:#0ea87e;--accent2-light:#e8f8f3;--accent3:#e05c2a;--accent3-light:#fdf0ea;--purple:#7c3aed;--purple-light:#f3eeff;--text:#1a1d2e;--text2:#4a4f6a;--muted:#9099b8;--shadow-sm:0 1px 3px rgba(30,40,100,.07);--shadow:0 4px 16px rgba(30,40,100,.09),0 1px 3px rgba(30,40,100,.06);--shadow-lg:0 12px 40px rgba(30,40,100,.13);--radius:14px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;line-height:1.6}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;min-height:100dvh;line-height:1.6;overscroll-behavior-y:contain;padding-top:var(--safe-top);padding-bottom:var(--safe-bottom)}
+/* 스크롤바 스타일 */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+/* PWA 설치 배너 */
+.pwa-install-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;padding:16px 20px;padding-bottom:calc(16px + var(--safe-bottom));z-index:9000;box-shadow:0 -4px 20px rgba(124,58,237,.3);animation:slideUp .3s ease}
+.pwa-install-banner.show{display:flex;align-items:center;gap:14px}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.pwa-install-banner .pwa-icon{width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:12px;display:grid;place-items:center;font-size:1.5rem;flex-shrink:0}
+.pwa-install-banner .pwa-text{flex:1}
+.pwa-install-banner .pwa-text strong{font-size:.95rem;display:block}
+.pwa-install-banner .pwa-text small{font-size:.78rem;opacity:.85}
+.pwa-install-banner .pwa-btn{padding:10px 20px;background:#fff;color:var(--purple);border:none;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;transition:transform .15s}
+.pwa-install-banner .pwa-btn:active{transform:scale(.95)}
+.pwa-install-banner .pwa-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:1.2rem;cursor:pointer;padding:8px;border-radius:8px;flex-shrink:0}
+.pwa-install-banner .pwa-close:hover{color:#fff;background:rgba(255,255,255,.1)}
+/* iOS 설치 가이드 */
+.ios-guide-overlay{display:none;position:fixed;inset:0;background:rgba(20,30,70,.5);backdrop-filter:blur(6px);z-index:9500;align-items:flex-end;justify-content:center;padding:1rem}
+.ios-guide-overlay.show{display:flex}
+.ios-guide{background:var(--white);border-radius:20px 20px 0 0;padding:2rem 1.5rem;padding-bottom:calc(2rem + var(--safe-bottom));width:100%;max-width:400px;text-align:center;animation:slideUp .3s ease}
+.ios-guide h3{font-size:1.1rem;margin-bottom:1rem}
+.ios-guide .ios-steps{text-align:left;font-size:.88rem;color:var(--text2);line-height:1.8}
+.ios-guide .ios-steps .step{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.ios-guide .ios-steps .step-num{width:28px;height:28px;background:var(--purple);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.ios-guide .ios-close{margin-top:1.25rem;padding:12px 24px;background:var(--purple);color:#fff;border:none;border-radius:12px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;width:100%}
+
 #loadingScreen{position:fixed;inset:0;background:var(--white);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
 .loading-logo{font-family:'Noto Serif KR',serif;font-size:1.8rem;font-weight:900;color:var(--purple)}
 .loading-sub{font-size:.875rem;color:var(--muted)}
@@ -19,7 +54,7 @@ body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-seri
 .top-banner{background:linear-gradient(135deg,#7c3aed,#6d28d9,#5b21b6);color:#fff;text-align:center;padding:7px 1rem;font-size:.78rem;font-weight:500;letter-spacing:.02em}
 header{background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:var(--shadow-sm)}
 .header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.logo{display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .logo-mark{width:40px;height:40px;background:var(--purple);border-radius:10px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(124,58,237,.3)}
 .logo-mark svg{color:#fff}
 .logo-text-main{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2}
@@ -34,7 +69,8 @@ header{background:var(--white);border-bottom:1.5px solid var(--border);position:
 .user-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;cursor:pointer;transition:border-color .2s}
 .user-avatar:hover{border-color:var(--purple)}
 .user-name{font-size:.82rem;font-weight:600;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .18s;text-decoration:none;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .18s;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.96)}
 .btn-primary{background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.25)}
 .btn-primary:hover{background:#6d28d9;transform:translateY(-1px)}
 .btn-outline{background:transparent;color:var(--text2);border:1.5px solid var(--border2)}
@@ -81,15 +117,17 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .bar-wrap{display:flex;align-items:center;gap:8px}
 .bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
-.tab-bar{display:flex;align-items:center;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;background:var(--white);padding:6px;border-radius:12px;border:1.5px solid var(--border);box-shadow:var(--shadow-sm)}
-.tab{padding:7px 15px;border-radius:8px;font-size:.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px}
+.tab-bar{display:flex;align-items:center;gap:4px;margin-bottom:1.5rem;flex-wrap:nowrap;background:var(--white);padding:6px;border-radius:12px;border:1.5px solid var(--border);box-shadow:var(--shadow-sm);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{padding:7px 15px;border-radius:8px;font-size:.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
 .tab:hover{background:var(--bg);color:var(--text)}
+.tab:active{transform:scale(.96)}
 .tab.active{color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(124,58,237,.2)}
 .tab .badge{font-size:.7rem;padding:1px 6px;border-radius:100px;font-weight:600}
 .tab.active .badge{background:rgba(255,255,255,.25)}
 .tab:not(.active) .badge{background:var(--surface2);color:var(--muted)}
 .tab-divider{width:1px;height:22px;background:var(--border);margin:0 2px;flex-shrink:0}
-.tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .tab-add-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 .cat-section{margin-bottom:2.5rem;animation:fadeUp .3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -100,10 +138,11 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .cat-count{font-size:.75rem;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:100px;font-weight:600}
 .cat-actions{display:flex;gap:4px}
 .link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.link-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);overflow:hidden}
+.link-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);overflow:hidden;-webkit-tap-highlight-color:transparent}
 .link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cat-color,var(--purple));opacity:0;transition:opacity .2s}
 .link-card:hover{border-color:var(--cat-color,var(--purple));transform:translateY(-2px);box-shadow:var(--shadow)}
 .link-card:hover::before{opacity:1}
+.link-card:active{transform:scale(.98)}
 .link-card.secret-card{background:linear-gradient(135deg,#fefce8 0%,#fffbeb 100%);border-color:#fbbf24}
 .link-card.secret-card::before{background:#f59e0b}
 .secret-badge{display:inline-flex;align-items:center;gap:3px;font-size:.66rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;white-space:nowrap}
@@ -111,10 +150,10 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .card-icon{width:40px;height:40px;border-radius:10px;background:var(--cat-bg,var(--purple-light));display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;transition:transform .2s}
 .link-card:hover .card-icon{transform:scale(1.08)}
 .card-title-group{flex:1;min-width:0}
-.card-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;display:flex;align-items:center;gap:6px}
+.card-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .card-url{font-size:.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
 .card-desc{font-size:.8rem;color:var(--text2);line-height:1.5}
-.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border);gap:6px}
 .click-pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border-radius:100px;padding:3px 9px;font-size:.72rem;font-weight:600;color:var(--muted);transition:all .2s}
 .click-pill.hot{background:#fdf0ea;color:var(--accent3)}
 .click-pill.warm{background:#e8f8f3;color:var(--accent2)}
@@ -128,9 +167,9 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .uploader-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--muted);background:var(--surface2);padding:2px 7px;border-radius:100px}
 .uploader-tag img{width:14px;height:14px;border-radius:50%}
 .ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;font-weight:700;color:var(--purple);background:var(--purple-light);padding:2px 8px;border-radius:100px;border:1px solid #ddd0ff;white-space:nowrap}
-.add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px}
+.add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px;-webkit-tap-highlight-color:transparent}
 .add-card:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
-.card-prompt-btn{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;transition:all .15s;width:100%;text-align:left;font-family:'Noto Sans KR',sans-serif;color:var(--text2);font-size:.76rem;line-height:1.4}
+.card-prompt-btn{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;transition:all .15s;width:100%;text-align:left;font-family:'Noto Sans KR',sans-serif;color:var(--text2);font-size:.76rem;line-height:1.4;-webkit-tap-highlight-color:transparent}
 .card-prompt-btn:hover{background:var(--purple-light);border-color:var(--purple);color:var(--purple)}
 .card-prompt-btn .prompt-icon{font-size:.9rem;flex-shrink:0}
 .card-prompt-btn .prompt-preview{flex:1;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all}
@@ -140,18 +179,18 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .prompt-detail-section{margin-bottom:1.25rem}
 .prompt-detail-label{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--purple);margin-bottom:8px}
 .prompt-detail-label.ai-label{color:var(--accent2)}
-.prompt-detail-box{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.88rem;color:var(--text);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto}
+.prompt-detail-box{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.88rem;color:var(--text);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .prompt-copy-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
 .prompt-copy-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 /* ADMIN SECTION */
 .admin-personal-section{display:none;margin-bottom:2.5rem;animation:fadeUp .3s ease both}
 .admin-personal-section.visible{display:block}
-.admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e,#2d3250);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none}
+.admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e,#2d3250);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none;flex-wrap:wrap;gap:8px}
 .admin-section-title{display:flex;align-items:center;gap:10px;color:#fff;font-size:1rem;font-weight:700}
 .admin-lock-badge{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em}
 .admin-section-body{background:#f4f5fb;border:1.5px solid #3a3f5c;border-top:none;border-radius:0 0 14px 14px;padding:16px}
 .admin-link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-.admin-link-card{background:#1e2238;border:1.5px solid #2e3354;border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.admin-link-card{background:#1e2238;border:1.5px solid #2e3354;border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
 .admin-link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#e8ff47;opacity:0;transition:opacity .2s}
 .admin-link-card:hover{background:#252a45;border-color:#e8ff47;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
 .admin-link-card:hover::before{opacity:1}
@@ -161,8 +200,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .admin-card-url{font-size:.7rem;color:#6b7099;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
 .admin-card-desc{font-size:.78rem;color:#8890b0;line-height:1.5}
 .admin-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #2e3354;margin-top:auto}
-
-/* ★ 관리자 링크 삭제/수정 버튼 — 항상 표시 */
 .admin-card-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center;transition:all .15s}
 .admin-card-delete{color:#6b7099}.admin-card-delete:hover{color:#ff6b6b;background:rgba(255,107,107,.1)}
 .admin-card-edit{color:#8890b0;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid #3a3f5c;background:rgba(255,255,255,.05)}
@@ -174,15 +211,15 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .admin-add-card:hover{border-color:#e8ff47;color:#e8ff47;background:rgba(232,255,71,.05)}
 .modal-overlay{position:fixed;inset:0;background:rgba(20,30,70,.35);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--white);border:1.5px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:2rem;transform:scale(.96) translateY(10px);transition:transform .2s;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+.modal{background:var(--white);border:1.5px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:2rem;transform:scale(.96) translateY(10px);transition:transform .2s;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .modal-overlay.open .modal{transform:scale(1) translateY(0)}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
 .modal-title{font-size:1.1rem;font-weight:700}
-.modal-close{background:var(--bg);border:1.5px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text2);display:grid;place-items:center;transition:all .15s}
+.modal-close{background:var(--bg);border:1.5px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text2);display:grid;place-items:center;transition:all .15s;min-width:32px}
 .modal-close:hover{background:var(--accent3-light);color:var(--accent3);border-color:var(--accent3)}
 .form-group{margin-bottom:1rem}
 .form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:5px}
-.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:.9rem;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:16px;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:#fff}
 .form-textarea{resize:vertical;min-height:72px;line-height:1.5}
 .modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem}
@@ -192,10 +229,10 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .desc-field-label{display:flex;align-items:center;gap:5px;flex-shrink:0;width:100px;padding:10px 12px;font-size:.82rem;font-weight:700;color:var(--purple);background:var(--white);border-right:1px solid var(--border)}
 .desc-field-label.prompt{color:#8b42cc}
 .desc-field-label svg{flex-shrink:0}
-.desc-field-input{flex:1;padding:10px 12px;background:transparent;border:none;color:var(--text);font-size:.88rem;font-family:'Noto Sans KR',sans-serif;outline:none;resize:none;line-height:1.5}
+.desc-field-input{flex:1;padding:10px 12px;background:transparent;border:none;color:var(--text);font-size:16px;font-family:'Noto Sans KR',sans-serif;outline:none;resize:none;line-height:1.5}
 .desc-field-input::placeholder{color:var(--muted)}
 .desc-field-input:focus{background:var(--white)}
-.secret-toggle-wrap{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1.5px solid #fbbf24;border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
+.secret-toggle-wrap{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1.5px solid #fbbf24;border-radius:10px;cursor:pointer;transition:all .15s;user-select:none;-webkit-tap-highlight-color:transparent}
 .secret-toggle-wrap:hover{box-shadow:0 2px 8px rgba(251,191,36,.2)}
 .secret-toggle-wrap input{display:none}
 .secret-toggle-track{width:40px;height:22px;border-radius:100px;background:var(--border2);position:relative;transition:background .2s;flex-shrink:0}
@@ -205,11 +242,11 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .secret-toggle-text{font-size:.84rem;font-weight:600;color:#92400e;line-height:1.4}
 .secret-toggle-text small{display:block;font-size:.74rem;font-weight:400;color:#b45309;margin-top:1px}
 .emoji-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
-.emoji-btn{padding:6px;border:1.5px solid transparent;background:var(--bg);font-size:1.1rem;cursor:pointer;border-radius:7px;transition:all .12s}
+.emoji-btn{padding:6px;border:1.5px solid transparent;background:var(--bg);font-size:1.1rem;cursor:pointer;border-radius:7px;transition:all .12s;-webkit-tap-highlight-color:transparent}
 .emoji-btn:hover{background:var(--purple-light)}
 .emoji-btn.selected{border-color:var(--purple);background:var(--purple-light)}
 .color-row{display:flex;gap:7px;flex-wrap:wrap}
-.swatch{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2.5px solid transparent;transition:transform .15s,border-color .15s}
+.swatch{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2.5px solid transparent;transition:transform .15s,border-color .15s;-webkit-tap-highlight-color:transparent}
 .swatch:hover{transform:scale(1.12)}
 .swatch.selected{border-color:#333;box-shadow:0 0 0 2px white inset}
 .pw-input-wrap input{letter-spacing:.2em;font-size:1.2rem;text-align:center;font-weight:700}
@@ -221,38 +258,30 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .toast.success{border-left:3px solid var(--accent2)}.toast.error{border-left:3px solid var(--accent3)}.toast.info{border-left:3px solid var(--purple)}
 .no-results{text-align:center;padding:4rem 2rem;color:var(--muted)}
 .no-results .nr-icon{font-size:3rem;margin-bottom:1rem;opacity:.35}
-.site-footer{text-align:center;padding:2rem 1rem 2.5rem;border-top:1.5px solid var(--border);margin-top:2rem;color:var(--muted);font-size:.78rem;letter-spacing:.02em}
+.site-footer{text-align:center;padding:2rem 1rem 2.5rem;padding-bottom:calc(2.5rem + var(--safe-bottom));border-top:1.5px solid var(--border);margin-top:2rem;color:var(--muted);font-size:.78rem;letter-spacing:.02em}
 .site-footer .footer-dev{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;font-size:.72rem;color:var(--muted);opacity:.7}
 .site-footer .footer-dev span{color:var(--purple);font-weight:600;opacity:1}
 .admin-link-note{display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354}
 .admin-link-note span{font-size:.82rem;color:#8890b0;font-weight:600}
-.cat-manage-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.cat-manage-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;-webkit-tap-highlight-color:transparent}
 .cat-manage-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 .cat-manage-btn.delete{border-color:transparent;color:var(--muted)}
 .cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light)}
-
-/* ══════════════════════════════════════
-   드래그&드롭 (마우스 커스텀)
-══════════════════════════════════════ */
+/* 드래그&드롭 */
 .link-grid.edit-mode-grid{outline:2px dashed var(--border2);outline-offset:4px;border-radius:var(--radius);min-height:80px;transition:outline-color .2s,background .2s}
 .link-grid.edit-mode-grid.drag-over-grid{outline-color:var(--purple);background:rgba(124,58,237,.04)}
 .link-card.drag-source{opacity:.3;pointer-events:none}
 .drag-ghost-el{position:fixed;z-index:99999;pointer-events:none;background:var(--white);border:2px solid var(--purple);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(124,58,237,.25);width:260px;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);transform:rotate(2deg) scale(1.04)}
 .drag-ghost-el .dg-icon{font-size:1.3rem}
-.drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600}
+.drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600;white-space:nowrap;flex-shrink:0}
 .drag-mode-hint.on{display:flex}
-/* ══════════════════════════════════════
-   분야 비밀번호 잠금
-══════════════════════════════════════ */
 .cat-lock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;margin-left:4px}
 .lock-overlay-card{position:relative}
 .lock-overlay-card::after{content:'🔒';position:absolute;inset:0;background:rgba(255,251,235,.85);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:var(--radius);backdrop-filter:blur(2px)}
-/* 뷰 토글 */
-.view-toggle-wrap{display:flex;align-items:center;gap:4px;background:var(--surface2);border-radius:8px;padding:3px}
-.view-btn{padding:5px 10px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:4px;font-family:'Noto Sans KR',sans-serif}
+.view-toggle-wrap{display:flex;align-items:center;gap:4px;background:var(--surface2);border-radius:8px;padding:3px;flex-shrink:0}
+.view-btn{padding:5px 10px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:4px;font-family:'Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent}
 .view-btn.active{background:var(--white);color:var(--purple);box-shadow:var(--shadow-sm)}
-/* 게시판 뷰 */
-.board-wrap{overflow-x:auto}
+.board-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .board-table{width:100%;border-collapse:collapse;font-size:.875rem;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1.5px solid var(--border)}
 .board-table thead tr{background:var(--surface2)}
 .board-table th{padding:10px 14px;text-align:left;font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.04em;border-bottom:1.5px solid var(--border);white-space:nowrap}
@@ -266,13 +295,198 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .btd-url{font-size:.7rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btd-cat{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;white-space:nowrap}
 .btd-clicks{text-align:right;font-size:.78rem;font-weight:700}
-
-@media(max-width:768px){main{padding:1.25rem 1rem 4rem}.header-inner{padding:0 1rem}.header-center{display:none}.hero-stats{display:none}.page-hero{padding:1.5rem}.emoji-grid{grid-template-columns:repeat(7,1fr)}.header-actions .btn-outline{display:none}.desc-field-label{width:80px;font-size:.76rem;padding:8px}.link-grid{grid-template-columns:1fr}.notice-banner{flex-direction:column;gap:6px;text-align:center}}
 .drag-handle-icon{position:absolute;top:6px;right:8px;font-size:1rem;color:var(--muted);cursor:grab;opacity:0;transition:opacity .15s;user-select:none;z-index:5;padding:2px 4px;border-radius:4px}.link-card:hover .drag-handle-icon{opacity:.6}.link-card.edit-draggable:hover .drag-handle-icon{opacity:1}.link-card.edit-draggable{cursor:grab}
+
+/* ══════════════════════════════════════
+   모바일 하단 네비게이션 바
+══════════════════════════════════════ */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);z-index:500;padding:6px 0;padding-bottom:calc(6px + var(--safe-bottom));box-shadow:0 -2px 12px rgba(30,40,100,.08)}
+.mobile-nav-inner{display:flex;align-items:center;justify-content:space-around;max-width:480px;margin:0 auto}
+.mobile-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:10px;cursor:pointer;border:none;background:none;color:var(--muted);font-size:.65rem;font-weight:600;font-family:'Noto Sans KR',sans-serif;transition:all .15s;-webkit-tap-highlight-color:transparent;text-decoration:none}
+.mobile-nav-item.active{color:var(--purple)}
+.mobile-nav-item svg,.mobile-nav-item .nav-icon{font-size:1.2rem;line-height:1}
+.mobile-nav-item:active{transform:scale(.9)}
+
+/* 모바일 검색 오버레이 */
+.mobile-search-overlay{display:none;position:fixed;inset:0;background:var(--white);z-index:600;padding:var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);animation:fadeUp .2s ease}
+.mobile-search-overlay.show{display:flex;flex-direction:column}
+.mobile-search-header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.mobile-search-header input{flex:1;padding:10px 14px;border:1.5px solid var(--border2);border-radius:100px;font-size:16px;font-family:'Noto Sans KR',sans-serif;color:var(--text);outline:none;background:var(--bg)}
+.mobile-search-header input:focus{border-color:var(--purple);background:#fff}
+.mobile-search-cancel{background:none;border:none;color:var(--purple);font-size:.9rem;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;padding:8px;white-space:nowrap}
+.mobile-search-results{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 16px}
+
+/* 모바일 플로팅 추가 버튼 */
+.mobile-fab{display:none;position:fixed;bottom:80px;right:16px;width:56px;height:56px;border-radius:50%;background:var(--purple);color:#fff;border:none;box-shadow:0 4px 16px rgba(124,58,237,.35);cursor:pointer;z-index:400;font-size:1.5rem;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
+.mobile-fab:active{transform:scale(.9)}
+.mobile-fab.show{display:grid;place-items:center}
+
+/* ══════════════════════════════════════
+   모바일 반응형 (768px 이하)
+══════════════════════════════════════ */
+@media(max-width:768px){
+  .top-banner{padding:5px .75rem;font-size:.72rem}
+  header{position:sticky;top:0}
+  .header-inner{padding:0 12px;height:56px;gap:8px}
+  .logo-mark{width:34px;height:34px;border-radius:8px}
+  .logo-mark svg{width:18px;height:18px}
+  .logo-text-main{font-size:1rem}
+  .header-center{display:none}
+  .header-actions .btn-outline{display:none}
+  .header-actions{gap:6px}
+  .admin-badge{font-size:.7rem;padding:3px 8px}
+  .edit-chip{font-size:.7rem;padding:3px 8px}
+  .btn-sm{padding:5px 10px;font-size:.76rem}
+  .btn-google svg{width:14px;height:14px}
+  main{padding:1rem .75rem;padding-bottom:calc(5rem + var(--safe-bottom))}
+  .page-hero{padding:1.25rem 1rem;border-radius:14px;flex-direction:column;gap:1rem;align-items:flex-start}
+  .page-hero::after{display:none}
+  .hero-title{font-size:1.3rem}
+  .hero-sub{font-size:.8rem}
+  .hero-stats{display:flex;width:100%;gap:8px}
+  .stat-box{flex:1;padding:10px 8px;min-width:0;border-radius:10px}
+  .stat-num{font-size:1.3rem}
+  .stat-label{font-size:.65rem}
+  .notice-banner{padding:10px 14px;font-size:.8rem;border-radius:10px;margin-bottom:1rem}
+  .notice-banner .notice-icon{font-size:1.1rem}
+  .login-prompt{padding:1.5rem 1rem;border-radius:14px;margin-bottom:1rem}
+  .login-prompt h2{font-size:1rem}
+  .login-prompt p{font-size:.82rem;margin-bottom:1rem}
+  .stats-panel{padding:1rem;border-radius:14px;margin-bottom:1rem}
+  .stats-table{font-size:.78rem}
+  .stats-table th{padding:6px 8px;font-size:.66rem}
+  .stats-table td{padding:8px}
+  .tab-bar{padding:4px;border-radius:10px;gap:3px}
+  .tab{padding:6px 12px;font-size:.78rem;border-radius:6px}
+  .tab .badge{font-size:.65rem;padding:1px 5px}
+  .cat-section{margin-bottom:1.5rem}
+  .cat-header{margin-bottom:.75rem;flex-wrap:wrap;gap:6px}
+  .cat-name{font-size:.95rem}
+  .cat-count{font-size:.7rem}
+  .cat-actions{gap:3px}
+  .cat-manage-btn{font-size:.7rem;padding:3px 8px}
+  .link-grid{grid-template-columns:1fr;gap:10px}
+  .link-card{padding:14px;border-radius:12px;gap:8px}
+  .card-icon{width:36px;height:36px;border-radius:8px;font-size:1.1rem}
+  .card-name{font-size:.9rem}
+  .card-url{font-size:.68rem}
+  .card-desc{font-size:.78rem}
+  .card-action-btn{opacity:1}
+  .card-edit-btn{opacity:1}
+  .card-footer{flex-wrap:wrap;gap:4px}
+  .add-card{min-height:70px;border-radius:12px;font-size:.8rem}
+  .admin-section-header{padding:12px 14px;border-radius:12px 12px 0 0}
+  .admin-section-title{font-size:.9rem;gap:8px}
+  .admin-section-body{padding:12px}
+  .admin-link-grid{grid-template-columns:1fr;gap:8px}
+  .admin-link-card{padding:12px 14px;border-radius:10px}
+  .admin-add-card{min-height:70px}
+  .modal{padding:1.5rem;border-radius:16px;max-height:85vh}
+  .modal-title{font-size:1rem}
+  .emoji-grid{grid-template-columns:repeat(7,1fr);gap:2px}
+  .emoji-btn{padding:5px;font-size:1rem}
+  .desc-field-label{width:80px;font-size:.76rem;padding:8px}
+  .desc-field-input{font-size:16px;padding:8px 10px}
+  .form-group{margin-bottom:.8rem}
+  .site-footer{padding:1.5rem 1rem;padding-bottom:calc(5rem + var(--safe-bottom));margin-top:1rem}
+  .site-footer .footer-dev{flex-direction:column;gap:2px}
+  .mobile-nav{display:block}
+  .mobile-fab.show{display:grid}
+  .drag-mode-hint{display:none!important}
+  .view-toggle-wrap{display:none}
+  /* 게시판 뷰 모바일 최적화 */
+  .board-table{font-size:.78rem}
+  .board-table th{padding:8px 10px;font-size:.66rem}
+  .board-table td{padding:8px 10px}
+  .btd-name{gap:6px}
+  .btd-icon{width:22px;height:22px;font-size:.75rem}
+  .btd-url{max-width:120px;font-size:.65rem}
+  .prompt-detail-box{font-size:.82rem;padding:12px}
+  /* 모달 하단 시트 스타일 */
+  .modal-overlay{align-items:flex-end;padding:0}
+  .modal{border-radius:20px 20px 0 0;max-height:90vh;padding-bottom:calc(2rem + var(--safe-bottom));animation:none}
+  .modal-overlay.open .modal{transform:scale(1) translateY(0)}
+  .toast-wrap{bottom:calc(5rem + var(--safe-bottom));right:1rem;left:1rem}
+  .toast{max-width:100%}
+}
+
+/* 매우 작은 화면 (360px 이하) */
+@media(max-width:360px){
+  .header-inner{padding:0 8px;height:50px}
+  .logo-mark{width:30px;height:30px}
+  .logo-text-main{font-size:.9rem}
+  .logo-text-sub{font-size:.6rem}
+  main{padding:.75rem .5rem;padding-bottom:calc(5rem + var(--safe-bottom))}
+  .page-hero{padding:1rem .75rem}
+  .hero-title{font-size:1.1rem}
+  .tab{padding:5px 10px;font-size:.72rem}
+  .link-card{padding:12px}
+  .emoji-grid{grid-template-columns:repeat(6,1fr)}
+}
+
+/* 태블릿 (769px ~ 1024px) */
+@media(min-width:769px) and (max-width:1024px){
+  .link-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-link-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* 다크 모드 미디어 쿼리 - 상태바 색상 */
+@media(prefers-color-scheme:dark){
+  meta[name="theme-color"]{content:#1a1d2e}
+}
+
+/* 프린트 시 숨김 */
+@media print{
+  .mobile-nav,.mobile-fab,.pwa-install-banner,.top-banner,header{display:none!important}
+  main{padding:0!important}
+}
+
+/* 가로 모드 */
+@media(max-height:500px) and (orientation:landscape){
+  .mobile-nav{padding:4px 0}
+  .mobile-nav-item{padding:2px 12px;font-size:.6rem}
+  .mobile-fab{bottom:60px;width:48px;height:48px;font-size:1.2rem}
+}
 </style>
 </head>
 <body>
 <div id="loadingScreen"><div class="loading-logo">에이모</div><div class="spinner"></div><div class="loading-sub">로딩 중...</div></div>
+
+<!-- PWA 설치 배너 -->
+<div class="pwa-install-banner" id="pwaInstallBanner">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>에이모 앱 설치</strong>
+    <small>홈 화면에 추가하여 빠르게 접근하세요</small>
+  </div>
+  <button class="pwa-btn" id="pwaInstallBtn" onclick="installPWA()">설치</button>
+  <button class="pwa-close" onclick="closePWABanner()">✕</button>
+</div>
+
+<!-- iOS 설치 가이드 -->
+<div class="ios-guide-overlay" id="iosGuide">
+  <div class="ios-guide">
+    <h3>📱 에이모 앱 설치 방법</h3>
+    <div class="ios-steps">
+      <div class="step"><span class="step-num">1</span>하단 Safari 메뉴의 <strong>공유 버튼</strong> (⬆) 을 탭합니다</div>
+      <div class="step"><span class="step-num">2</span><strong>"홈 화면에 추가"</strong> 를 선택합니다</div>
+      <div class="step"><span class="step-num">3</span>오른쪽 상단의 <strong>"추가"</strong>를 탭합니다</div>
+    </div>
+    <button class="ios-close" onclick="closeIOSGuide()">확인</button>
+  </div>
+</div>
+
+<!-- 모바일 검색 오버레이 -->
+<div class="mobile-search-overlay" id="mobileSearchOverlay">
+  <div class="mobile-search-header">
+    <input type="text" id="mobileSearchInput" placeholder="링크 이름, 설명 검색…" oninput="syncSearch(this.value)"/>
+    <button class="mobile-search-cancel" onclick="closeMobileSearch()">취소</button>
+  </div>
+  <div class="mobile-search-results" id="mobileSearchResults">
+    <p style="text-align:center;color:var(--muted);padding:2rem;font-size:.88rem">검색어를 입력하세요</p>
+  </div>
+</div>
+
 <div id="appRoot" style="display:none">
 <div class="top-banner">🤖 에이모(AI모음) — 학교업무 링크 허브</div>
 <header><div class="header-inner">
@@ -282,12 +496,12 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
     <span class="edit-chip" id="editChip">✏️ 편집 중</span>
     <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="관리자 모드 종료">🔓 관리자</span>
     <button class="btn btn-outline btn-sm" id="pwChangeBtn" onclick="openPwChangeModal()" style="display:none" title="비밀번호 변경">🔑</button>
-    <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 통계</button>
-    <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐 관리자</button>
-    <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️ 편집</button>
-    <button class="btn btn-primary btn-sm" id="addLinkBtnTop" onclick="openAddLink()" style="display:none">+ 링크</button>
+    <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊</button>
+    <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐</button>
+    <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️</button>
+    <button class="btn btn-primary btn-sm" id="addLinkBtnTop" onclick="openAddLink()" style="display:none">+</button>
     <div id="userArea" style="display:none"><img id="userPhoto" class="user-avatar" src="" onclick="signOutUser()" title="로그아웃"/><span class="user-name" id="userName"></span></div>
-    <button class="btn btn-google btn-sm" id="loginBtn" onclick="signInWithGoogle()"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a7.03 7.03 0 01-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A7 7 0 015.49 12c0-.72.13-1.43.35-2.09V7.07H2.18A11 11 0 001 12c0 1.78.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Google 로그인</button>
+    <button class="btn btn-google btn-sm" id="loginBtn" onclick="signInWithGoogle()"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a7.03 7.03 0 01-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A7 7 0 015.49 12c0-.72.13-1.43.35-2.09V7.07H2.18A11 11 0 001 12c0 1.78.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg><span class="login-text">로그인</span></button>
   </div>
 </div></header>
 <main>
@@ -309,6 +523,27 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 <footer class="site-footer"><p>에이모(AI모음) &copy; 2025</p><div class="footer-dev"><span>Developed by Choi Gwangcheul, Gurye Middle School with AI</span></div></footer>
 </div>
 
+<!-- 모바일 하단 네비게이션 -->
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <a class="mobile-nav-item active" onclick="mobileNavTo('home')" id="mnHome">
+      <span class="nav-icon">🏠</span>홈
+    </a>
+    <a class="mobile-nav-item" onclick="openMobileSearch()" id="mnSearch">
+      <span class="nav-icon">🔍</span>검색
+    </a>
+    <a class="mobile-nav-item" onclick="toggleStats();mobileNavTo('stats')" id="mnStats">
+      <span class="nav-icon">📊</span>통계
+    </a>
+    <a class="mobile-nav-item" onclick="mobileNavTo('admin')" id="mnAdmin">
+      <span class="nav-icon">🔐</span>관리
+    </a>
+  </div>
+</nav>
+
+<!-- 모바일 플로팅 추가 버튼 -->
+<button class="mobile-fab" id="mobileFab" onclick="openAddLink()">+</button>
+
 <!-- 분야 잠금 비밀번호 모달 -->
 <div class="modal-overlay" id="catPwModal"><div class="modal" style="max-width:360px"><div class="modal-header"><div class="modal-title" id="catPwModalTitle">🔒 분야 잠금</div><button class="modal-close" onclick="closeModal('catPwModal')">✕</button></div><p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6" id="catPwModalDesc">이 분야의 링크를 열려면 비밀번호가 필요합니다.</p><div class="form-group"><label class="form-label">비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="catPwInput" placeholder="••••" maxlength="30" onkeydown="if(event.key==='Enter')checkCatPw()"/></div><div class="pw-error" id="catPwError">비밀번호가 올바르지 않습니다.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catPwModal')">취소</button><button class="btn btn-primary" onclick="checkCatPw()">확인</button></div></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
@@ -318,7 +553,7 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 
 <div class="modal-overlay" id="linkModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="linkModalTitle">링크 추가</div><button class="modal-close" onclick="closeModal('linkModal')">✕</button></div>
   <div class="form-group"><label class="form-label">링크 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인…"/></div>
-  <div class="form-group"><label class="form-label">URL <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fUrl" placeholder="https://…"/></div>
+  <div class="form-group"><label class="form-label">URL <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fUrl" placeholder="https://…" type="url" inputmode="url"/></div>
   <div class="form-group" id="fCatGroup"><label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label><select class="form-select" id="fCat"></select></div>
   <div class="admin-link-note" id="adminLinkNote"><span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span></div>
   <div class="form-group"><label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label><div class="desc-fields-wrap"><div class="desc-field-row"><div class="desc-field-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작AI</div><input class="desc-field-input" id="fAiTool" placeholder="예: ChatGPT, Claude, Gemini…"/></div><div class="desc-field-row"><div class="desc-field-label prompt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><textarea class="desc-field-input" id="fPrompt" rows="2" placeholder="사용한 프롬프트…" style="resize:vertical;min-height:50px"></textarea></div><div class="desc-field-row"><div class="desc-field-label" style="color:var(--text2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>기타 설명</div><textarea class="desc-field-input" id="fDesc" rows="2" placeholder="추가 설명…" style="resize:vertical;min-height:50px"></textarea></div></div></div>
@@ -345,6 +580,204 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('pwChangeModal')">취소</button><button class="btn btn-primary" onclick="changePw()">변경</button></div>
 </div></div>
 
+<script>
+// ══════════════════════════════════════
+// PWA: 동적 매니페스트 생성 & 서비스 워커 등록
+// ══════════════════════════════════════
+
+// 동적 매니페스트 생성 (별도 파일 불필요)
+const manifestData = {
+  name: "에이모(AI모음)",
+  short_name: "에이모",
+  description: "학교업무 경감 AI 제작공방 — 링크 허브",
+  start_url: location.href.split('?')[0],
+  scope: location.href.substring(0, location.href.lastIndexOf('/') + 1),
+  display: "standalone",
+  orientation: "any",
+  background_color: "#f7f8fc",
+  theme_color: "#7c3aed",
+  categories: ["education","productivity"],
+  icons: [
+    { src: createIconDataURL(192), sizes: "192x192", type: "image/png", purpose: "any maskable" },
+    { src: createIconDataURL(512), sizes: "512x512", type: "image/png", purpose: "any maskable" }
+  ]
+};
+
+function createIconDataURL(size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  // 배경 - 보라색 그래디언트
+  const grd = ctx.createLinearGradient(0, 0, size, size);
+  grd.addColorStop(0, '#7c3aed');
+  grd.addColorStop(1, '#5b21b6');
+  ctx.fillStyle = grd;
+  const r = size * 0.18;
+  ctx.beginPath();
+  ctx.moveTo(r, 0); ctx.lineTo(size - r, 0);
+  ctx.quadraticCurveTo(size, 0, size, r);
+  ctx.lineTo(size, size - r);
+  ctx.quadraticCurveTo(size, size, size - r, size);
+  ctx.lineTo(r, size);
+  ctx.quadraticCurveTo(0, size, 0, size - r);
+  ctx.lineTo(0, r);
+  ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath(); ctx.fill();
+  // 텍스트
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `bold ${size * 0.28}px 'Noto Serif KR', serif`;
+  ctx.fillText('에', size / 2, size * 0.38);
+  ctx.font = `600 ${size * 0.15}px 'Noto Sans KR', sans-serif`;
+  ctx.fillText('AI모음', size / 2, size * 0.67);
+  return canvas.toDataURL('image/png');
+}
+
+// 매니페스트 Blob URL 설정
+const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+const manifestURL = URL.createObjectURL(manifestBlob);
+document.getElementById('manifestLink').href = manifestURL;
+
+// Apple Touch Icon 설정
+document.getElementById('appleTouchIcon').href = createIconDataURL(180);
+
+// 서비스 워커 등록 (인라인)
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE_NAME = 'aimo-v1';
+    const PRECACHE = ['/'];
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+    });
+    self.addEventListener('fetch', e => {
+      if (e.request.method !== 'GET') return;
+      // 네트워크 우선, 실패 시 캐시
+      e.respondWith(
+        fetch(e.request).then(res => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+          }
+          return res;
+        }).catch(() => caches.match(e.request))
+      );
+    });
+  `;
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swURL = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swURL).catch(() => {});
+}
+
+// PWA 설치 프롬프트
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // 이전에 닫지 않았으면 배너 표시
+  if (!sessionStorage.getItem('pwaBannerClosed')) {
+    document.getElementById('pwaInstallBanner').classList.add('show');
+  }
+});
+
+window.installPWA = async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const result = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('pwaInstallBanner').classList.remove('show');
+    if (result.outcome === 'accepted') {
+      toast('앱이 설치되었습니다! 🎉', 'success');
+    }
+  } else {
+    // iOS Safari 감지
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+    if (isIOS && !isInStandalone) {
+      document.getElementById('iosGuide').classList.add('show');
+    } else if (!isInStandalone) {
+      toast('브라우저 메뉴에서 "홈 화면에 추가"를 선택하세요', 'info');
+    }
+  }
+};
+
+window.closePWABanner = () => {
+  document.getElementById('pwaInstallBanner').classList.remove('show');
+  sessionStorage.setItem('pwaBannerClosed', '1');
+};
+
+window.closeIOSGuide = () => {
+  document.getElementById('iosGuide').classList.remove('show');
+};
+
+// 이미 설치된 경우 배너 숨김
+window.addEventListener('appinstalled', () => {
+  document.getElementById('pwaInstallBanner').classList.remove('show');
+  deferredPrompt = null;
+});
+
+// ══════════════════════════════════════
+// 모바일 네비게이션
+// ══════════════════════════════════════
+window.mobileNavTo = (target) => {
+  document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+  if (target === 'home') {
+    document.getElementById('mnHome').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (target === 'stats') {
+    document.getElementById('mnStats').classList.add('active');
+    const sp = document.getElementById('statsPanel');
+    if (sp.classList.contains('open')) {
+      sp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  } else if (target === 'admin') {
+    document.getElementById('mnAdmin').classList.add('active');
+    if (typeof isAdmin !== 'undefined' && isAdmin) {
+      adminLogout();
+    } else {
+      openAdminModal();
+    }
+  }
+};
+
+window.openMobileSearch = () => {
+  document.getElementById('mobileSearchOverlay').classList.add('show');
+  const input = document.getElementById('mobileSearchInput');
+  input.value = document.getElementById('searchInput')?.value || '';
+  setTimeout(() => input.focus(), 100);
+};
+
+window.closeMobileSearch = () => {
+  document.getElementById('mobileSearchOverlay').classList.remove('show');
+};
+
+window.syncSearch = (val) => {
+  const mainInput = document.getElementById('searchInput');
+  if (mainInput) {
+    mainInput.value = val;
+    mainInput.dispatchEvent(new Event('input'));
+  }
+};
+
+// 뒤로가기로 모바일 검색 닫기
+window.addEventListener('popstate', () => {
+  closeMobileSearch();
+});
+
+// 모바일 FAB 표시/숨김 (로그인 시)
+function updateMobileFab() {
+  const fab = document.getElementById('mobileFab');
+  if (fab && typeof currentUser !== 'undefined' && currentUser) {
+    fab.classList.add('show');
+  } else if (fab) {
+    fab.classList.remove('show');
+  }
+}
+</script>
+
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import{getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -357,17 +790,18 @@ const CAT_BG={'#7c3aed':'#f3eeff','#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c
 const getBg=c=>CAT_BG[c]||'#f0f2f8';
 const EMOJIS=['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
 let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=false,selColor=PALETTE[0],selEmoji=EMOJIS[0];
-let viewMode='card'; // 'card'|'board'
-// 드래그 상태
+let viewMode='card';
 let _dragLinkId=null,_dragCatId=null,_ghostEl=null,_sourceEl=null;
-// 분야 잠금: { catId: true } — 세션 동안 인증된 분야
 let catUnlocked={};
-// 클릭 대기 콜백 (분야잠금 확인 후 실행)
 let _pendingCatPwCb=null,_pendingCatId=null;
 let editingLinkId=null,editingAdminLinkId=null,isAdminLinkMode=false;
 let categories=[],links=[],adminLinks=[],clickData={};
 let unsubCats,unsubLinks,unsubAdminLinks,unsubClicks;
 let currentPromptText='';
+
+// 전역 변수 노출 (모바일 NAV에서 사용)
+window.currentUser = currentUser;
+window.isAdmin = isAdmin;
 
 window.closeNotice=()=>{document.getElementById('noticeBanner').style.display='none';sessionStorage.setItem('noticeClosed','1')};
 if(sessionStorage.getItem('noticeClosed')==='1')document.addEventListener('DOMContentLoaded',()=>{const n=document.getElementById('noticeBanner');if(n)n.style.display='none'});
@@ -376,7 +810,7 @@ window.signInWithGoogle=async()=>{try{await signInWithPopup(auth,new GoogleAuthP
 window.signOutUser=async()=>{if(!confirm('로그아웃?'))return;await signOut(auth);toast('로그아웃','info')};
 
 onAuthStateChanged(auth,u=>{
-  currentUser=u;updateUserUI();
+  currentUser=u;window.currentUser=u;updateUserUI();updateMobileFab();
   if(u)startListeners();else{stopListeners();categories=[];links=[];adminLinks=[];clickData={};renderAll()}
   document.getElementById('loadingScreen').style.display='none';document.getElementById('appRoot').style.display='block';
   if(sessionStorage.getItem('noticeClosed')==='1'){const n=document.getElementById('noticeBanner');if(n)n.style.display='none'}
@@ -384,7 +818,7 @@ onAuthStateChanged(auth,u=>{
 
 function updateUserUI(){
   if(currentUser){document.getElementById('loginBtn').style.display='none';document.getElementById('userArea').style.display='flex';document.getElementById('userPhoto').src=currentUser.photoURL||'';document.getElementById('userName').textContent=currentUser.displayName?.split(' ')[0]||'사용자';document.getElementById('loginPrompt').style.display='none'}
-  else{document.getElementById('loginBtn').style.display='';document.getElementById('userArea').style.display='none';document.getElementById('loginPrompt').style.display='block';isAdmin=false;editMode=false;document.getElementById('adminBadge').classList.remove('on');document.getElementById('adminLoginBtn').style.display='';document.getElementById('editBtn').style.display='none';document.getElementById('addLinkBtnTop').style.display='none';document.getElementById('editChip').classList.remove('on')}
+  else{document.getElementById('loginBtn').style.display='';document.getElementById('userArea').style.display='none';document.getElementById('loginPrompt').style.display='block';isAdmin=false;window.isAdmin=false;editMode=false;document.getElementById('adminBadge').classList.remove('on');document.getElementById('adminLoginBtn').style.display='';document.getElementById('editBtn').style.display='none';document.getElementById('addLinkBtnTop').style.display='none';document.getElementById('editChip').classList.remove('on')}
 }
 
 function startListeners(){
@@ -401,11 +835,11 @@ function renderAll(){
   document.getElementById('statLink').textContent=links.length;
   document.getElementById('statClick').textContent=Object.values(clickData).reduce((s,v)=>s+v,0);
   renderTabs();renderContent();renderAdminSection();if(showStats)renderStatsPanel();
+  updateMobileFab();
 }
 function getClicks(id){return clickData[id]||0}
 function escHtml(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 
-/* 비밀 링크 필터: 본인 + 관리자만 */
 function visibleLinks(){
   return links.filter(l=>{
     if(!l.isSecret) return true;
@@ -421,7 +855,7 @@ function renderTabs(){
   const allN=vLinks.filter(l=>matchQ(l,q)).length;
   let h=`<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')" style="${activeTab==='all'?'background:var(--purple)':''}">전체 <span class="badge">${allN}</span></button><div class="tab-divider"></div>`;
   categories.forEach(c=>{const n=vLinks.filter(l=>l.catId===c.id&&matchQ(l,q)).length;const a=activeTab===c.id;h+=`<button class="tab ${a?'active':''}" onclick="setTab('${c.id}')" style="${a?`background:${c.color};box-shadow:0 2px 8px ${c.color}44`:''}">${c.name} <span class="badge">${n}</span></button>`});
-  if(isAdmin)h+=`<button class="tab-add-btn" onclick="openAddCat()">+ 분야 추가</button>`;
+  if(isAdmin)h+=`<button class="tab-add-btn" onclick="openAddCat()">+ 분야</button>`;
   document.getElementById('tabBar').innerHTML=h;
 }
 function matchQ(l,q){return !q||(l.name+l.url+(l.desc||'')+(l.aiTool||'')+(l.prompt||'')).toLowerCase().includes(q)}
@@ -481,13 +915,12 @@ function cardHTML(l,cat){
   }
   const hasDesc=l.desc&&l.desc.trim();
   const editBtn=canEdit?`<button class="card-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditLink('${l.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button>`:`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-
-  // 드래그 핸들 (편집모드에서만)
   const dragHandle=isAdmin&&editMode?`<div class="drag-handle-icon" title="드래그해서 분야 이동">⠿</div>`:'';
   return `<a class="link-card ${secretClass}" href="${l.url}" target="_blank" rel="noopener"
     style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}"
     data-link-id="${l.id}" data-cat-id="${cat.id}"
     onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
+    ${dragHandle}
     <div class="card-header-row">
       <div class="card-icon">${l.emoji||'🔗'}</div>
       <div class="card-title-group"><div class="card-name">${escHtml(l.name)} ${secretBadge}</div><div class="card-url">${escHtml(l.url)}</div></div>
@@ -521,13 +954,11 @@ async function handleClick(e,id){
   try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}
 }
 
-// 분야 잠금 확인 후 링크 열기
 window.catLockedClick=function(e,linkId,catId,url){
   e.preventDefault();
-  if(isAdmin&&editMode)return; // 편집모드에서는 클릭 막음(드래그용)
+  if(isAdmin&&editMode)return;
   const cat=categories.find(c=>c.id===catId);
   if(cat&&cat.lockPw&&!isAdmin&&!catUnlocked[catId]){
-    // 비밀번호 필요
     _pendingCatId=catId;
     _pendingCatPwCb=()=>{
       handleClick({defaultPrevented:false},linkId);
@@ -547,11 +978,6 @@ window.catLockedClick=function(e,linkId,catId,url){
 
 window.checkCatPw=()=>{
   const val=document.getElementById('catPwInput').value;
-  // 현재 잠금 대상 분야 찾기
-  const titleEl=document.getElementById('catPwModalTitle').textContent;
-  // _pendingCatPwCb 는 클릭한 링크의 catId를 클로저로 가짐
-  // 분야 비밀번호 매칭: catUnlocked에 저장하면 세션 동안 열림
-  // 현재 어떤 분야인지는 modal desc에서 파싱하는 대신, 변수로 추적
   const cat=_pendingCatId?categories.find(c=>c.id===_pendingCatId):null;
   if(cat&&val===cat.lockPw){
     catUnlocked[cat.id]=true;
@@ -570,7 +996,6 @@ function renderAdminSection(){
   const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),act=document.getElementById('adminPersonalActions');
   if(!isAdmin){sec.classList.remove('visible');return}
   sec.classList.add('visible');act.style.display='flex';
-  // ★ 관리자 개인 링크도 조회수 순 정렬
   const sorted=[...adminLinks].sort((a,b)=>getClicks(b.id)-getClicks(a.id));
   let h=sorted.map(l=>`
     <a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener">
@@ -599,7 +1024,7 @@ function renderAdminSection(){
   grid.innerHTML=h||`<div style="color:#6b7099;font-size:.84rem;padding:1rem">아직 등록된 관리자 링크가 없습니다.</div>`;
 }
 
-window.toggleStats=()=>{showStats=!showStats;document.getElementById('statsPanel').classList.toggle('open',showStats);document.getElementById('statsBtn').textContent=showStats?'📊 닫기':'📊 통계';if(showStats)renderStatsPanel()};
+window.toggleStats=()=>{showStats=!showStats;document.getElementById('statsPanel').classList.toggle('open',showStats);document.getElementById('statsBtn').textContent=showStats?'📊':'📊';if(showStats)renderStatsPanel()};
 function renderStatsPanel(){const sorted=[...links].sort((a,b)=>getClicks(b.id)-getClicks(a.id));const max=sorted.length?getClicks(sorted[0].id):0;if(!max){document.getElementById('statsTableWrap').innerHTML=`<div style="text-align:center;padding:2rem;color:var(--muted)">클릭 기록 없음</div>`;return}let h=`<table class="stats-table"><thead><tr><th style="width:44px">순위</th><th>링크</th><th style="width:110px">분야</th><th>빈도</th><th style="width:60px">횟수</th></tr></thead><tbody>`;sorted.forEach((l,i)=>{const cat=categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};const n=getClicks(l.id),p=Math.round(n/max*100),rk=i<3?`rank-${i+1}`:'rank-n';h+=`<tr><td><span class="rank-badge ${rk}">${i+1}</span></td><td><strong>${l.emoji||''} ${escHtml(l.name)}</strong></td><td><span style="font-size:.82rem"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:4px"></span>${escHtml(cat.name)}</span></td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${cat.color}"></div></div></div></td><td><strong style="color:${cat.color}">${n}</strong></td></tr>`});h+=`</tbody></table>`;document.getElementById('statsTableWrap').innerHTML=h}
 
 let adminPw='04250425';
@@ -615,7 +1040,7 @@ onSnapshot(doc(db,'meta','adminConfig'),snap=>{if(snap.exists()&&snap.data().pas
 window.openAdminModal=()=>{document.getElementById('pwInput').value='';document.getElementById('pwError').classList.remove('show');openM('adminModal');setTimeout(()=>document.getElementById('pwInput').focus(),200)};
 window.checkPw=()=>{
   if(document.getElementById('pwInput').value===adminPw){
-    isAdmin=true;closeModal('adminModal');
+    isAdmin=true;window.isAdmin=true;closeModal('adminModal');
     document.getElementById('adminLoginBtn').style.display='none';
     document.getElementById('adminBadge').classList.add('on');
     document.getElementById('editBtn').style.display='';
@@ -626,14 +1051,14 @@ window.checkPw=()=>{
 };
 window.adminLogout=()=>{
   if(!confirm('관리자 모드 종료?'))return;
-  isAdmin=false;editMode=false;
+  isAdmin=false;window.isAdmin=false;editMode=false;
   document.getElementById('adminBadge').classList.remove('on');
   document.getElementById('adminLoginBtn').style.display='';
   document.getElementById('editBtn').style.display='none';
   document.getElementById('addLinkBtnTop').style.display='none';
   document.getElementById('pwChangeBtn').style.display='none';
   document.getElementById('editChip').classList.remove('on');
-  document.getElementById('editBtn').textContent='⚙️ 편집';
+  document.getElementById('editBtn').textContent='⚙️';
   toast('관리자 모드 종료','info');renderAll();
 };
 
@@ -655,7 +1080,7 @@ window.toggleEdit=()=>{
   if(!isAdmin){openAdminModal();return}
   editMode=!editMode;
   document.getElementById('editChip').classList.toggle('on',editMode);
-  document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';
+  document.getElementById('editBtn').textContent=editMode?'✅':'⚙️';
   document.getElementById('dragHint').classList.toggle('on',editMode);
   renderAll();
 };
@@ -676,7 +1101,7 @@ window.saveLink=async()=>{
   const aiTool=document.getElementById('fAiTool').value.trim(),prompt=document.getElementById('fPrompt').value.trim(),desc=document.getElementById('fDesc').value.trim();
   const isSecret=document.getElementById('fSecret').checked;
   if(!name||!url){toast('이름과 URL 필요','error');return}
-  if(!/^https?:\/\//i.test(url))url='https://'+url;
+  if(!/^https?:\\/\\//i.test(url))url='https://'+url;
   try{
     if(isAdminLinkMode){
       const d={name,url,aiTool,prompt,desc,emoji:selEmoji,createdAt:Date.now()};
@@ -711,7 +1136,7 @@ window.saveCat=async()=>{
   try{
     if(editingCatId){
       await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw},{merge:true});
-      if(!lockPw) delete catUnlocked[editingCatId]; // 잠금 해제하면 캐시 제거
+      if(!lockPw) delete catUnlocked[editingCatId];
       toast('수정 ✓');
     }else{
       await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw});
@@ -720,16 +1145,13 @@ window.saveCat=async()=>{
     closeModal('catModal');
   }catch(e){toast('오류','error')};
 };
-window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
+window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
 
 window.setTab=id=>{activeTab=id;renderAll()};
 window.openM=id=>document.getElementById(id).classList.add('open');
 window.closeModal=id=>document.getElementById(id).classList.remove('open');
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')})});
 
-/* ══════════════════════════════════════
-   뷰 모드 토글
-══════════════════════════════════════ */
 window.setView=mode=>{
   viewMode=mode;
   document.getElementById('vBtnCard').classList.toggle('active',mode==='card');
@@ -737,9 +1159,6 @@ window.setView=mode=>{
   renderContent();
 };
 
-/* ══════════════════════════════════════
-   게시판 뷰
-══════════════════════════════════════ */
 function renderBoardView(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const vLinks=visibleLinks();
@@ -780,42 +1199,44 @@ function renderBoardView(){
     :`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
 }
 
-/* ══════════════════════════════════════
-   드래그&드롭 — 마우스 이벤트 기반
-══════════════════════════════════════ */
 function initDragDrop(){
-  // 이전 리스너 정리
   cleanupDrag();
-  // 각 카드에 mousedown 바인딩
   document.querySelectorAll('#content .link-card').forEach(card=>{
     if(card.classList.contains('add-card'))return;
     card.classList.add('edit-draggable');
     const onDown=e=>{
-      // 버튼 클릭은 무시
       if(e.target.closest('button'))return;
       e.preventDefault();
       startDrag(e,card);
     };
     card._dragDown=onDown;
     card.addEventListener('mousedown',onDown);
+    // 터치 지원
+    const onTouch=e=>{
+      if(e.target.closest('button'))return;
+      const touch=e.touches[0];
+      startDrag({clientX:touch.clientX,clientY:touch.clientY,preventDefault:()=>{}},card,true);
+    };
+    card._dragTouch=onTouch;
+    card.addEventListener('touchstart',onTouch,{passive:false});
   });
 }
 
 function cleanupDrag(){
   document.querySelectorAll('#content .link-card').forEach(card=>{
     if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown;}
+    if(card._dragTouch){card.removeEventListener('touchstart',card._dragTouch);delete card._dragTouch;}
     card.classList.remove('edit-draggable','drag-source');
   });
   if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
 }
 
-function startDrag(e,card){
+function startDrag(e,card,isTouch=false){
   _dragLinkId=card.dataset.linkId||card.getAttribute('data-link-id');
   _dragCatId=card.dataset.catId||card.getAttribute('data-cat-id');
   if(!_dragLinkId)return;
   _sourceEl=card;
 
-  // 고스트 엘리먼트 생성
   const name=card.querySelector('.card-name')?.textContent?.trim()||'링크';
   const icon=card.querySelector('.card-icon')?.textContent?.trim()||'🔗';
   _ghostEl=document.createElement('div');
@@ -826,34 +1247,64 @@ function startDrag(e,card){
   document.body.appendChild(_ghostEl);
   card.classList.add('drag-source');
 
-  const onMove=ev=>{
-    _ghostEl.style.left=(ev.clientX-130)+'px';
-    _ghostEl.style.top=(ev.clientY-20)+'px';
-    // 드롭 대상 그리드 하이라이트
-    document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-      const r=g.getBoundingClientRect();
-      const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
-      g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
-    });
-  };
-  const onUp=ev=>{
-    document.removeEventListener('mousemove',onMove);
-    document.removeEventListener('mouseup',onUp);
-    // 드롭 대상 찾기
-    if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
-    _sourceEl&&_sourceEl.classList.remove('drag-source');
-    document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-      g.classList.remove('drag-over-grid');
-      const r=g.getBoundingClientRect();
-      const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
-      if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){
-        moveLinkToCat(_dragLinkId,g.dataset.catId);
-      }
-    });
-    _dragLinkId=null;_dragCatId=null;_sourceEl=null;
-  };
-  document.addEventListener('mousemove',onMove);
-  document.addEventListener('mouseup',onUp);
+  if(isTouch){
+    const onMove=ev=>{
+      ev.preventDefault();
+      const t=ev.touches[0];
+      _ghostEl.style.left=(t.clientX-130)+'px';
+      _ghostEl.style.top=(t.clientY-20)+'px';
+      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+        const r=g.getBoundingClientRect();
+        const inside=t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom;
+        g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
+      });
+    };
+    const onEnd=ev=>{
+      document.removeEventListener('touchmove',onMove);
+      document.removeEventListener('touchend',onEnd);
+      if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
+      _sourceEl&&_sourceEl.classList.remove('drag-source');
+      const t=ev.changedTouches[0];
+      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+        g.classList.remove('drag-over-grid');
+        const r=g.getBoundingClientRect();
+        const inside=t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom;
+        if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){
+          moveLinkToCat(_dragLinkId,g.dataset.catId);
+        }
+      });
+      _dragLinkId=null;_dragCatId=null;_sourceEl=null;
+    };
+    document.addEventListener('touchmove',onMove,{passive:false});
+    document.addEventListener('touchend',onEnd);
+  } else {
+    const onMove=ev=>{
+      _ghostEl.style.left=(ev.clientX-130)+'px';
+      _ghostEl.style.top=(ev.clientY-20)+'px';
+      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+        const r=g.getBoundingClientRect();
+        const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
+        g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
+      });
+    };
+    const onUp=ev=>{
+      document.removeEventListener('mousemove',onMove);
+      document.removeEventListener('mouseup',onUp);
+      if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
+      _sourceEl&&_sourceEl.classList.remove('drag-source');
+      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+        g.classList.remove('drag-over-grid');
+        const r=g.getBoundingClientRect();
+        const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
+        if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){
+          moveLinkToCat(_dragLinkId,g.dataset.catId);
+        }
+      });
+      _dragLinkId=null;_dragCatId=null;_sourceEl=null;
+    };
+    document.addEventListener('mousemove',onMove);
+    document.addEventListener('mouseup',onUp);
+  }
 }
 
 async function moveLinkToCat(linkId,newCatId){
