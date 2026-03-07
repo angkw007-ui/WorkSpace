@@ -104,7 +104,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cat-color,var(--purple));opacity:0;transition:opacity .2s}
 .link-card:hover{border-color:var(--cat-color,var(--purple));transform:translateY(-2px);box-shadow:var(--shadow)}
 .link-card:hover::before{opacity:1}
-/* ★ 비밀 링크 카드 */
 .link-card.secret-card{background:linear-gradient(135deg,#fefce8 0%,#fffbeb 100%);border-color:#fbbf24}
 .link-card.secret-card::before{background:#f59e0b}
 .secret-badge{display:inline-flex;align-items:center;gap:3px;font-size:.66rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;white-space:nowrap}
@@ -131,14 +130,12 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;font-weight:700;color:var(--purple);background:var(--purple-light);padding:2px 8px;border-radius:100px;border:1px solid #ddd0ff;white-space:nowrap}
 .add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px}
 .add-card:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
-/* ★ 프롬프트 클릭 영역 */
 .card-prompt-btn{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;transition:all .15s;width:100%;text-align:left;font-family:'Noto Sans KR',sans-serif;color:var(--text2);font-size:.76rem;line-height:1.4}
 .card-prompt-btn:hover{background:var(--purple-light);border-color:var(--purple);color:var(--purple)}
 .card-prompt-btn .prompt-icon{font-size:.9rem;flex-shrink:0}
 .card-prompt-btn .prompt-preview{flex:1;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all}
 .card-prompt-btn .prompt-arrow{color:var(--muted);font-size:.7rem;flex-shrink:0;transition:color .15s}
 .card-prompt-btn:hover .prompt-arrow{color:var(--purple)}
-/* ★ 프롬프트 팝업 모달 */
 .prompt-modal-content{padding:0}
 .prompt-detail-section{margin-bottom:1.25rem}
 .prompt-detail-label{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--purple);margin-bottom:8px}
@@ -164,11 +161,13 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .admin-card-url{font-size:.7rem;color:#6b7099;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
 .admin-card-desc{font-size:.78rem;color:#8890b0;line-height:1.5}
 .admin-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #2e3354;margin-top:auto}
-.admin-card-btn{opacity:0;transition:opacity .15s;background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex}
-.admin-link-card:hover .admin-card-btn{opacity:1}
-.admin-card-delete{color:#6b7099}.admin-card-delete:hover{color:#ff6b6b}
-.admin-card-edit{color:#6b7099;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:3px 8px;border-radius:5px}
-.admin-card-edit:hover{color:#e8ff47;background:rgba(232,255,71,.1)}
+
+/* ★ 관리자 링크 삭제/수정 버튼 — 항상 표시 */
+.admin-card-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center;transition:all .15s}
+.admin-card-delete{color:#6b7099}.admin-card-delete:hover{color:#ff6b6b;background:rgba(255,107,107,.1)}
+.admin-card-edit{color:#8890b0;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid #3a3f5c;background:rgba(255,255,255,.05)}
+.admin-card-edit:hover{color:#e8ff47;background:rgba(232,255,71,.1);border-color:rgba(232,255,71,.3)}
+.admin-card-actions{display:flex;align-items:center;gap:6px}
 .admin-card-arrow{color:#6b7099;transition:transform .2s,color .2s}
 .admin-link-card:hover .admin-card-arrow{transform:translateX(3px);color:#e8ff47}
 .admin-add-card{border:1.5px dashed #2e3354;border-radius:11px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7099;font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:90px}
@@ -196,7 +195,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .desc-field-input{flex:1;padding:10px 12px;background:transparent;border:none;color:var(--text);font-size:.88rem;font-family:'Noto Sans KR',sans-serif;outline:none;resize:none;line-height:1.5}
 .desc-field-input::placeholder{color:var(--muted)}
 .desc-field-input:focus{background:var(--white)}
-/* ★ 비밀 링크 토글 */
 .secret-toggle-wrap{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1.5px solid #fbbf24;border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
 .secret-toggle-wrap:hover{box-shadow:0 2px 8px rgba(251,191,36,.2)}
 .secret-toggle-wrap input{display:none}
@@ -276,7 +274,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   <div class="form-group" id="fCatGroup"><label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label><select class="form-select" id="fCat"></select></div>
   <div class="admin-link-note" id="adminLinkNote"><span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span></div>
   <div class="form-group"><label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label><div class="desc-fields-wrap"><div class="desc-field-row"><div class="desc-field-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작AI</div><input class="desc-field-input" id="fAiTool" placeholder="예: ChatGPT, Claude, Gemini…"/></div><div class="desc-field-row"><div class="desc-field-label prompt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><textarea class="desc-field-input" id="fPrompt" rows="2" placeholder="사용한 프롬프트…" style="resize:vertical;min-height:50px"></textarea></div><div class="desc-field-row"><div class="desc-field-label" style="color:var(--text2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>기타 설명</div><textarea class="desc-field-input" id="fDesc" rows="2" placeholder="추가 설명…" style="resize:vertical;min-height:50px"></textarea></div></div></div>
-  <!-- ★ 비밀 링크 토글 -->
   <div class="form-group" id="fSecretGroup">
     <label class="secret-toggle-wrap" for="fSecret">
       <input type="checkbox" id="fSecret"/>
@@ -290,11 +287,8 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 
 <div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
 
-<!-- ★ 프롬프트 상세보기 모달 -->
 <div class="modal-overlay" id="promptModal"><div class="modal" style="max-width:540px"><div class="modal-header"><div class="modal-title">💬 프롬프트 상세보기</div><button class="modal-close" onclick="closeModal('promptModal')">✕</button></div><div class="prompt-modal-content"><div class="prompt-detail-section" id="promptAiSection"><div class="prompt-detail-label ai-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작 AI</div><div class="prompt-detail-box" id="promptAiText"></div></div><div class="prompt-detail-section"><div class="prompt-detail-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><div class="prompt-detail-box" id="promptText"></div></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="prompt-copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button></div></div></div></div>
 
-
-<!-- ★ 비밀번호 변경 모달 -->
 <div class="modal-overlay" id="pwChangeModal"><div class="modal" style="max-width:400px"><div class="modal-header"><div class="modal-title">🔑 관리자 비밀번호 변경</div><button class="modal-close" onclick="closeModal('pwChangeModal')">✕</button></div>
 <div class="form-group"><label class="form-label">현재 비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwOld" placeholder="현재 비밀번호"/></div></div>
 <div class="form-group"><label class="form-label">새 비밀번호 <span style="color:var(--accent3);font-weight:400">(8자 이상)</span></label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwNew" placeholder="새 비밀번호 (8자 이상)"/></div></div>
@@ -318,7 +312,7 @@ let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=fals
 let editingLinkId=null,editingAdminLinkId=null,isAdminLinkMode=false;
 let categories=[],links=[],adminLinks=[],clickData={};
 let unsubCats,unsubLinks,unsubAdminLinks,unsubClicks;
-let currentPromptText=''; // 복사용
+let currentPromptText='';
 
 window.closeNotice=()=>{document.getElementById('noticeBanner').style.display='none';sessionStorage.setItem('noticeClosed','1')};
 if(sessionStorage.getItem('noticeClosed')==='1')document.addEventListener('DOMContentLoaded',()=>{const n=document.getElementById('noticeBanner');if(n)n.style.display='none'});
@@ -356,7 +350,7 @@ function renderAll(){
 function getClicks(id){return clickData[id]||0}
 function escHtml(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 
-/* ★ 링크 표시 필터: 비밀 링크는 본인+관리자만 */
+/* 비밀 링크 필터: 본인 + 관리자만 */
 function visibleLinks(){
   return links.filter(l=>{
     if(!l.isSecret) return true;
@@ -383,7 +377,10 @@ function renderContent(){
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
   let h='',total=0;
   cats.forEach((cat,ci)=>{
-    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
+    // ★ 카테고리 내 링크를 조회수 많은 순으로 정렬
+    const catLinks=vLinks
+      .filter(l=>l.catId===cat.id&&matchQ(l,q))
+      .sort((a,b)=>getClicks(b.id)-getClicks(a.id));
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
     h+=`<div class="cat-section" style="animation-delay:${ci*.05}s"><div class="cat-header"><div class="cat-title-row"><div class="cat-stripe" style="background:${cat.color}"></div><span class="cat-name">${cat.name}</span><span class="cat-count">${catLinks.length}개</span></div>${isAdmin?`<div class="cat-actions"><button class="cat-manage-btn" onclick="openEditCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button><button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> 삭제</button></div>`:''}</div><div class="link-grid">${catLinks.map(l=>cardHTML(l,cat)).join('')}${currentUser?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`:''}</div></div>`;
@@ -399,10 +396,7 @@ function cardHTML(l,cat){
   const aiTag=(l.aiTool&&l.aiTool.trim())?`<span class="ai-tag">🤖 ${escHtml(l.aiTool)}</span>`:'';
   const secretBadge=l.isSecret?`<span class="secret-badge">🔐 비밀</span>`:'';
   const secretClass=l.isSecret?'secret-card':'';
-
-  // ★ 프롬프트 클릭 버튼 (있을 때만)
   const hasPrompt=l.prompt&&l.prompt.trim();
-  const hasAi=l.aiTool&&l.aiTool.trim();
   let promptBtnHTML='';
   if(hasPrompt){
     promptBtnHTML=`<button class="card-prompt-btn" onclick="event.stopPropagation();event.preventDefault();showPromptPopup('${l.id}')">
@@ -411,7 +405,6 @@ function cardHTML(l,cat){
       <span class="prompt-arrow">보기 ›</span>
     </button>`;
   }
-
   const hasDesc=l.desc&&l.desc.trim();
   const editBtn=canEdit?`<button class="card-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditLink('${l.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button>`:`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
 
@@ -430,14 +423,11 @@ function cardHTML(l,cat){
   </a>`;
 }
 
-/* ★ 프롬프트 팝업 */
 window.showPromptPopup=id=>{
   const l=links.find(x=>x.id===id);if(!l)return;
   const aiSec=document.getElementById('promptAiSection');
-  if(l.aiTool&&l.aiTool.trim()){
-    aiSec.style.display='block';
-    document.getElementById('promptAiText').textContent=l.aiTool;
-  }else{aiSec.style.display='none'}
+  if(l.aiTool&&l.aiTool.trim()){aiSec.style.display='block';document.getElementById('promptAiText').textContent=l.aiTool}
+  else{aiSec.style.display='none'}
   document.getElementById('promptText').textContent=l.prompt||'';
   currentPromptText=l.prompt||'';
   openM('promptModal');
@@ -451,8 +441,33 @@ async function handleClick(e,id){if(e.defaultPrevented)return;try{await setDoc(d
 
 function renderAdminSection(){
   const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),act=document.getElementById('adminPersonalActions');
-  if(!isAdmin){sec.classList.remove('visible');return}sec.classList.add('visible');act.style.display='flex';
-  let h=adminLinks.map(l=>`<a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener"><div class="admin-card-row"><div class="admin-card-icon">${l.emoji||'🔗'}</div><div class="card-title-group"><div class="admin-card-name">${escHtml(l.name)}</div><div class="admin-card-url">${escHtml(l.url)}</div></div><button class="admin-card-btn admin-card-delete" style="opacity:0" onclick="event.stopPropagation();event.preventDefault();deleteAdminLink('${l.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>${l.desc?`<div class="admin-card-desc">${escHtml(l.desc)}</div>`:''}<div class="admin-card-footer"><span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span><button class="admin-card-btn admin-card-edit" style="opacity:0" onclick="event.stopPropagation();event.preventDefault();openEditAdminLink('${l.id}')">수정</button></div></a>`).join('');
+  if(!isAdmin){sec.classList.remove('visible');return}
+  sec.classList.add('visible');act.style.display='flex';
+  // ★ 관리자 개인 링크도 조회수 순 정렬
+  const sorted=[...adminLinks].sort((a,b)=>getClicks(b.id)-getClicks(a.id));
+  let h=sorted.map(l=>`
+    <a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener">
+      <div class="admin-card-row">
+        <div class="admin-card-icon">${l.emoji||'🔗'}</div>
+        <div class="card-title-group">
+          <div class="admin-card-name">${escHtml(l.name)}</div>
+          <div class="admin-card-url">${escHtml(l.url)}</div>
+        </div>
+      </div>
+      ${l.desc?`<div class="admin-card-desc">${escHtml(l.desc)}</div>`:''}
+      <div class="admin-card-footer">
+        <span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>
+        <div class="admin-card-actions">
+          <button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();event.preventDefault();openEditAdminLink('${l.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            수정
+          </button>
+          <button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();event.preventDefault();deleteAdminLink('${l.id}')" title="삭제">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </a>`).join('');
   h+=`<button class="admin-add-card" onclick="openAddAdminLink()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`;
   grid.innerHTML=h||`<div style="color:#6b7099;font-size:.84rem;padding:1rem">아직 등록된 관리자 링크가 없습니다.</div>`;
 }
@@ -460,8 +475,7 @@ function renderAdminSection(){
 window.toggleStats=()=>{showStats=!showStats;document.getElementById('statsPanel').classList.toggle('open',showStats);document.getElementById('statsBtn').textContent=showStats?'📊 닫기':'📊 통계';if(showStats)renderStatsPanel()};
 function renderStatsPanel(){const sorted=[...links].sort((a,b)=>getClicks(b.id)-getClicks(a.id));const max=sorted.length?getClicks(sorted[0].id):0;if(!max){document.getElementById('statsTableWrap').innerHTML=`<div style="text-align:center;padding:2rem;color:var(--muted)">클릭 기록 없음</div>`;return}let h=`<table class="stats-table"><thead><tr><th style="width:44px">순위</th><th>링크</th><th style="width:110px">분야</th><th>빈도</th><th style="width:60px">횟수</th></tr></thead><tbody>`;sorted.forEach((l,i)=>{const cat=categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};const n=getClicks(l.id),p=Math.round(n/max*100),rk=i<3?`rank-${i+1}`:'rank-n';h+=`<tr><td><span class="rank-badge ${rk}">${i+1}</span></td><td><strong>${l.emoji||''} ${escHtml(l.name)}</strong></td><td><span style="font-size:.82rem"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:4px"></span>${escHtml(cat.name)}</span></td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${cat.color}"></div></div></div></td><td><strong style="color:${cat.color}">${n}</strong></td></tr>`});h+=`</tbody></table>`;document.getElementById('statsTableWrap').innerHTML=h}
 
-let adminPw='04250425'; // 기본 비밀번호 (8자)
-// Firestore에서 관리자 비밀번호 로드
+let adminPw='04250425';
 async function loadAdminPw(){
   try{
     const snap=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(m=>m.getDoc(doc(db,'meta','adminConfig')));
@@ -469,7 +483,6 @@ async function loadAdminPw(){
   }catch(e){}
 }
 loadAdminPw();
-// 실시간 비번 동기화
 onSnapshot(doc(db,'meta','adminConfig'),snap=>{if(snap.exists()&&snap.data().password)adminPw=snap.data().password});
 
 window.openAdminModal=()=>{document.getElementById('pwInput').value='';document.getElementById('pwError').classList.remove('show');openM('adminModal');setTimeout(()=>document.getElementById('pwInput').focus(),200)};
@@ -497,30 +510,19 @@ window.adminLogout=()=>{
   toast('관리자 모드 종료','info');renderAll();
 };
 
-/* ★ 비밀번호 변경 */
 window.openPwChangeModal=()=>{
-  document.getElementById('pwOld').value='';
-  document.getElementById('pwNew').value='';
-  document.getElementById('pwNewConfirm').value='';
+  document.getElementById('pwOld').value='';document.getElementById('pwNew').value='';document.getElementById('pwNewConfirm').value='';
   const err=document.getElementById('pwChangeError');err.textContent='';err.classList.remove('show');
-  openM('pwChangeModal');
-  setTimeout(()=>document.getElementById('pwOld').focus(),200);
+  openM('pwChangeModal');setTimeout(()=>document.getElementById('pwOld').focus(),200);
 };
 window.changePw=async()=>{
-  const old=document.getElementById('pwOld').value;
-  const nw=document.getElementById('pwNew').value;
-  const nwc=document.getElementById('pwNewConfirm').value;
-  const err=document.getElementById('pwChangeError');
-  err.classList.remove('show');
+  const old=document.getElementById('pwOld').value,nw=document.getElementById('pwNew').value,nwc=document.getElementById('pwNewConfirm').value;
+  const err=document.getElementById('pwChangeError');err.classList.remove('show');
   if(old!==adminPw){err.textContent='현재 비밀번호가 올바르지 않습니다.';err.classList.add('show');return}
   if(nw.length<8){err.textContent='새 비밀번호는 8자 이상이어야 합니다.';err.classList.add('show');return}
   if(nw!==nwc){err.textContent='새 비밀번호가 일치하지 않습니다.';err.classList.add('show');return}
-  try{
-    await setDoc(doc(db,'meta','adminConfig'),{password:nw},{merge:true});
-    adminPw=nw;
-    closeModal('pwChangeModal');
-    toast('비밀번호가 변경되었습니다 🔑','success');
-  }catch(e){err.textContent='오류: '+e.message;err.classList.add('show')}
+  try{await setDoc(doc(db,'meta','adminConfig'),{password:nw},{merge:true});adminPw=nw;closeModal('pwChangeModal');toast('비밀번호가 변경되었습니다 🔑','success')}
+  catch(e){err.textContent='오류: '+e.message;err.classList.add('show')}
 };
 window.toggleEdit=()=>{if(!isAdmin){openAdminModal();return}editMode=!editMode;document.getElementById('editChip').classList.toggle('on',editMode);document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';renderAll()};
 
@@ -535,7 +537,6 @@ window.openEditLink=id=>{const l=links.find(x=>x.id===id);if(!l)return;const own
 window.openAddAdminLink=()=>{editingLinkId=null;editingAdminLinkId=null;isAdminLinkMode=true;selEmoji=EMOJIS[0];document.getElementById('linkModalTitle').textContent='🔒 관리자 링크 추가';clearForm();document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';document.getElementById('fSecretGroup').style.display='none';buildEmojiGrid();openM('linkModal')};
 window.openEditAdminLink=id=>{const l=adminLinks.find(x=>x.id===id);if(!l)return;editingLinkId=null;editingAdminLinkId=id;isAdminLinkMode=true;selEmoji=l.emoji||EMOJIS[0];document.getElementById('linkModalTitle').textContent='🔒 관리자 링크 수정';document.getElementById('fName').value=l.name;document.getElementById('fUrl').value=l.url;document.getElementById('fAiTool').value=l.aiTool||'';document.getElementById('fPrompt').value=l.prompt||'';document.getElementById('fDesc').value=l.desc||'';document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';document.getElementById('fSecretGroup').style.display='none';buildEmojiGrid();openM('linkModal')};
 
-/* ★ 저장 시 isSecret 포함 */
 window.saveLink=async()=>{
   const name=document.getElementById('fName').value.trim();let url=document.getElementById('fUrl').value.trim();
   const aiTool=document.getElementById('fAiTool').value.trim(),prompt=document.getElementById('fPrompt').value.trim(),desc=document.getElementById('fDesc').value.trim();
