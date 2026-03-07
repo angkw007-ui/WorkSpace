@@ -1,5 +1,4 @@
-
-html_code = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -1102,34 +1101,4 @@ window.toast = (msg,type='success') => {
 };
 </script>
 </body>
-</html>'''
-
-with open('/home/user/aimo_updated.html', 'w', encoding='utf-8') as f:
-    f.write(html_code)
-
-print("✅ 파일 생성 완료!")
-print("\n🔧 주요 변경 사항:")
-print("=" * 60)
-print()
-print("1️⃣ renderTabs() 함수 변경:")
-print("   - 기존: if (editMode) → '+ 분야 추가' 버튼 표시")
-print("   - 변경: if (isAdmin) → '+ 분야 추가' 버튼 표시")
-print("   → 관리자 로그인만 하면 편집 모드 없이도 분야 추가 가능")
-print()
-print("2️⃣ renderContent() 함수 변경:")
-print("   - 기존: editMode일 때만 분야 수정/삭제 버튼 표시")
-print("   - 변경: isAdmin이면 항상 분야 수정/삭제 버튼 표시")
-print("   → 관리자 로그인만 하면 각 분야 옆에 수정·삭제 버튼 노출")
-print()
-print("3️⃣ 빈 분야 표시 조건 변경:")
-print("   - 기존: editMode일 때만 링크 0개인 분야도 표시")
-print("   - 변경: isAdmin이면 링크 0개인 분야도 표시 (삭제할 수 있도록)")
-print()
-print("4️⃣ 카테고리 CRUD 함수에 관리자 권한 체크 추가:")
-print("   - openAddCat, openEditCat, saveCat, deleteCat 모두")
-print("   - isAdmin 체크 후 아닐 경우 toast 에러 메시지 표시")
-print()
-print("5️⃣ 분야 수정/삭제 버튼 디자인 개선:")
-print("   - .cat-manage-btn 새 스타일 추가")
-print("   - 수정: 연필 아이콘 + 텍스트")
-print("   - 삭제: 휴지통 아이콘 + 텍스트 (hover 시 빨간색)")
+</html>
