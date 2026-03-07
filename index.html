@@ -8,869 +8,500 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg: #f7f8fc;
-  --white: #ffffff;
-  --surface2: #f0f2f8;
-  --border: #e4e7f0;
-  --border2: #d0d4e8;
-  --accent: #2554c7;
-  --accent-light: #eef1fc;
-  --accent2: #0ea87e;
-  --accent2-light: #e8f8f3;
-  --accent3: #e05c2a;
-  --accent3-light: #fdf0ea;
-  --purple: #7c3aed;
-  --purple-light: #f3eeff;
-  --text: #1a1d2e;
-  --text2: #4a4f6a;
-  --muted: #9099b8;
-  --shadow-sm: 0 1px 3px rgba(30,40,100,.07);
-  --shadow: 0 4px 16px rgba(30,40,100,.09), 0 1px 3px rgba(30,40,100,.06);
-  --shadow-lg: 0 12px 40px rgba(30,40,100,.13);
-  --radius: 14px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;line-height:1.6;}
-
-#loadingScreen{position:fixed;inset:0;background:var(--white);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
-.loading-logo{font-family:'Noto Serif KR',serif;font-size:1.8rem;font-weight:900;color:var(--purple);}
-.loading-sub{font-size:.875rem;color:var(--muted);}
-.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-.top-banner{background:linear-gradient(135deg,#7c3aed 0%,#6d28d9 50%,#5b21b6 100%);color:white;text-align:center;padding:7px 1rem;font-size:.78rem;font-weight:500;letter-spacing:.02em;}
-
-header{background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:var(--shadow-sm);}
-.header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.logo{display:flex;align-items:center;gap:12px;}
-.logo-mark{width:40px;height:40px;background:var(--purple);border-radius:10px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(124,58,237,.3);}
-.logo-mark svg{color:white;}
-.logo-text-main{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2;}
-.logo-text-sub{font-size:.7rem;color:var(--muted);font-weight:400;}
-.header-center{flex:1;max-width:420px;}
-.search-wrap{position:relative;}
-.search-wrap input{width:100%;padding:9px 16px 9px 40px;border:1.5px solid var(--border2);border-radius:100px;background:var(--bg);font-size:.875rem;font-family:'Noto Sans KR',sans-serif;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;}
-.search-wrap input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:white;}
-.search-wrap input::placeholder{color:var(--muted);}
-.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
-.header-actions{display:flex;align-items:center;gap:8px;}
-
-.user-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;cursor:pointer;transition:border-color .2s;}
-.user-avatar:hover{border-color:var(--purple);}
-.user-name{font-size:.82rem;font-weight:600;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .18s;text-decoration:none;white-space:nowrap;}
-.btn-primary{background:var(--purple);color:white;box-shadow:0 2px 8px rgba(124,58,237,.25);}
-.btn-primary:hover{background:#6d28d9;transform:translateY(-1px);}
-.btn-outline{background:transparent;color:var(--text2);border:1.5px solid var(--border2);}
-.btn-outline:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light);}
-.btn-google{background:white;color:#444;border:1.5px solid var(--border2);box-shadow:var(--shadow-sm);}
-.btn-google:hover{box-shadow:var(--shadow);transform:translateY(-1px);}
-.btn-sm{padding:6px 13px;font-size:.8rem;}
-.btn-danger-sm{background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;padding:5px 8px;border-radius:6px;font-family:'Noto Sans KR',sans-serif;font-weight:600;transition:all .15s;}
-.btn-danger-sm:hover{color:var(--accent3);background:var(--accent3-light);}
-
-.admin-badge{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent2);background:var(--accent2-light);padding:4px 11px;border-radius:100px;border:1px solid #a8e8d0;cursor:pointer;white-space:nowrap;}
-.admin-badge.on{display:flex;}
-.edit-chip{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent3);background:var(--accent3-light);padding:4px 11px;border-radius:100px;border:1px solid #f0c0a8;}
-.edit-chip.on{display:flex;}
-
-main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem;}
-
-.page-hero{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:2rem 2.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;box-shadow:var(--shadow-sm);overflow:hidden;position:relative;}
-.page-hero::after{content:'🏫';position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);font-size:5.5rem;opacity:.07;pointer-events:none;}
-.hero-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3;}
-.hero-title span{color:var(--purple);}
-.hero-sub{font-size:.9rem;color:var(--text2);margin-top:.4rem;}
-.hero-stats{display:flex;gap:1rem;flex-shrink:0;}
-.stat-box{text-align:center;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;min-width:88px;}
-.stat-num{font-size:1.75rem;font-weight:900;color:var(--purple);line-height:1;font-family:'Noto Serif KR',serif;}
-.stat-label{font-size:.7rem;color:var(--muted);margin-top:3px;font-weight:500;}
-
-/* ★ 안내 배너 */
-.notice-banner{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fefce8 0%,#fef9c3 100%);border:1.5px solid #fbbf24;border-radius:12px;padding:12px 18px;margin-bottom:1.5rem;font-size:.84rem;color:#92400e;line-height:1.5;box-shadow:0 1px 4px rgba(251,191,36,.15);position:relative;}
-.notice-banner .notice-icon{font-size:1.3rem;flex-shrink:0;}
-.notice-banner .notice-text{flex:1;}
-.notice-banner .notice-text strong{color:#78350f;font-weight:700;}
-.notice-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:.9rem;cursor:pointer;color:#b45309;opacity:.6;transition:opacity .15s;padding:2px 5px;border-radius:4px;}
-.notice-close:hover{opacity:1;background:rgba(180,83,9,.08);}
-
-.login-prompt{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin-bottom:1.5rem;box-shadow:var(--shadow-sm);}
-.login-prompt h2{font-size:1.15rem;font-weight:700;margin-bottom:.5rem;}
-.login-prompt p{font-size:.875rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.7;}
-
-.stats-panel{display:none;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm);}
-.stats-panel.open{display:block;animation:fadeUp .25s ease;}
-.stats-panel-title{font-size:1rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
-.stats-table{width:100%;border-collapse:collapse;font-size:.84rem;}
-.stats-table th{text-align:left;padding:8px 12px;background:var(--bg);color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;}
-.stats-table th:first-child{border-radius:8px 0 0 8px;}
-.stats-table th:last-child{border-radius:0 8px 8px 0;text-align:right;}
-.stats-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
-.stats-table tr:last-child td{border-bottom:none;}
-.stats-table tr:hover td{background:var(--bg);}
-.stats-table td:last-child{text-align:right;}
-.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.75rem;font-weight:700;}
-.rank-1{background:#ffd700;color:#7a5e00;}
-.rank-2{background:#e0e0e0;color:#555;}
-.rank-3{background:#d4956a;color:#5a2e00;}
-.rank-n{background:var(--surface2);color:var(--muted);font-size:.72rem;}
-.bar-wrap{display:flex;align-items:center;gap:8px;}
-.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:4px;transition:width .5s ease;}
-
-.tab-bar{display:flex;align-items:center;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;background:var(--white);padding:6px;border-radius:12px;border:1.5px solid var(--border);box-shadow:var(--shadow-sm);}
-.tab{padding:7px 15px;border-radius:8px;font-size:.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px;}
-.tab:hover{background:var(--bg);color:var(--text);}
-.tab.active{color:white;font-weight:700;box-shadow:0 2px 8px rgba(124,58,237,.2);}
-.tab .badge{font-size:.7rem;padding:1px 6px;border-radius:100px;font-weight:600;}
-.tab.active .badge{background:rgba(255,255,255,.25);}
-.tab:not(.active) .badge{background:var(--surface2);color:var(--muted);}
-.tab-divider{width:1px;height:22px;background:var(--border);margin:0 2px;flex-shrink:0;}
-.tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
-.tab-add-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light);}
-
-.cat-section{margin-bottom:2.5rem;animation:fadeUp .3s ease both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.cat-title-row{display:flex;align-items:center;gap:10px;}
-.cat-stripe{width:4px;height:22px;border-radius:4px;}
-.cat-name{font-size:1.05rem;font-weight:700;color:var(--text);}
-.cat-count{font-size:.75rem;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:100px;font-weight:600;}
-.cat-actions{display:flex;gap:4px;}
-
-.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
-
-.link-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);overflow:hidden;}
-.link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cat-color,var(--purple));opacity:0;transition:opacity .2s;}
-.link-card:hover{border-color:var(--cat-color,var(--purple));transform:translateY(-2px);box-shadow:var(--shadow);}
-.link-card:hover::before{opacity:1;}
-.card-header-row{display:flex;align-items:flex-start;gap:12px;}
-.card-icon{width:40px;height:40px;border-radius:10px;background:var(--cat-bg,var(--purple-light));display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;transition:transform .2s;}
-.link-card:hover .card-icon{transform:scale(1.08);}
-.card-title-group{flex:1;min-width:0;}
-.card-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;}
-.card-url{font-size:.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
-.card-desc{font-size:.8rem;color:var(--text2);line-height:1.5;}
-.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border);}
-.click-pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border-radius:100px;padding:3px 9px;font-size:.72rem;font-weight:600;color:var(--muted);transition:all .2s;}
-.click-pill.hot{background:#fdf0ea;color:var(--accent3);}
-.click-pill.warm{background:#e8f8f3;color:var(--accent2);}
-.card-arrow{color:var(--muted);transition:transform .2s,color .2s;flex-shrink:0;}
-.link-card:hover .card-arrow{transform:translateX(3px);color:var(--purple);}
-
-.card-action-btn{opacity:0;transition:opacity .15s;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center;}
-.card-action-btn:hover{color:var(--accent3);}
-.link-card:hover .card-action-btn{opacity:1;}
-.card-edit-btn{background:none;border:none;color:var(--muted);font-size:.73rem;cursor:pointer;padding:3px 8px;border-radius:5px;font-family:'Noto Sans KR',sans-serif;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:3px;}
-.card-edit-btn:hover{color:var(--purple);background:var(--purple-light);}
-
-.uploader-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--muted);background:var(--surface2);padding:2px 7px;border-radius:100px;}
-.uploader-tag img{width:14px;height:14px;border-radius:50%;}
-.ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;font-weight:700;color:var(--purple);background:var(--purple-light);padding:2px 8px;border-radius:100px;border:1px solid #ddd0ff;white-space:nowrap;}
-
-.add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px;}
-.add-card:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light);}
-
-.card-meta-area{display:flex;flex-direction:column;gap:5px;}
-.card-meta-tag{display:flex;align-items:flex-start;gap:6px;font-size:.78rem;line-height:1.45;}
-.card-meta-label{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;font-weight:700;color:var(--purple);background:var(--purple-light);padding:1px 8px;border-radius:100px;font-size:.7rem;letter-spacing:.01em;white-space:nowrap;}
-.card-meta-label.prompt-label{color:#8b42cc;background:#f5eefb;}
-.card-meta-value{color:var(--text2);word-break:break-word;}
-.card-meta-value.prompt-value{color:var(--text2);font-size:.76rem;background:var(--bg);padding:4px 8px;border-radius:6px;border:1px solid var(--border);width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-
+:root{--bg:#f7f8fc;--white:#fff;--surface2:#f0f2f8;--border:#e4e7f0;--border2:#d0d4e8;--accent:#2554c7;--accent-light:#eef1fc;--accent2:#0ea87e;--accent2-light:#e8f8f3;--accent3:#e05c2a;--accent3-light:#fdf0ea;--purple:#7c3aed;--purple-light:#f3eeff;--text:#1a1d2e;--text2:#4a4f6a;--muted:#9099b8;--shadow-sm:0 1px 3px rgba(30,40,100,.07);--shadow:0 4px 16px rgba(30,40,100,.09),0 1px 3px rgba(30,40,100,.06);--shadow-lg:0 12px 40px rgba(30,40,100,.13);--radius:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;line-height:1.6}
+#loadingScreen{position:fixed;inset:0;background:var(--white);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.loading-logo{font-family:'Noto Serif KR',serif;font-size:1.8rem;font-weight:900;color:var(--purple)}
+.loading-sub{font-size:.875rem;color:var(--muted)}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.top-banner{background:linear-gradient(135deg,#7c3aed,#6d28d9,#5b21b6);color:#fff;text-align:center;padding:7px 1rem;font-size:.78rem;font-weight:500;letter-spacing:.02em}
+header{background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:40px;height:40px;background:var(--purple);border-radius:10px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(124,58,237,.3)}
+.logo-mark svg{color:#fff}
+.logo-text-main{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2}
+.logo-text-sub{font-size:.7rem;color:var(--muted);font-weight:400}
+.header-center{flex:1;max-width:420px}
+.search-wrap{position:relative}
+.search-wrap input{width:100%;padding:9px 16px 9px 40px;border:1.5px solid var(--border2);border-radius:100px;background:var(--bg);font-size:.875rem;font-family:'Noto Sans KR',sans-serif;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-wrap input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:#fff}
+.search-wrap input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.header-actions{display:flex;align-items:center;gap:8px}
+.user-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;cursor:pointer;transition:border-color .2s}
+.user-avatar:hover{border-color:var(--purple)}
+.user-name{font-size:.82rem;font-weight:600;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .18s;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.25)}
+.btn-primary:hover{background:#6d28d9;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text2);border:1.5px solid var(--border2)}
+.btn-outline:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
+.btn-google{background:#fff;color:#444;border:1.5px solid var(--border2);box-shadow:var(--shadow-sm)}
+.btn-google:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.btn-sm{padding:6px 13px;font-size:.8rem}
+.admin-badge{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent2);background:var(--accent2-light);padding:4px 11px;border-radius:100px;border:1px solid #a8e8d0;cursor:pointer;white-space:nowrap}
+.admin-badge.on{display:flex}
+.edit-chip{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent3);background:var(--accent3-light);padding:4px 11px;border-radius:100px;border:1px solid #f0c0a8}
+.edit-chip.on{display:flex}
+main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
+.page-hero{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:2rem 2.5rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;box-shadow:var(--shadow-sm);overflow:hidden;position:relative}
+.page-hero::after{content:'🏫';position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);font-size:5.5rem;opacity:.07;pointer-events:none}
+.hero-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3}
+.hero-title span{color:var(--purple)}
+.hero-sub{font-size:.9rem;color:var(--text2);margin-top:.4rem}
+.hero-stats{display:flex;gap:1rem;flex-shrink:0}
+.stat-box{text-align:center;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;min-width:88px}
+.stat-num{font-size:1.75rem;font-weight:900;color:var(--purple);line-height:1;font-family:'Noto Serif KR',serif}
+.stat-label{font-size:.7rem;color:var(--muted);margin-top:3px;font-weight:500}
+.notice-banner{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#fefce8,#fef9c3);border:1.5px solid #fbbf24;border-radius:12px;padding:12px 18px;margin-bottom:1.5rem;font-size:.84rem;color:#92400e;line-height:1.5;box-shadow:0 1px 4px rgba(251,191,36,.15);position:relative}
+.notice-banner .notice-icon{font-size:1.3rem;flex-shrink:0}
+.notice-banner .notice-text{flex:1}
+.notice-banner .notice-text strong{color:#78350f;font-weight:700}
+.notice-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:.9rem;cursor:pointer;color:#b45309;opacity:.6;transition:opacity .15s;padding:2px 5px;border-radius:4px}
+.notice-close:hover{opacity:1;background:rgba(180,83,9,.08)}
+.login-prompt{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+.login-prompt h2{font-size:1.15rem;font-weight:700;margin-bottom:.5rem}
+.login-prompt p{font-size:.875rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.7}
+.stats-panel{display:none;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm)}
+.stats-panel.open{display:block;animation:fadeUp .25s ease}
+.stats-panel-title{font-size:1rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+.stats-table{width:100%;border-collapse:collapse;font-size:.84rem}
+.stats-table th{text-align:left;padding:8px 12px;background:var(--bg);color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.stats-table th:first-child{border-radius:8px 0 0 8px}
+.stats-table th:last-child{border-radius:0 8px 8px 0;text-align:right}
+.stats-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle}
+.stats-table tr:last-child td{border-bottom:none}
+.stats-table tr:hover td{background:var(--bg)}
+.stats-table td:last-child{text-align:right}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.75rem;font-weight:700}
+.rank-1{background:#ffd700;color:#7a5e00}.rank-2{background:#e0e0e0;color:#555}.rank-3{background:#d4956a;color:#5a2e00}.rank-n{background:var(--surface2);color:var(--muted);font-size:.72rem}
+.bar-wrap{display:flex;align-items:center;gap:8px}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.tab-bar{display:flex;align-items:center;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;background:var(--white);padding:6px;border-radius:12px;border:1.5px solid var(--border);box-shadow:var(--shadow-sm)}
+.tab{padding:7px 15px;border-radius:8px;font-size:.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px}
+.tab:hover{background:var(--bg);color:var(--text)}
+.tab.active{color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(124,58,237,.2)}
+.tab .badge{font-size:.7rem;padding:1px 6px;border-radius:100px;font-weight:600}
+.tab.active .badge{background:rgba(255,255,255,.25)}
+.tab:not(.active) .badge{background:var(--surface2);color:var(--muted)}
+.tab-divider{width:1px;height:22px;background:var(--border);margin:0 2px;flex-shrink:0}
+.tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.tab-add-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
+.cat-section{margin-bottom:2.5rem;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cat-title-row{display:flex;align-items:center;gap:10px}
+.cat-stripe{width:4px;height:22px;border-radius:4px}
+.cat-name{font-size:1.05rem;font-weight:700;color:var(--text)}
+.cat-count{font-size:.75rem;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:100px;font-weight:600}
+.cat-actions{display:flex;gap:4px}
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.link-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);overflow:hidden}
+.link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cat-color,var(--purple));opacity:0;transition:opacity .2s}
+.link-card:hover{border-color:var(--cat-color,var(--purple));transform:translateY(-2px);box-shadow:var(--shadow)}
+.link-card:hover::before{opacity:1}
+/* ★ 비밀 링크 카드 */
+.link-card.secret-card{background:linear-gradient(135deg,#fefce8 0%,#fffbeb 100%);border-color:#fbbf24}
+.link-card.secret-card::before{background:#f59e0b}
+.secret-badge{display:inline-flex;align-items:center;gap:3px;font-size:.66rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;white-space:nowrap}
+.card-header-row{display:flex;align-items:flex-start;gap:12px}
+.card-icon{width:40px;height:40px;border-radius:10px;background:var(--cat-bg,var(--purple-light));display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;transition:transform .2s}
+.link-card:hover .card-icon{transform:scale(1.08)}
+.card-title-group{flex:1;min-width:0}
+.card-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;display:flex;align-items:center;gap:6px}
+.card-url{font-size:.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.card-desc{font-size:.8rem;color:var(--text2);line-height:1.5}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border)}
+.click-pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border-radius:100px;padding:3px 9px;font-size:.72rem;font-weight:600;color:var(--muted);transition:all .2s}
+.click-pill.hot{background:#fdf0ea;color:var(--accent3)}
+.click-pill.warm{background:#e8f8f3;color:var(--accent2)}
+.card-arrow{color:var(--muted);transition:transform .2s,color .2s;flex-shrink:0}
+.link-card:hover .card-arrow{transform:translateX(3px);color:var(--purple)}
+.card-action-btn{opacity:0;transition:opacity .15s;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center}
+.card-action-btn:hover{color:var(--accent3)}
+.link-card:hover .card-action-btn{opacity:1}
+.card-edit-btn{background:none;border:none;color:var(--muted);font-size:.73rem;cursor:pointer;padding:3px 8px;border-radius:5px;font-family:'Noto Sans KR',sans-serif;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:3px}
+.card-edit-btn:hover{color:var(--purple);background:var(--purple-light)}
+.uploader-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--muted);background:var(--surface2);padding:2px 7px;border-radius:100px}
+.uploader-tag img{width:14px;height:14px;border-radius:50%}
+.ai-tag{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;font-weight:700;color:var(--purple);background:var(--purple-light);padding:2px 8px;border-radius:100px;border:1px solid #ddd0ff;white-space:nowrap}
+.add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px}
+.add-card:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
+/* ★ 프롬프트 클릭 영역 */
+.card-prompt-btn{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;transition:all .15s;width:100%;text-align:left;font-family:'Noto Sans KR',sans-serif;color:var(--text2);font-size:.76rem;line-height:1.4}
+.card-prompt-btn:hover{background:var(--purple-light);border-color:var(--purple);color:var(--purple)}
+.card-prompt-btn .prompt-icon{font-size:.9rem;flex-shrink:0}
+.card-prompt-btn .prompt-preview{flex:1;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all}
+.card-prompt-btn .prompt-arrow{color:var(--muted);font-size:.7rem;flex-shrink:0;transition:color .15s}
+.card-prompt-btn:hover .prompt-arrow{color:var(--purple)}
+/* ★ 프롬프트 팝업 모달 */
+.prompt-modal-content{padding:0}
+.prompt-detail-section{margin-bottom:1.25rem}
+.prompt-detail-label{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--purple);margin-bottom:8px}
+.prompt-detail-label.ai-label{color:var(--accent2)}
+.prompt-detail-box{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.88rem;color:var(--text);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto}
+.prompt-copy-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.prompt-copy-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 /* ADMIN SECTION */
-.admin-personal-section{display:none;margin-bottom:2.5rem;animation:fadeUp .3s ease both;}
-.admin-personal-section.visible{display:block;}
-.admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e 0%,#2d3250 100%);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none;}
-.admin-section-title{display:flex;align-items:center;gap:10px;color:white;font-size:1rem;font-weight:700;}
-.admin-lock-badge{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em;}
-.admin-section-body{background:#f4f5fb;border:1.5px solid #3a3f5c;border-top:none;border-radius:0 0 14px 14px;padding:16px;}
-.admin-link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
-.admin-link-card{background:#1e2238;border:1.5px solid #2e3354;border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;position:relative;overflow:hidden;}
-.admin-link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#e8ff47;opacity:0;transition:opacity .2s;}
-.admin-link-card:hover{background:#252a45;border-color:#e8ff47;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
-.admin-link-card:hover::before{opacity:1;}
-.admin-card-row{display:flex;align-items:flex-start;gap:10px;}
-.admin-card-icon{width:36px;height:36px;border-radius:8px;background:rgba(232,255,71,.12);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;}
-.admin-card-name{font-size:.9rem;font-weight:700;color:#e8eaf5;line-height:1.3;}
-.admin-card-url{font-size:.7rem;color:#6b7099;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
-.admin-card-desc{font-size:.78rem;color:#8890b0;line-height:1.5;}
-.admin-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #2e3354;margin-top:auto;}
-.admin-card-btn{opacity:0;transition:opacity .15s;background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex;}
-.admin-link-card:hover .admin-card-btn{opacity:1;}
-.admin-card-delete{color:#6b7099;}
-.admin-card-delete:hover{color:#ff6b6b;}
-.admin-card-edit{color:#6b7099;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:3px 8px;border-radius:5px;}
-.admin-card-edit:hover{color:#e8ff47;background:rgba(232,255,71,.1);}
-.admin-card-arrow{color:#6b7099;transition:transform .2s,color .2s;}
-.admin-link-card:hover .admin-card-arrow{transform:translateX(3px);color:#e8ff47;}
-.admin-add-card{border:1.5px dashed #2e3354;border-radius:11px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7099;font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:90px;}
-.admin-add-card:hover{border-color:#e8ff47;color:#e8ff47;background:rgba(232,255,71,.05);}
-
-.modal-overlay{position:fixed;inset:0;background:rgba(20,30,70,.35);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
-.modal{background:var(--white);border:1.5px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:2rem;transform:scale(.96) translateY(10px);transition:transform .2s;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;}
-.modal-overlay.open .modal{transform:scale(1) translateY(0);}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
-.modal-title{font-size:1.1rem;font-weight:700;}
-.modal-close{background:var(--bg);border:1.5px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text2);display:grid;place-items:center;transition:all .15s;}
-.modal-close:hover{background:var(--accent3-light);color:var(--accent3);border-color:var(--accent3);}
-.form-group{margin-bottom:1rem;}
-.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:5px;}
-.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:.9rem;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:white;}
-.form-select option{background:white;}
-.form-textarea{resize:vertical;min-height:72px;line-height:1.5;}
-.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;}
-
-.desc-fields-wrap{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg);}
-.desc-field-row{display:flex;align-items:flex-start;padding:0;}
-.desc-field-row + .desc-field-row{border-top:1px solid var(--border);}
-.desc-field-label{display:flex;align-items:center;gap:5px;flex-shrink:0;width:100px;padding:10px 12px;font-size:.82rem;font-weight:700;color:var(--purple);background:var(--white);border-right:1px solid var(--border);}
-.desc-field-label.prompt{color:#8b42cc;}
-.desc-field-label svg{flex-shrink:0;}
-.desc-field-input{flex:1;padding:10px 12px;background:transparent;border:none;color:var(--text);font-size:.88rem;font-family:'Noto Sans KR',sans-serif;outline:none;resize:none;line-height:1.5;}
-.desc-field-input::placeholder{color:var(--muted);}
-.desc-field-input:focus{background:var(--white);}
-
-.emoji-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;}
-.emoji-btn{padding:6px;border:1.5px solid transparent;background:var(--bg);font-size:1.1rem;cursor:pointer;border-radius:7px;transition:all .12s;}
-.emoji-btn:hover{background:var(--purple-light);}
-.emoji-btn.selected{border-color:var(--purple);background:var(--purple-light);}
-
-.color-row{display:flex;gap:7px;flex-wrap:wrap;}
-.swatch{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2.5px solid transparent;transition:transform .15s,border-color .15s;}
-.swatch:hover{transform:scale(1.12);}
-.swatch.selected{border-color:#333;box-shadow:0 0 0 2px white inset;}
-
-.pw-input-wrap input{letter-spacing:.2em;font-size:1.2rem;text-align:center;font-weight:700;}
-.pw-error{color:var(--accent3);font-size:.8rem;margin-top:6px;display:none;text-align:center;}
-.pw-error.show{display:block;}
-
-.toast-wrap{position:fixed;bottom:2rem;right:2rem;z-index:9999;display:flex;flex-direction:column;gap:8px;}
-.toast{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:.875rem;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);animation:slideIn .25s ease;max-width:300px;}
-@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
-.toast.success{border-left:3px solid var(--accent2);}
-.toast.error{border-left:3px solid var(--accent3);}
-.toast.info{border-left:3px solid var(--purple);}
-
-.no-results{text-align:center;padding:4rem 2rem;color:var(--muted);}
-.no-results .nr-icon{font-size:3rem;margin-bottom:1rem;opacity:.35;}
-
-.site-footer{text-align:center;padding:2rem 1rem 2.5rem;border-top:1.5px solid var(--border);margin-top:2rem;color:var(--muted);font-size:.78rem;letter-spacing:.02em;}
-.site-footer .footer-dev{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;font-size:.72rem;color:var(--muted);opacity:.7;}
-.site-footer .footer-dev span{color:var(--purple);font-weight:600;opacity:1;}
-
-.admin-link-note{display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354;}
-.admin-link-note span{font-size:.82rem;color:#8890b0;font-weight:600;}
-
-.cat-manage-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
-.cat-manage-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light);}
-.cat-manage-btn.delete{border-color:transparent;color:var(--muted);}
-.cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light);}
-
-@media(max-width:768px){
-  main{padding:1.25rem 1rem 4rem;}
-  .header-inner{padding:0 1rem;}
-  .header-center{display:none;}
-  .hero-stats{display:none;}
-  .page-hero{padding:1.5rem;}
-  .emoji-grid{grid-template-columns:repeat(7,1fr);}
-  .header-actions .btn-outline{display:none;}
-  .desc-field-label{width:80px;font-size:.76rem;padding:8px 8px;}
-  .link-grid{grid-template-columns:1fr;}
-  .notice-banner{flex-direction:column;gap:6px;text-align:center;}
-}
+.admin-personal-section{display:none;margin-bottom:2.5rem;animation:fadeUp .3s ease both}
+.admin-personal-section.visible{display:block}
+.admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e,#2d3250);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none}
+.admin-section-title{display:flex;align-items:center;gap:10px;color:#fff;font-size:1rem;font-weight:700}
+.admin-lock-badge{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em}
+.admin-section-body{background:#f4f5fb;border:1.5px solid #3a3f5c;border-top:none;border-radius:0 0 14px 14px;padding:16px}
+.admin-link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.admin-link-card{background:#1e2238;border:1.5px solid #2e3354;border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;position:relative;overflow:hidden}
+.admin-link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#e8ff47;opacity:0;transition:opacity .2s}
+.admin-link-card:hover{background:#252a45;border-color:#e8ff47;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.admin-link-card:hover::before{opacity:1}
+.admin-card-row{display:flex;align-items:flex-start;gap:10px}
+.admin-card-icon{width:36px;height:36px;border-radius:8px;background:rgba(232,255,71,.12);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.admin-card-name{font-size:.9rem;font-weight:700;color:#e8eaf5;line-height:1.3}
+.admin-card-url{font-size:.7rem;color:#6b7099;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
+.admin-card-desc{font-size:.78rem;color:#8890b0;line-height:1.5}
+.admin-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #2e3354;margin-top:auto}
+.admin-card-btn{opacity:0;transition:opacity .15s;background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex}
+.admin-link-card:hover .admin-card-btn{opacity:1}
+.admin-card-delete{color:#6b7099}.admin-card-delete:hover{color:#ff6b6b}
+.admin-card-edit{color:#6b7099;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:3px 8px;border-radius:5px}
+.admin-card-edit:hover{color:#e8ff47;background:rgba(232,255,71,.1)}
+.admin-card-arrow{color:#6b7099;transition:transform .2s,color .2s}
+.admin-link-card:hover .admin-card-arrow{transform:translateX(3px);color:#e8ff47}
+.admin-add-card{border:1.5px dashed #2e3354;border-radius:11px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7099;font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:90px}
+.admin-add-card:hover{border-color:#e8ff47;color:#e8ff47;background:rgba(232,255,71,.05)}
+.modal-overlay{position:fixed;inset:0;background:rgba(20,30,70,.35);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--white);border:1.5px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:2rem;transform:scale(.96) translateY(10px);transition:transform .2s;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal{transform:scale(1) translateY(0)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.modal-title{font-size:1.1rem;font-weight:700}
+.modal-close{background:var(--bg);border:1.5px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text2);display:grid;place-items:center;transition:all .15s}
+.modal-close:hover{background:var(--accent3-light);color:var(--accent3);border-color:var(--accent3)}
+.form-group{margin-bottom:1rem}
+.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:5px}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:.9rem;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:#fff}
+.form-textarea{resize:vertical;min-height:72px;line-height:1.5}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem}
+.desc-fields-wrap{border:1.5px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg)}
+.desc-field-row{display:flex;align-items:flex-start}
+.desc-field-row+.desc-field-row{border-top:1px solid var(--border)}
+.desc-field-label{display:flex;align-items:center;gap:5px;flex-shrink:0;width:100px;padding:10px 12px;font-size:.82rem;font-weight:700;color:var(--purple);background:var(--white);border-right:1px solid var(--border)}
+.desc-field-label.prompt{color:#8b42cc}
+.desc-field-label svg{flex-shrink:0}
+.desc-field-input{flex:1;padding:10px 12px;background:transparent;border:none;color:var(--text);font-size:.88rem;font-family:'Noto Sans KR',sans-serif;outline:none;resize:none;line-height:1.5}
+.desc-field-input::placeholder{color:var(--muted)}
+.desc-field-input:focus{background:var(--white)}
+/* ★ 비밀 링크 토글 */
+.secret-toggle-wrap{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1.5px solid #fbbf24;border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
+.secret-toggle-wrap:hover{box-shadow:0 2px 8px rgba(251,191,36,.2)}
+.secret-toggle-wrap input{display:none}
+.secret-toggle-track{width:40px;height:22px;border-radius:100px;background:var(--border2);position:relative;transition:background .2s;flex-shrink:0}
+.secret-toggle-track::after{content:'';position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:transform .2s}
+.secret-toggle-wrap input:checked~.secret-toggle-track{background:#f59e0b}
+.secret-toggle-wrap input:checked~.secret-toggle-track::after{transform:translateX(18px)}
+.secret-toggle-text{font-size:.84rem;font-weight:600;color:#92400e;line-height:1.4}
+.secret-toggle-text small{display:block;font-size:.74rem;font-weight:400;color:#b45309;margin-top:1px}
+.emoji-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.emoji-btn{padding:6px;border:1.5px solid transparent;background:var(--bg);font-size:1.1rem;cursor:pointer;border-radius:7px;transition:all .12s}
+.emoji-btn:hover{background:var(--purple-light)}
+.emoji-btn.selected{border-color:var(--purple);background:var(--purple-light)}
+.color-row{display:flex;gap:7px;flex-wrap:wrap}
+.swatch{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2.5px solid transparent;transition:transform .15s,border-color .15s}
+.swatch:hover{transform:scale(1.12)}
+.swatch.selected{border-color:#333;box-shadow:0 0 0 2px white inset}
+.pw-input-wrap input{letter-spacing:.2em;font-size:1.2rem;text-align:center;font-weight:700}
+.pw-error{color:var(--accent3);font-size:.8rem;margin-top:6px;display:none;text-align:center}
+.pw-error.show{display:block}
+.toast-wrap{position:fixed;bottom:2rem;right:2rem;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:.875rem;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);animation:slideIn .25s ease;max-width:300px}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast.success{border-left:3px solid var(--accent2)}.toast.error{border-left:3px solid var(--accent3)}.toast.info{border-left:3px solid var(--purple)}
+.no-results{text-align:center;padding:4rem 2rem;color:var(--muted)}
+.no-results .nr-icon{font-size:3rem;margin-bottom:1rem;opacity:.35}
+.site-footer{text-align:center;padding:2rem 1rem 2.5rem;border-top:1.5px solid var(--border);margin-top:2rem;color:var(--muted);font-size:.78rem;letter-spacing:.02em}
+.site-footer .footer-dev{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;font-size:.72rem;color:var(--muted);opacity:.7}
+.site-footer .footer-dev span{color:var(--purple);font-weight:600;opacity:1}
+.admin-link-note{display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354}
+.admin-link-note span{font-size:.82rem;color:#8890b0;font-weight:600}
+.cat-manage-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.cat-manage-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
+.cat-manage-btn.delete{border-color:transparent;color:var(--muted)}
+.cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light)}
+@media(max-width:768px){main{padding:1.25rem 1rem 4rem}.header-inner{padding:0 1rem}.header-center{display:none}.hero-stats{display:none}.page-hero{padding:1.5rem}.emoji-grid{grid-template-columns:repeat(7,1fr)}.header-actions .btn-outline{display:none}.desc-field-label{width:80px;font-size:.76rem;padding:8px}.link-grid{grid-template-columns:1fr}.notice-banner{flex-direction:column;gap:6px;text-align:center}}
 </style>
 </head>
 <body>
-
-<div id="loadingScreen">
-  <div class="loading-logo">에이모</div>
-  <div class="spinner"></div>
-  <div class="loading-sub">로딩 중...</div>
-</div>
-
+<div id="loadingScreen"><div class="loading-logo">에이모</div><div class="spinner"></div><div class="loading-sub">로딩 중...</div></div>
 <div id="appRoot" style="display:none">
 <div class="top-banner">🤖 에이모(AI모음) — 교사 · 행정실 전용 업무 링크 허브</div>
-
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <div class="logo-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-          <polyline points="9,22 9,12 15,12 15,22"/>
-        </svg>
-      </div>
-      <div>
-        <div class="logo-text-main">에이모</div>
-        <div class="logo-text-sub">AI모음</div>
-      </div>
-    </div>
-    <div class="header-center">
-      <div class="search-wrap">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="searchInput" placeholder="링크 이름, 설명 검색…" oninput="renderAll()"/>
-      </div>
-    </div>
-    <div class="header-actions">
-      <span class="edit-chip" id="editChip">✏️ 편집 중</span>
-      <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="클릭하면 관리자 모드 종료">🔓 관리자</span>
-      <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 통계</button>
-      <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐 관리자</button>
-      <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️ 편집</button>
-      <button class="btn btn-primary btn-sm" id="addLinkBtnTop" onclick="openAddLink()" style="display:none">+ 링크</button>
-      <div id="userArea" style="display:flex;align-items:center;gap:8px;display:none">
-        <img id="userPhoto" class="user-avatar" src="" onclick="signOutUser()" title="로그아웃"/>
-        <span class="user-name" id="userName"></span>
-      </div>
-      <button class="btn btn-google btn-sm" id="loginBtn" onclick="signInWithGoogle()">
-        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Google 로그인
-      </button>
-    </div>
+<header><div class="header-inner">
+  <div class="logo"><div class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div><div><div class="logo-text-main">에이모</div><div class="logo-text-sub">AI모음</div></div></div>
+  <div class="header-center"><div class="search-wrap"><svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" id="searchInput" placeholder="링크 이름, 설명 검색…" oninput="renderAll()"/></div></div>
+  <div class="header-actions">
+    <span class="edit-chip" id="editChip">✏️ 편집 중</span>
+    <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="관리자 모드 종료">🔓 관리자</span>
+    <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 통계</button>
+    <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐 관리자</button>
+    <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️ 편집</button>
+    <button class="btn btn-primary btn-sm" id="addLinkBtnTop" onclick="openAddLink()" style="display:none">+ 링크</button>
+    <div id="userArea" style="display:none"><img id="userPhoto" class="user-avatar" src="" onclick="signOutUser()" title="로그아웃"/><span class="user-name" id="userName"></span></div>
+    <button class="btn btn-google btn-sm" id="loginBtn" onclick="signInWithGoogle()"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a7.03 7.03 0 01-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A7 7 0 015.49 12c0-.72.13-1.43.35-2.09V7.07H2.18A11 11 0 001 12c0 1.78.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Google 로그인</button>
   </div>
-</header>
-
+</div></header>
 <main>
-  <div class="page-hero">
-    <div>
-      <h1 class="hero-title">에이모 <span>AI모음</span></h1>
-      <p class="hero-sub">교사 · 행정실 업무에 필요한 모든 링크를 한 곳에서 관리하세요</p>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-box"><div class="stat-num" id="statCat">0</div><div class="stat-label">업무 분야</div></div>
-      <div class="stat-box"><div class="stat-num" id="statLink">0</div><div class="stat-label">등록 링크</div></div>
-      <div class="stat-box"><div class="stat-num" id="statClick">0</div><div class="stat-label">총 클릭</div></div>
-    </div>
-  </div>
-
-  <!-- ★ 안내 배너 -->
-  <div class="notice-banner" id="noticeBanner">
-    <span class="notice-icon">📢</span>
-    <div class="notice-text">
-      <strong>안내</strong> &nbsp;업무와 관계없는 링크나 개인정보보호를 위해 필요시 링크를 삭제합니다.
-    </div>
-    <button class="notice-close" onclick="closeNotice()" title="닫기">✕</button>
-  </div>
-
-  <div class="login-prompt" id="loginPrompt" style="display:none">
-    <h2>🔐 로그인하면 링크를 직접 등록할 수 있어요</h2>
-    <p>Google 계정으로 로그인하면 누구나 링크를 추가할 수 있습니다.<br>본인이 올린 링크는 본인만 삭제할 수 있어요.</p>
-    <button class="btn btn-google" onclick="signInWithGoogle()">
-      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      Google 계정으로 로그인
-    </button>
-  </div>
-
-  <div class="admin-personal-section" id="adminPersonalSection">
-    <div class="admin-section-header">
-      <div class="admin-section-title">🔒 관리자 개인 링크 <span class="admin-lock-badge">ADMIN ONLY</span></div>
-      <div id="adminPersonalActions" style="display:none">
-        <button class="btn btn-sm" style="background:rgba(232,255,71,.15);color:#e8ff47;border:1px solid rgba(232,255,71,.3);font-size:.78rem" onclick="openAddAdminLink()">+ 링크 추가</button>
-      </div>
-    </div>
-    <div class="admin-section-body">
-      <div class="admin-link-grid" id="adminLinkGrid"></div>
-    </div>
-  </div>
-
-  <div class="stats-panel" id="statsPanel">
-    <div class="stats-panel-title">📊 링크 사용 현황 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순</span></div>
-    <div id="statsTableWrap"></div>
-  </div>
-
+  <div class="page-hero"><div><h1 class="hero-title">에이모 <span>AI모음</span></h1><p class="hero-sub">교사 · 행정실 업무에 필요한 모든 링크를 한 곳에서 관리하세요</p></div><div class="hero-stats"><div class="stat-box"><div class="stat-num" id="statCat">0</div><div class="stat-label">업무 분야</div></div><div class="stat-box"><div class="stat-num" id="statLink">0</div><div class="stat-label">등록 링크</div></div><div class="stat-box"><div class="stat-num" id="statClick">0</div><div class="stat-label">총 클릭</div></div></div></div>
+  <div class="notice-banner" id="noticeBanner"><span class="notice-icon">📢</span><div class="notice-text"><strong>안내</strong>&nbsp;업무와 관계없는 링크나 개인정보보호를 위해 필요시 링크를 삭제합니다.</div><button class="notice-close" onclick="closeNotice()">✕</button></div>
+  <div class="login-prompt" id="loginPrompt" style="display:none"><h2>🔐 로그인하면 링크를 직접 등록할 수 있어요</h2><p>Google 계정으로 로그인하면 누구나 링크를 추가할 수 있습니다.<br>본인이 올린 링크는 본인만 삭제할 수 있어요.</p><button class="btn btn-google" onclick="signInWithGoogle()"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a7.03 7.03 0 01-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A7 7 0 015.49 12c0-.72.13-1.43.35-2.09V7.07H2.18A11 11 0 001 12c0 1.78.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Google 계정으로 로그인</button></div>
+  <div class="admin-personal-section" id="adminPersonalSection"><div class="admin-section-header"><div class="admin-section-title">🔒 관리자 개인 링크 <span class="admin-lock-badge">ADMIN ONLY</span></div><div id="adminPersonalActions" style="display:none"><button class="btn btn-sm" style="background:rgba(232,255,71,.15);color:#e8ff47;border:1px solid rgba(232,255,71,.3);font-size:.78rem" onclick="openAddAdminLink()">+ 링크 추가</button></div></div><div class="admin-section-body"><div class="admin-link-grid" id="adminLinkGrid"></div></div></div>
+  <div class="stats-panel" id="statsPanel"><div class="stats-panel-title">📊 링크 사용 현황 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순</span></div><div id="statsTableWrap"></div></div>
   <div class="tab-bar" id="tabBar"></div>
   <div id="content"></div>
 </main>
-
-<footer class="site-footer">
-  <p>에이모(AI모음) &copy; 2025</p>
-  <div class="footer-dev">
-    <span>Developed by Choi Gwangcheul, Gurye Middle School with AI</span>
-  </div>
-</footer>
+<footer class="site-footer"><p>에이모(AI모음) &copy; 2025</p><div class="footer-dev"><span>Developed by Choi Gwangcheul, Gurye Middle School with AI</span></div></footer>
 </div>
-
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- MODAL: ADMIN -->
-<div class="modal-overlay" id="adminModal">
-  <div class="modal" style="max-width:360px">
-    <div class="modal-header">
-      <div class="modal-title">🔐 관리자 로그인</div>
-      <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
-    </div>
-    <p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">편집 기능은 관리자만 사용할 수 있습니다.<br>비밀번호를 입력하세요.</p>
-    <div class="form-group">
-      <label class="form-label">비밀번호</label>
-      <div class="pw-input-wrap"><input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPw()"/></div>
-      <div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('adminModal')">취소</button>
-      <button class="btn btn-primary" onclick="checkPw()">로그인</button>
-    </div>
-  </div>
-</div>
+<!-- MODALS -->
+<div class="modal-overlay" id="adminModal"><div class="modal" style="max-width:360px"><div class="modal-header"><div class="modal-title">🔐 관리자 로그인</div><button class="modal-close" onclick="closeModal('adminModal')">✕</button></div><p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">관리자 비밀번호를 입력하세요.</p><div class="form-group"><label class="form-label">비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPw()"/></div><div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('adminModal')">취소</button><button class="btn btn-primary" onclick="checkPw()">로그인</button></div></div></div>
 
-<!-- MODAL: LINK -->
-<div class="modal-overlay" id="linkModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="linkModalTitle">링크 추가</div>
-      <button class="modal-close" onclick="closeModal('linkModal')">✕</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">링크 이름 <span style="color:var(--accent3)">*</span></label>
-      <input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인…"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">URL <span style="color:var(--accent3)">*</span></label>
-      <input class="form-input" id="fUrl" placeholder="https://…"/>
-    </div>
-    <div class="form-group" id="fCatGroup">
-      <label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label>
-      <select class="form-select" id="fCat"></select>
-    </div>
-    <div class="admin-link-note" id="adminLinkNote">
-      <span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span>
-    </div>
-    <div class="form-group">
-      <label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label>
-      <div class="desc-fields-wrap">
-        <div class="desc-field-row">
-          <div class="desc-field-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>
-            제작AI
-          </div>
-          <input class="desc-field-input" id="fAiTool" placeholder="예: ChatGPT, Claude, Gemini…"/>
-        </div>
-        <div class="desc-field-row">
-          <div class="desc-field-label prompt">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            프롬프트
-          </div>
-          <textarea class="desc-field-input" id="fPrompt" rows="2" placeholder="사용한 프롬프트…" style="resize:vertical;min-height:50px;"></textarea>
-        </div>
-        <div class="desc-field-row">
-          <div class="desc-field-label" style="color:var(--text2);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            기타 설명
-          </div>
-          <textarea class="desc-field-input" id="fDesc" rows="2" placeholder="추가 설명…" style="resize:vertical;min-height:50px;"></textarea>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">아이콘</label>
-      <div class="emoji-grid" id="emojiGrid"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('linkModal')">취소</button>
-      <button class="btn btn-primary" onclick="saveLink()">저장</button>
-    </div>
+<div class="modal-overlay" id="linkModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="linkModalTitle">링크 추가</div><button class="modal-close" onclick="closeModal('linkModal')">✕</button></div>
+  <div class="form-group"><label class="form-label">링크 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인…"/></div>
+  <div class="form-group"><label class="form-label">URL <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fUrl" placeholder="https://…"/></div>
+  <div class="form-group" id="fCatGroup"><label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label><select class="form-select" id="fCat"></select></div>
+  <div class="admin-link-note" id="adminLinkNote"><span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span></div>
+  <div class="form-group"><label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label><div class="desc-fields-wrap"><div class="desc-field-row"><div class="desc-field-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작AI</div><input class="desc-field-input" id="fAiTool" placeholder="예: ChatGPT, Claude, Gemini…"/></div><div class="desc-field-row"><div class="desc-field-label prompt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><textarea class="desc-field-input" id="fPrompt" rows="2" placeholder="사용한 프롬프트…" style="resize:vertical;min-height:50px"></textarea></div><div class="desc-field-row"><div class="desc-field-label" style="color:var(--text2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>기타 설명</div><textarea class="desc-field-input" id="fDesc" rows="2" placeholder="추가 설명…" style="resize:vertical;min-height:50px"></textarea></div></div></div>
+  <!-- ★ 비밀 링크 토글 -->
+  <div class="form-group" id="fSecretGroup">
+    <label class="secret-toggle-wrap" for="fSecret">
+      <input type="checkbox" id="fSecret"/>
+      <div class="secret-toggle-track"></div>
+      <div class="secret-toggle-text">🔐 비밀 링크<small>나와 관리자만 볼 수 있습니다</small></div>
+    </label>
   </div>
-</div>
+  <div class="form-group"><label class="form-label">아이콘</label><div class="emoji-grid" id="emojiGrid"></div></div>
+  <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('linkModal')">취소</button><button class="btn btn-primary" onclick="saveLink()">저장</button></div>
+</div></div>
 
-<!-- MODAL: CATEGORY -->
-<div class="modal-overlay" id="catModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="catModalTitle">업무 분야 추가</div>
-      <button class="modal-close" onclick="closeModal('catModal')">✕</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label>
-      <input class="form-input" id="fCatName" placeholder="예: 교무, 행정, 생활지도…"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">색상</label>
-      <div class="color-row" id="colorRow"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('catModal')">취소</button>
-      <button class="btn btn-primary" onclick="saveCat()">저장</button>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
+
+<!-- ★ 프롬프트 상세보기 모달 -->
+<div class="modal-overlay" id="promptModal"><div class="modal" style="max-width:540px"><div class="modal-header"><div class="modal-title">💬 프롬프트 상세보기</div><button class="modal-close" onclick="closeModal('promptModal')">✕</button></div><div class="prompt-modal-content"><div class="prompt-detail-section" id="promptAiSection"><div class="prompt-detail-label ai-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작 AI</div><div class="prompt-detail-box" id="promptAiText"></div></div><div class="prompt-detail-section"><div class="prompt-detail-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><div class="prompt-detail-box" id="promptText"></div></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="prompt-copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button></div></div></div></div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot,
-  query, orderBy, updateDoc, increment, getDoc, getDocs }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,collection,doc,addDoc,setDoc,deleteDoc,onSnapshot,query,orderBy,increment}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD8TTAOCUQelTo-PIe6tsno3Llsr2JjCyA",
-  authDomain: "aimo-20052.firebaseapp.com",
-  projectId: "aimo-20052",
-  storageBucket: "aimo-20052.firebasestorage.app",
-  messagingSenderId: "905838846324",
-  appId: "1:905838846324:web:2946669a4cb195e2decc21"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const PALETTE = ['#7c3aed','#2554c7','#0ea87e','#e05c2a','#8b42cc','#d4970a','#1098c4','#c42573','#3d8b40'];
-const CAT_BG = {'#7c3aed':'#f3eeff','#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c2a':'#fdf0ea','#8b42cc':'#f5eefb','#d4970a':'#fdf6e0','#1098c4':'#e5f5fc','#c42573':'#fce8f2','#3d8b40':'#eaf5ea'};
-const getBg = c => CAT_BG[c] || '#f0f2f8';
-const EMOJIS = ['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
-
-let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=false;
-let selColor=PALETTE[0],selEmoji=EMOJIS[0];
+const app=initializeApp({apiKey:"AIzaSyD8TTAOCUQelTo-PIe6tsno3Llsr2JjCyA",authDomain:"aimo-20052.firebaseapp.com",projectId:"aimo-20052",storageBucket:"aimo-20052.firebasestorage.app",messagingSenderId:"905838846324",appId:"1:905838846324:web:2946669a4cb195e2decc21"});
+const auth=getAuth(app),db=getFirestore(app);
+const PALETTE=['#7c3aed','#2554c7','#0ea87e','#e05c2a','#8b42cc','#d4970a','#1098c4','#c42573','#3d8b40'];
+const CAT_BG={'#7c3aed':'#f3eeff','#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c2a':'#fdf0ea','#8b42cc':'#f5eefb','#d4970a':'#fdf6e0','#1098c4':'#e5f5fc','#c42573':'#fce8f2','#3d8b40':'#eaf5ea'};
+const getBg=c=>CAT_BG[c]||'#f0f2f8';
+const EMOJIS=['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
+let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=false,selColor=PALETTE[0],selEmoji=EMOJIS[0];
 let editingLinkId=null,editingAdminLinkId=null,isAdminLinkMode=false;
 let categories=[],links=[],adminLinks=[],clickData={};
 let unsubCats,unsubLinks,unsubAdminLinks,unsubClicks;
+let currentPromptText=''; // 복사용
 
-/* ★ 안내 배너 닫기 (세션 유지) */
-window.closeNotice=()=>{
-  document.getElementById('noticeBanner').style.display='none';
-  sessionStorage.setItem('noticeClosed','1');
-};
-// 페이지 로드 시 이전에 닫았으면 숨김
-if(sessionStorage.getItem('noticeClosed')==='1'){
-  document.addEventListener('DOMContentLoaded',()=>{
-    const nb=document.getElementById('noticeBanner');
-    if(nb) nb.style.display='none';
-  });
-}
+window.closeNotice=()=>{document.getElementById('noticeBanner').style.display='none';sessionStorage.setItem('noticeClosed','1')};
+if(sessionStorage.getItem('noticeClosed')==='1')document.addEventListener('DOMContentLoaded',()=>{const n=document.getElementById('noticeBanner');if(n)n.style.display='none'});
 
-window.signInWithGoogle=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){toast('로그인 실패: '+e.message,'error')}};
-window.signOutUser=async()=>{if(!confirm('로그아웃 하시겠습니까?'))return;await signOut(auth);toast('로그아웃 되었습니다','info')};
+window.signInWithGoogle=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){toast('로그인 실패','error')}};
+window.signOutUser=async()=>{if(!confirm('로그아웃?'))return;await signOut(auth);toast('로그아웃','info')};
 
-onAuthStateChanged(auth,user=>{
-  currentUser=user;updateUserUI();
-  if(user)startListeners();else{stopListeners();categories=[];links=[];adminLinks=[];clickData={};renderAll();}
-  document.getElementById('loadingScreen').style.display='none';
-  document.getElementById('appRoot').style.display='block';
-  // 안내배너 복원
-  if(sessionStorage.getItem('noticeClosed')==='1'){const nb=document.getElementById('noticeBanner');if(nb)nb.style.display='none';}
+onAuthStateChanged(auth,u=>{
+  currentUser=u;updateUserUI();
+  if(u)startListeners();else{stopListeners();categories=[];links=[];adminLinks=[];clickData={};renderAll()}
+  document.getElementById('loadingScreen').style.display='none';document.getElementById('appRoot').style.display='block';
+  if(sessionStorage.getItem('noticeClosed')==='1'){const n=document.getElementById('noticeBanner');if(n)n.style.display='none'}
 });
 
 function updateUserUI(){
-  if(currentUser){
-    document.getElementById('loginBtn').style.display='none';
-    document.getElementById('userArea').style.display='flex';
-    document.getElementById('userPhoto').src=currentUser.photoURL||'';
-    document.getElementById('userName').textContent=currentUser.displayName?.split(' ')[0]||'사용자';
-    document.getElementById('loginPrompt').style.display='none';
-  } else {
-    document.getElementById('loginBtn').style.display='';
-    document.getElementById('userArea').style.display='none';
-    document.getElementById('loginPrompt').style.display='block';
-    isAdmin=false;editMode=false;
-    document.getElementById('adminBadge').classList.remove('on');
-    document.getElementById('adminLoginBtn').style.display='';
-    document.getElementById('editBtn').style.display='none';
-    document.getElementById('addLinkBtnTop').style.display='none';
-    document.getElementById('editChip').classList.remove('on');
-  }
+  if(currentUser){document.getElementById('loginBtn').style.display='none';document.getElementById('userArea').style.display='flex';document.getElementById('userPhoto').src=currentUser.photoURL||'';document.getElementById('userName').textContent=currentUser.displayName?.split(' ')[0]||'사용자';document.getElementById('loginPrompt').style.display='none'}
+  else{document.getElementById('loginBtn').style.display='';document.getElementById('userArea').style.display='none';document.getElementById('loginPrompt').style.display='block';isAdmin=false;editMode=false;document.getElementById('adminBadge').classList.remove('on');document.getElementById('adminLoginBtn').style.display='';document.getElementById('editBtn').style.display='none';document.getElementById('addLinkBtnTop').style.display='none';document.getElementById('editChip').classList.remove('on')}
 }
 
 function startListeners(){
-  unsubCats=onSnapshot(query(collection(db,'categories'),orderBy('order','asc')),snap=>{categories=snap.docs.map(d=>({id:d.id,...d.data()}));if(!categories.length)seedDefaultCategories();renderAll()});
-  unsubLinks=onSnapshot(query(collection(db,'links'),orderBy('createdAt','desc')),snap=>{links=snap.docs.map(d=>({id:d.id,...d.data()}));renderAll()});
-  unsubAdminLinks=onSnapshot(query(collection(db,'adminLinks'),orderBy('createdAt','desc')),snap=>{adminLinks=snap.docs.map(d=>({id:d.id,...d.data()}));renderAdminSection()});
-  unsubClicks=onSnapshot(doc(db,'meta','clicks'),snap=>{clickData=snap.exists()?snap.data():{};renderAll()});
+  unsubCats=onSnapshot(query(collection(db,'categories'),orderBy('order','asc')),s=>{categories=s.docs.map(d=>({id:d.id,...d.data()}));if(!categories.length)seedDefaultCategories();renderAll()});
+  unsubLinks=onSnapshot(query(collection(db,'links'),orderBy('createdAt','desc')),s=>{links=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});
+  unsubAdminLinks=onSnapshot(query(collection(db,'adminLinks'),orderBy('createdAt','desc')),s=>{adminLinks=s.docs.map(d=>({id:d.id,...d.data()}));renderAdminSection()});
+  unsubClicks=onSnapshot(doc(db,'meta','clicks'),s=>{clickData=s.exists()?s.data():{};renderAll()});
 }
 function stopListeners(){[unsubCats,unsubLinks,unsubAdminLinks,unsubClicks].forEach(u=>u&&u())}
-
-async function seedDefaultCategories(){
-  for(const c of [{name:'교무·수업',color:'#7c3aed',order:0},{name:'행정·문서',color:'#0ea87e',order:1},{name:'생활지도',color:'#e05c2a',order:2},{name:'학부모·민원',color:'#8b42cc',order:3}])
-    await addDoc(collection(db,'categories'),c);
-}
+async function seedDefaultCategories(){for(const c of [{name:'교무·수업',color:'#7c3aed',order:0},{name:'행정·문서',color:'#0ea87e',order:1},{name:'생활지도',color:'#e05c2a',order:2},{name:'학부모·민원',color:'#8b42cc',order:3}])await addDoc(collection(db,'categories'),c)}
 
 function renderAll(){
   document.getElementById('statCat').textContent=categories.length;
   document.getElementById('statLink').textContent=links.length;
   document.getElementById('statClick').textContent=Object.values(clickData).reduce((s,v)=>s+v,0);
-  renderTabs();renderContent();renderAdminSection();
-  if(showStats)renderStatsPanel();
+  renderTabs();renderContent();renderAdminSection();if(showStats)renderStatsPanel();
 }
 function getClicks(id){return clickData[id]||0}
 function escHtml(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 
+/* ★ 링크 표시 필터: 비밀 링크는 본인+관리자만 */
+function visibleLinks(){
+  return links.filter(l=>{
+    if(!l.isSecret) return true;
+    if(isAdmin) return true;
+    if(currentUser && currentUser.uid===l.uploaderId) return true;
+    return false;
+  });
+}
+
 function renderTabs(){
   const q=document.getElementById('searchInput').value.toLowerCase();
-  const bar=document.getElementById('tabBar');
-  const allN=links.filter(l=>matchQ(l,q)).length;
+  const vLinks=visibleLinks();
+  const allN=vLinks.filter(l=>matchQ(l,q)).length;
   let h=`<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')" style="${activeTab==='all'?'background:var(--purple)':''}">전체 <span class="badge">${allN}</span></button><div class="tab-divider"></div>`;
-  categories.forEach(c=>{
-    const n=links.filter(l=>l.catId===c.id&&matchQ(l,q)).length;
-    const a=activeTab===c.id;
-    h+=`<button class="tab ${a?'active':''}" onclick="setTab('${c.id}')" style="${a?`background:${c.color};box-shadow:0 2px 8px ${c.color}44`:''}">${c.name} <span class="badge">${n}</span></button>`;
-  });
+  categories.forEach(c=>{const n=vLinks.filter(l=>l.catId===c.id&&matchQ(l,q)).length;const a=activeTab===c.id;h+=`<button class="tab ${a?'active':''}" onclick="setTab('${c.id}')" style="${a?`background:${c.color};box-shadow:0 2px 8px ${c.color}44`:''}">${c.name} <span class="badge">${n}</span></button>`});
   if(isAdmin)h+=`<button class="tab-add-btn" onclick="openAddCat()">+ 분야 추가</button>`;
-  bar.innerHTML=h;
+  document.getElementById('tabBar').innerHTML=h;
 }
 function matchQ(l,q){return !q||(l.name+l.url+(l.desc||'')+(l.aiTool||'')+(l.prompt||'')).toLowerCase().includes(q)}
 
 function renderContent(){
   const q=document.getElementById('searchInput').value.toLowerCase();
+  const vLinks=visibleLinks();
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
-  const cont=document.getElementById('content');
   let h='',total=0;
   cats.forEach((cat,ci)=>{
-    const catLinks=links.filter(l=>l.catId===cat.id&&matchQ(l,q));
+    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
-    h+=`<div class="cat-section" style="animation-delay:${ci*0.05}s">
-      <div class="cat-header"><div class="cat-title-row">
-        <div class="cat-stripe" style="background:${cat.color}"></div>
-        <span class="cat-name">${cat.name}</span>
-        <span class="cat-count">${catLinks.length}개</span>
-      </div>
-      ${isAdmin?`<div class="cat-actions">
-        <button class="cat-manage-btn" onclick="openEditCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
-        <button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> 삭제</button>
-      </div>`:''}</div>
-      <div class="link-grid">
-        ${catLinks.map(l=>cardHTML(l,cat)).join('')}
-        ${currentUser?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`:''}
-      </div>
-    </div>`;
+    h+=`<div class="cat-section" style="animation-delay:${ci*.05}s"><div class="cat-header"><div class="cat-title-row"><div class="cat-stripe" style="background:${cat.color}"></div><span class="cat-name">${cat.name}</span><span class="cat-count">${catLinks.length}개</span></div>${isAdmin?`<div class="cat-actions"><button class="cat-manage-btn" onclick="openEditCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button><button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> 삭제</button></div>`:''}</div><div class="link-grid">${catLinks.map(l=>cardHTML(l,cat)).join('')}${currentUser?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`:''}</div></div>`;
   });
-  if(total===0&&!isAdmin&&!editMode&&categories.length>0)
-    h=`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div><div style="font-size:.84rem">다른 검색어를 입력해보세요</div></div>`;
-  cont.innerHTML=h;
+  if(!total&&!isAdmin&&!editMode&&categories.length)h=`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
+  document.getElementById('content').innerHTML=h;
 }
 
-/* ★ cardHTML — 관리자는 모든 카드에 수정/삭제 가능 */
 function cardHTML(l,cat){
-  const n=getClicks(l.id);
-  const hotClass=n>=20?'hot':n>=5?'warm':'';
-  const icon=n>=20?'🔥':n>=5?'✨':'👁️';
-  const isOwner=currentUser&&currentUser.uid===l.uploaderId;
-  /* ★ 관리자: 모든 링크 삭제/수정 가능 | 본인: 본인 것만 */
-  const canDelete=isAdmin||isOwner;
-  const canEdit=isAdmin||isOwner;
-
+  const n=getClicks(l.id),hotClass=n>=20?'hot':n>=5?'warm':'',ic=n>=20?'🔥':n>=5?'✨':'👁️';
+  const isOwner=currentUser&&currentUser.uid===l.uploaderId,canDel=isAdmin||isOwner,canEdit=isAdmin||isOwner;
   const uploaderTag=l.uploaderName?`<span class="uploader-tag">${l.uploaderPhoto?`<img src="${l.uploaderPhoto}" onerror="this.style.display='none'">`:''}${escHtml(l.uploaderName)}</span>`:'';
   const aiTag=(l.aiTool&&l.aiTool.trim())?`<span class="ai-tag">🤖 ${escHtml(l.aiTool)}</span>`:'';
+  const secretBadge=l.isSecret?`<span class="secret-badge">🔐 비밀</span>`:'';
+  const secretClass=l.isSecret?'secret-card':'';
 
-  let metaHTML='';
+  // ★ 프롬프트 클릭 버튼 (있을 때만)
   const hasPrompt=l.prompt&&l.prompt.trim();
-  const hasDesc=l.desc&&l.desc.trim();
-  if(hasPrompt||hasDesc){
-    metaHTML=`<div class="card-meta-area">`;
-    if(hasPrompt)metaHTML+=`<div class="card-meta-tag" style="flex-direction:column;gap:4px"><span class="card-meta-label prompt-label">💬 프롬프트</span><span class="card-meta-value prompt-value">${escHtml(l.prompt)}</span></div>`;
-    if(hasDesc)metaHTML+=`<div class="card-desc">${escHtml(l.desc)}</div>`;
-    metaHTML+=`</div>`;
+  const hasAi=l.aiTool&&l.aiTool.trim();
+  let promptBtnHTML='';
+  if(hasPrompt){
+    promptBtnHTML=`<button class="card-prompt-btn" onclick="event.stopPropagation();event.preventDefault();showPromptPopup('${l.id}')">
+      <span class="prompt-icon">💬</span>
+      <span class="prompt-preview">${escHtml(l.prompt.substring(0,60))}${l.prompt.length>60?'…':''}</span>
+      <span class="prompt-arrow">보기 ›</span>
+    </button>`;
   }
 
-  /* ★ 수정 버튼: 본인 or 관리자 → 항상 표시 */
-  const editBtn=canEdit
-    ?`<button class="card-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditLink('${l.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button>`
-    :`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+  const hasDesc=l.desc&&l.desc.trim();
+  const editBtn=canEdit?`<button class="card-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditLink('${l.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button>`:`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
 
-  return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener"
-    style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}"
-    onclick="handleClick(event,'${l.id}')">
+  return `<a class="link-card ${secretClass}" href="${l.url}" target="_blank" rel="noopener" style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}" onclick="handleClick(event,'${l.id}')">
     <div class="card-header-row">
       <div class="card-icon">${l.emoji||'🔗'}</div>
-      <div class="card-title-group">
-        <div class="card-name">${escHtml(l.name)}</div>
-        <div class="card-url">${escHtml(l.url)}</div>
-      </div>
-      ${canDelete?`<button class="card-action-btn" onclick="event.stopPropagation();event.preventDefault();deleteLink('${l.id}')" title="삭제"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}
+      <div class="card-title-group"><div class="card-name">${escHtml(l.name)} ${secretBadge}</div><div class="card-url">${escHtml(l.url)}</div></div>
+      ${canDel?`<button class="card-action-btn" onclick="event.stopPropagation();event.preventDefault();deleteLink('${l.id}')" title="삭제"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}
     </div>
-    ${metaHTML}
+    ${promptBtnHTML}
+    ${hasDesc?`<div class="card-desc">${escHtml(l.desc)}</div>`:''}
     <div class="card-footer">
-      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span class="click-pill ${hotClass}">${icon} ${n}회</span>
-        ${uploaderTag}
-        ${aiTag}
-      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span class="click-pill ${hotClass}">${ic} ${n}회</span>${uploaderTag}${aiTag}</div>
       ${editBtn}
     </div>
   </a>`;
 }
 
-async function handleClick(e,id){
-  if(e.defaultPrevented)return;
-  try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}
-}
+/* ★ 프롬프트 팝업 */
+window.showPromptPopup=id=>{
+  const l=links.find(x=>x.id===id);if(!l)return;
+  const aiSec=document.getElementById('promptAiSection');
+  if(l.aiTool&&l.aiTool.trim()){
+    aiSec.style.display='block';
+    document.getElementById('promptAiText').textContent=l.aiTool;
+  }else{aiSec.style.display='none'}
+  document.getElementById('promptText').textContent=l.prompt||'';
+  currentPromptText=l.prompt||'';
+  openM('promptModal');
+};
+window.copyPrompt=async()=>{
+  try{await navigator.clipboard.writeText(currentPromptText);toast('프롬프트가 복사되었습니다 📋')}
+  catch(e){toast('복사 실패','error')}
+};
 
-// ADMIN SECTION
+async function handleClick(e,id){if(e.defaultPrevented)return;try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}}
+
 function renderAdminSection(){
-  const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),actions=document.getElementById('adminPersonalActions');
-  if(!isAdmin){sec.classList.remove('visible');return;}
-  sec.classList.add('visible');actions.style.display=editMode?'flex':'none';
-  let h=adminLinks.map(l=>adminCardHTML(l)).join('');
+  const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),act=document.getElementById('adminPersonalActions');
+  if(!isAdmin){sec.classList.remove('visible');return}sec.classList.add('visible');act.style.display=editMode?'flex':'none';
+  let h=adminLinks.map(l=>`<a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener"><div class="admin-card-row"><div class="admin-card-icon">${l.emoji||'🔗'}</div><div class="card-title-group"><div class="admin-card-name">${escHtml(l.name)}</div><div class="admin-card-url">${escHtml(l.url)}</div></div>${editMode?`<button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();event.preventDefault();deleteAdminLink('${l.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}</div>${l.desc?`<div class="admin-card-desc">${escHtml(l.desc)}</div>`:''}<div class="admin-card-footer"><span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>${editMode?`<button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();event.preventDefault();openEditAdminLink('${l.id}')">수정</button>`:`<svg class="admin-card-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`}</div></a>`).join('');
   if(editMode)h+=`<button class="admin-add-card" onclick="openAddAdminLink()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`;
   grid.innerHTML=h||`<div style="color:#6b7099;font-size:.84rem;padding:1rem">아직 등록된 관리자 링크가 없습니다.</div>`;
 }
-function adminCardHTML(l){
-  return `<a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener" onclick="if(editMode){event.preventDefault();}">
-    <div class="admin-card-row"><div class="admin-card-icon">${l.emoji||'🔗'}</div><div class="card-title-group"><div class="admin-card-name">${escHtml(l.name)}</div><div class="admin-card-url">${escHtml(l.url)}</div></div>
-    ${editMode?`<button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();deleteAdminLink('${l.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}</div>
-    ${l.desc?`<div class="admin-card-desc">${escHtml(l.desc)}</div>`:''}
-    <div class="admin-card-footer"><span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>
-    ${editMode?`<button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();openEditAdminLink('${l.id}')">수정</button>`:`<svg class="admin-card-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`}</div>
-  </a>`;
-}
 
-// STATS
 window.toggleStats=()=>{showStats=!showStats;document.getElementById('statsPanel').classList.toggle('open',showStats);document.getElementById('statsBtn').textContent=showStats?'📊 닫기':'📊 통계';if(showStats)renderStatsPanel()};
-function renderStatsPanel(){
-  const sorted=[...links].sort((a,b)=>getClicks(b.id)-getClicks(a.id));const max=sorted.length>0?getClicks(sorted[0].id):0;
-  if(!max){document.getElementById('statsTableWrap').innerHTML=`<div style="text-align:center;padding:2rem;color:var(--muted);font-size:.875rem">아직 클릭 기록이 없습니다.</div>`;return;}
-  let h=`<table class="stats-table"><thead><tr><th style="width:44px">순위</th><th>링크 이름</th><th style="width:120px">분야</th><th>사용 빈도</th><th style="width:70px">횟수</th></tr></thead><tbody>`;
-  sorted.forEach((l,i)=>{const cat=categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};const n=getClicks(l.id),pct=max>0?Math.round(n/max*100):0;const rk=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';h+=`<tr><td><span class="rank-badge ${rk}">${i+1}</span></td><td><strong>${l.emoji||''} ${escHtml(l.name)}</strong></td><td><span style="display:inline-flex;align-items:center;gap:5px;font-size:.82rem"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span>${escHtml(cat.name)}</span></td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cat.color}"></div></div></div></td><td><strong style="color:${cat.color}">${n}회</strong></td></tr>`});
-  h+=`</tbody></table>`;document.getElementById('statsTableWrap').innerHTML=h;
-}
+function renderStatsPanel(){const sorted=[...links].sort((a,b)=>getClicks(b.id)-getClicks(a.id));const max=sorted.length?getClicks(sorted[0].id):0;if(!max){document.getElementById('statsTableWrap').innerHTML=`<div style="text-align:center;padding:2rem;color:var(--muted)">클릭 기록 없음</div>`;return}let h=`<table class="stats-table"><thead><tr><th style="width:44px">순위</th><th>링크</th><th style="width:110px">분야</th><th>빈도</th><th style="width:60px">횟수</th></tr></thead><tbody>`;sorted.forEach((l,i)=>{const cat=categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};const n=getClicks(l.id),p=Math.round(n/max*100),rk=i<3?`rank-${i+1}`:'rank-n';h+=`<tr><td><span class="rank-badge ${rk}">${i+1}</span></td><td><strong>${l.emoji||''} ${escHtml(l.name)}</strong></td><td><span style="font-size:.82rem"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:4px"></span>${escHtml(cat.name)}</span></td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${cat.color}"></div></div></div></td><td><strong style="color:${cat.color}">${n}</strong></td></tr>`});h+=`</tbody></table>`;document.getElementById('statsTableWrap').innerHTML=h}
 
-// ADMIN AUTH
 const ADMIN_PW_VAL='0425';
 window.openAdminModal=()=>{document.getElementById('pwInput').value='';document.getElementById('pwError').classList.remove('show');openM('adminModal');setTimeout(()=>document.getElementById('pwInput').focus(),200)};
-window.checkPw=()=>{
-  if(document.getElementById('pwInput').value===ADMIN_PW_VAL){
-    isAdmin=true;closeModal('adminModal');
-    document.getElementById('adminLoginBtn').style.display='none';
-    document.getElementById('adminBadge').classList.add('on');
-    document.getElementById('editBtn').style.display='';
-    document.getElementById('addLinkBtnTop').style.display='';
-    toast('관리자 모드 활성화 🔓','success');renderAll();
-  }else{document.getElementById('pwError').classList.add('show');document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();}
-};
-window.adminLogout=()=>{
-  if(!confirm('관리자 모드를 종료할까요?'))return;
-  isAdmin=false;editMode=false;
-  document.getElementById('adminBadge').classList.remove('on');
-  document.getElementById('adminLoginBtn').style.display='';
-  document.getElementById('editBtn').style.display='none';
-  document.getElementById('addLinkBtnTop').style.display='none';
-  document.getElementById('editChip').classList.remove('on');
-  document.getElementById('editBtn').textContent='⚙️ 편집';
-  toast('관리자 모드 종료','info');renderAll();
-};
+window.checkPw=()=>{if(document.getElementById('pwInput').value===ADMIN_PW_VAL){isAdmin=true;closeModal('adminModal');document.getElementById('adminLoginBtn').style.display='none';document.getElementById('adminBadge').classList.add('on');document.getElementById('editBtn').style.display='';document.getElementById('addLinkBtnTop').style.display='';toast('관리자 모드 활성화 🔓','success');renderAll()}else{document.getElementById('pwError').classList.add('show');document.getElementById('pwInput').value='';document.getElementById('pwInput').focus()}};
+window.adminLogout=()=>{if(!confirm('관리자 모드 종료?'))return;isAdmin=false;editMode=false;document.getElementById('adminBadge').classList.remove('on');document.getElementById('adminLoginBtn').style.display='';document.getElementById('editBtn').style.display='none';document.getElementById('addLinkBtnTop').style.display='none';document.getElementById('editChip').classList.remove('on');document.getElementById('editBtn').textContent='⚙️ 편집';toast('관리자 모드 종료','info');renderAll()};
+window.toggleEdit=()=>{if(!isAdmin){openAdminModal();return}editMode=!editMode;document.getElementById('editChip').classList.toggle('on',editMode);document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';renderAll()};
 
-window.toggleEdit=()=>{
-  if(!isAdmin){window.openAdminModal();return;}
-  editMode=!editMode;
-  document.getElementById('editChip').classList.toggle('on',editMode);
-  document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';
-  renderAll();
-};
-
-// LINK CRUD
 function buildEmojiGrid(){document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`<button class="emoji-btn ${e===selEmoji?'selected':''}" onclick="pickEmoji('${e}')">${e}</button>`).join('')}
 window.pickEmoji=e=>{selEmoji=e;buildEmojiGrid()};
-function fillCatSelect(presel){document.getElementById('fCat').innerHTML=categories.map(c=>`<option value="${c.id}" ${c.id===presel?'selected':''}>${c.name}</option>`).join('')}
-function clearDescFields(){document.getElementById('fAiTool').value='';document.getElementById('fPrompt').value='';document.getElementById('fDesc').value=''}
+function fillCatSelect(p){document.getElementById('fCat').innerHTML=categories.map(c=>`<option value="${c.id}" ${c.id===p?'selected':''}>${c.name}</option>`).join('')}
+function clearForm(){['fName','fUrl','fAiTool','fPrompt','fDesc'].forEach(id=>document.getElementById(id).value='');document.getElementById('fSecret').checked=false}
 
-window.openAddLink=()=>{
-  if(!currentUser){toast('로그인이 필요합니다','error');return;}
-  editingLinkId=null;editingAdminLinkId=null;isAdminLinkMode=false;selEmoji=EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent='링크 추가';
-  document.getElementById('fName').value='';document.getElementById('fUrl').value='';clearDescFields();
-  document.getElementById('fCatGroup').style.display='';document.getElementById('adminLinkNote').style.display='none';
-  fillCatSelect(categories[0]?.id);buildEmojiGrid();openM('linkModal');
-};
-window.openAddLinkFor=catId=>{window.openAddLink();fillCatSelect(catId)};
+window.openAddLink=()=>{if(!currentUser){toast('로그인 필요','error');return}editingLinkId=null;editingAdminLinkId=null;isAdminLinkMode=false;selEmoji=EMOJIS[0];document.getElementById('linkModalTitle').textContent='링크 추가';clearForm();document.getElementById('fCatGroup').style.display='';document.getElementById('adminLinkNote').style.display='none';document.getElementById('fSecretGroup').style.display='';fillCatSelect(categories[0]?.id);buildEmojiGrid();openM('linkModal')};
+window.openAddLinkFor=c=>{openAddLink();fillCatSelect(c)};
+window.openEditLink=id=>{const l=links.find(x=>x.id===id);if(!l)return;const own=currentUser&&currentUser.uid===l.uploaderId;if(!isAdmin&&!own){toast('수정 권한 없음','error');return}editingLinkId=id;editingAdminLinkId=null;isAdminLinkMode=false;selEmoji=l.emoji||EMOJIS[0];document.getElementById('linkModalTitle').textContent='링크 수정';document.getElementById('fName').value=l.name;document.getElementById('fUrl').value=l.url;document.getElementById('fAiTool').value=l.aiTool||'';document.getElementById('fPrompt').value=l.prompt||'';document.getElementById('fDesc').value=l.desc||'';document.getElementById('fSecret').checked=!!l.isSecret;document.getElementById('fCatGroup').style.display='';document.getElementById('adminLinkNote').style.display='none';document.getElementById('fSecretGroup').style.display='';fillCatSelect(l.catId);buildEmojiGrid();openM('linkModal')};
+window.openAddAdminLink=()=>{editingLinkId=null;editingAdminLinkId=null;isAdminLinkMode=true;selEmoji=EMOJIS[0];document.getElementById('linkModalTitle').textContent='🔒 관리자 링크 추가';clearForm();document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';document.getElementById('fSecretGroup').style.display='none';buildEmojiGrid();openM('linkModal')};
+window.openEditAdminLink=id=>{const l=adminLinks.find(x=>x.id===id);if(!l)return;editingLinkId=null;editingAdminLinkId=id;isAdminLinkMode=true;selEmoji=l.emoji||EMOJIS[0];document.getElementById('linkModalTitle').textContent='🔒 관리자 링크 수정';document.getElementById('fName').value=l.name;document.getElementById('fUrl').value=l.url;document.getElementById('fAiTool').value=l.aiTool||'';document.getElementById('fPrompt').value=l.prompt||'';document.getElementById('fDesc').value=l.desc||'';document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';document.getElementById('fSecretGroup').style.display='none';buildEmojiGrid();openM('linkModal')};
 
-/* ★ 수정 — 관리자는 모든 링크, 본인은 본인 것만 */
-window.openEditLink=id=>{
-  const l=links.find(x=>x.id===id);if(!l)return;
-  const isOwner=currentUser&&currentUser.uid===l.uploaderId;
-  if(!isAdmin&&!isOwner){toast('본인이 올린 링크만 수정할 수 있습니다','error');return;}
-  editingLinkId=id;editingAdminLinkId=null;isAdminLinkMode=false;
-  selEmoji=l.emoji||EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent='링크 수정';
-  document.getElementById('fName').value=l.name;
-  document.getElementById('fUrl').value=l.url;
-  document.getElementById('fAiTool').value=l.aiTool||'';
-  document.getElementById('fPrompt').value=l.prompt||'';
-  document.getElementById('fDesc').value=l.desc||'';
-  document.getElementById('fCatGroup').style.display='';
-  document.getElementById('adminLinkNote').style.display='none';
-  fillCatSelect(l.catId);buildEmojiGrid();openM('linkModal');
-};
-
-window.openAddAdminLink=()=>{
-  editingLinkId=null;editingAdminLinkId=null;isAdminLinkMode=true;selEmoji=EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent='🔒 관리자 개인 링크 추가';
-  document.getElementById('fName').value='';document.getElementById('fUrl').value='';clearDescFields();
-  document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';
-  buildEmojiGrid();openM('linkModal');
-};
-window.openEditAdminLink=id=>{
-  const l=adminLinks.find(x=>x.id===id);if(!l)return;
-  editingLinkId=null;editingAdminLinkId=id;isAdminLinkMode=true;selEmoji=l.emoji||EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent='🔒 관리자 개인 링크 수정';
-  document.getElementById('fName').value=l.name;document.getElementById('fUrl').value=l.url;
-  document.getElementById('fAiTool').value=l.aiTool||'';document.getElementById('fPrompt').value=l.prompt||'';document.getElementById('fDesc').value=l.desc||'';
-  document.getElementById('fCatGroup').style.display='none';document.getElementById('adminLinkNote').style.display='block';
-  buildEmojiGrid();openM('linkModal');
-};
-
+/* ★ 저장 시 isSecret 포함 */
 window.saveLink=async()=>{
-  const name=document.getElementById('fName').value.trim();
-  let url=document.getElementById('fUrl').value.trim();
-  const aiTool=document.getElementById('fAiTool').value.trim();
-  const prompt=document.getElementById('fPrompt').value.trim();
-  const desc=document.getElementById('fDesc').value.trim();
-  if(!name||!url){toast('이름과 URL을 입력하세요','error');return;}
+  const name=document.getElementById('fName').value.trim();let url=document.getElementById('fUrl').value.trim();
+  const aiTool=document.getElementById('fAiTool').value.trim(),prompt=document.getElementById('fPrompt').value.trim(),desc=document.getElementById('fDesc').value.trim();
+  const isSecret=document.getElementById('fSecret').checked;
+  if(!name||!url){toast('이름과 URL 필요','error');return}
   if(!/^https?:\/\//i.test(url))url='https://'+url;
   try{
     if(isAdminLinkMode){
-      const data={name,url,aiTool,prompt,desc,emoji:selEmoji,createdAt:Date.now()};
-      if(editingAdminLinkId){await setDoc(doc(db,'adminLinks',editingAdminLinkId),data,{merge:true});toast('수정되었습니다 ✓')}
-      else{await addDoc(collection(db,'adminLinks'),data);toast('관리자 링크가 추가되었습니다 ✓')}
+      const d={name,url,aiTool,prompt,desc,emoji:selEmoji,createdAt:Date.now()};
+      if(editingAdminLinkId){await setDoc(doc(db,'adminLinks',editingAdminLinkId),d,{merge:true});toast('수정 ✓')}
+      else{await addDoc(collection(db,'adminLinks'),d);toast('추가 ✓')}
     }else{
       const catId=document.getElementById('fCat').value;
-      /* ★ 관리자가 수정할 때: 원래 업로더 정보 유지 */
-      let uploaderData={};
-      if(editingLinkId){
-        const origLink=links.find(x=>x.id===editingLinkId);
-        if(origLink&&isAdmin&&currentUser.uid!==origLink.uploaderId){
-          // 관리자가 다른 사람 링크 수정 시 원래 업로더 유지
-          uploaderData={uploaderId:origLink.uploaderId,uploaderName:origLink.uploaderName,uploaderPhoto:origLink.uploaderPhoto};
-        } else {
-          uploaderData={uploaderId:currentUser.uid,uploaderName:currentUser.displayName?.split(' ')[0]||'',uploaderPhoto:currentUser.photoURL||''};
-        }
-      } else {
-        uploaderData={uploaderId:currentUser.uid,uploaderName:currentUser.displayName?.split(' ')[0]||'',uploaderPhoto:currentUser.photoURL||''};
-      }
-      const data={name,url,aiTool,prompt,desc,emoji:selEmoji,catId,createdAt:Date.now(),...uploaderData};
-      if(editingLinkId){await setDoc(doc(db,'links',editingLinkId),data,{merge:true});toast('링크가 수정되었습니다 ✓')}
-      else{await addDoc(collection(db,'links'),data);toast('링크가 추가되었습니다 ✓')}
+      let uData={};
+      if(editingLinkId){const orig=links.find(x=>x.id===editingLinkId);if(orig&&isAdmin&&currentUser.uid!==orig.uploaderId)uData={uploaderId:orig.uploaderId,uploaderName:orig.uploaderName,uploaderPhoto:orig.uploaderPhoto};else uData={uploaderId:currentUser.uid,uploaderName:currentUser.displayName?.split(' ')[0]||'',uploaderPhoto:currentUser.photoURL||''}}
+      else uData={uploaderId:currentUser.uid,uploaderName:currentUser.displayName?.split(' ')[0]||'',uploaderPhoto:currentUser.photoURL||''};
+      const d={name,url,aiTool,prompt,desc,emoji:selEmoji,catId,isSecret,createdAt:Date.now(),...uData};
+      if(editingLinkId){await setDoc(doc(db,'links',editingLinkId),d,{merge:true});toast('수정 ✓')}
+      else{await addDoc(collection(db,'links'),d);toast('추가 ✓')}
     }
     closeModal('linkModal');
   }catch(e){toast('오류: '+e.message,'error')}
 };
 
-/* ★ 관리자: 다른 사람 링크도 삭제 가능 */
-window.deleteLink=async id=>{
-  const l=links.find(x=>x.id===id);if(!l)return;
-  const isOwner=currentUser&&currentUser.uid===l.uploaderId;
-  if(!isAdmin&&!isOwner){toast('본인이 올린 링크만 삭제할 수 있습니다','error');return;}
-  const who=isAdmin&&!isOwner?` (등록자: ${l.uploaderName||'알 수 없음'})`:'';
-  if(!confirm(`"${l.name}"${who} 링크를 삭제할까요?`))return;
-  try{await deleteDoc(doc(db,'links',id));toast('삭제되었습니다')}catch(e){toast('오류: '+e.message,'error')}
-};
-window.deleteAdminLink=async id=>{
-  const l=adminLinks.find(x=>x.id===id);if(!l)return;
-  if(!confirm(`"${l.name}" 링크를 삭제할까요?`))return;
-  try{await deleteDoc(doc(db,'adminLinks',id));toast('삭제되었습니다')}catch(e){toast('오류: '+e.message,'error')}
-};
+window.deleteLink=async id=>{const l=links.find(x=>x.id===id);if(!l)return;const own=currentUser&&currentUser.uid===l.uploaderId;if(!isAdmin&&!own){toast('권한 없음','error');return}const who=isAdmin&&!own?` (등록: ${l.uploaderName||'?'})`:'';if(!confirm(`"${l.name}"${who} 삭제?`))return;try{await deleteDoc(doc(db,'links',id));toast('삭제')}catch(e){toast('오류','error')}};
+window.deleteAdminLink=async id=>{const l=adminLinks.find(x=>x.id===id);if(!l||!confirm(`"${l.name}" 삭제?`))return;try{await deleteDoc(doc(db,'adminLinks',id));toast('삭제')}catch(e){toast('오류','error')}};
 
-// CAT CRUD
 function buildColorRow(){document.getElementById('colorRow').innerHTML=PALETTE.map(c=>`<div class="swatch ${c===selColor?'selected':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`).join('')}
 window.pickColor=c=>{selColor=c;buildColorRow()};
 let editingCatId=null;
-window.openAddCat=()=>{if(!isAdmin){toast('관리자만 분야를 추가할 수 있습니다','error');return;}editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';buildColorRow();openM('catModal')};
-window.openEditCat=id=>{if(!isAdmin){toast('관리자만 분야를 수정할 수 있습니다','error');return;}const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;buildColorRow();openM('catModal')};
-window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('분야 이름을 입력하세요','error');return;}try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor},{merge:true});toast('분야가 수정되었습니다 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length});toast('분야가 추가되었습니다 ✓')}closeModal('catModal')}catch(e){toast('오류: '+e.message,'error')}};
-window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 분야를 삭제할까요?\n포함된 링크 ${n}개도 함께 삭제됩니다.`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제되었습니다')}catch(e){toast('오류: '+e.message,'error')}};
+window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';buildColorRow();openM('catModal')};
+window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;buildColorRow();openM('catModal')};
+window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('이름 필요','error');return}try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor},{merge:true});toast('수정 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length});toast('추가 ✓')}closeModal('catModal')}catch(e){toast('오류','error')}};
+window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
 
 window.setTab=id=>{activeTab=id;renderAll()};
 window.openM=id=>document.getElementById(id).classList.add('open');
