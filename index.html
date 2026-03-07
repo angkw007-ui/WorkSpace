@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>에이모 (AI자료모음)</title>
+<title>에이모(AI모음)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet"/>
 <style>
@@ -369,6 +369,111 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 .no-results { text-align: center; padding: 4rem 2rem; color: var(--muted); }
 .no-results .nr-icon { font-size: 3rem; margin-bottom: 1rem; opacity: .35; }
 
+/* ADMIN ONLY SECTION */
+.admin-section {
+  display: none;
+  margin-bottom: 2.5rem;
+  animation: fadeUp .3s ease both;
+}
+.admin-section.visible { display: block; }
+.admin-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #1a1d2e 0%, #2d3250 100%);
+  border-radius: 14px 14px 0 0;
+  padding: 14px 20px;
+  border: 1.5px solid #3a3f5c;
+  border-bottom: none;
+}
+.admin-section-title {
+  display: flex; align-items: center; gap: 10px;
+  color: white; font-size: 1rem; font-weight: 700;
+}
+.admin-lock-badge {
+  background: rgba(255,255,255,.12); color: rgba(255,255,255,.7);
+  font-size: .7rem; font-weight: 700; padding: 3px 9px;
+  border-radius: 100px; border: 1px solid rgba(255,255,255,.15);
+  letter-spacing: .04em;
+}
+.admin-section-body {
+  background: #f4f5fb;
+  border: 1.5px solid #3a3f5c;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 16px;
+}
+.admin-link-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;
+}
+.admin-link-card {
+  background: #1e2238;
+  border: 1.5px solid #2e3354;
+  border-radius: 11px; padding: 14px 16px;
+  cursor: pointer; transition: all .2s;
+  display: flex; flex-direction: column; gap: 8px;
+  text-decoration: none; color: inherit;
+  position: relative; overflow: hidden;
+}
+.admin-link-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: #e8ff47; opacity: 0; transition: opacity .2s;
+}
+.admin-link-card:hover { background: #252a45; border-color: #e8ff47; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.admin-link-card:hover::before { opacity: 1; }
+.admin-card-row { display: flex; align-items: flex-start; gap: 10px; }
+.admin-card-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(232,255,71,.12); display: grid; place-items: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.admin-card-name { font-size: .9rem; font-weight: 700; color: #e8eaf5; line-height: 1.3; }
+.admin-card-url { font-size: .7rem; color: #6b7099; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
+.admin-card-desc { font-size: .78rem; color: #8890b0; line-height: 1.5; }
+.admin-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 8px; border-top: 1px solid #2e3354; margin-top: auto;
+}
+.admin-card-delete { opacity: 0; transition: opacity .15s; background: none; border: none; color: #6b7099; cursor: pointer; padding: 4px; border-radius: 4px; display: flex; }
+.admin-link-card:hover .admin-card-delete { opacity: 1; }
+.admin-card-delete:hover { color: #ff6b6b; }
+.admin-card-edit { opacity: 0; transition: opacity .15s; background: none; border: none; color: #6b7099; font-size: .75rem; cursor: pointer; padding: 3px 8px; border-radius: 5px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600; }
+.admin-link-card:hover .admin-card-edit { opacity: 1; }
+.admin-card-edit:hover { color: #e8ff47; background: rgba(232,255,71,.1); }
+.admin-card-arrow { color: #6b7099; transition: transform .2s, color .2s; }
+.admin-link-card:hover .admin-card-arrow { transform: translateX(3px); color: #e8ff47; }
+.admin-add-card {
+  border: 1.5px dashed #2e3354; border-radius: 11px; padding: 14px;
+  cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  color: #6b7099; font-size: .84rem; background: transparent;
+  font-family: 'Noto Sans KR', sans-serif; transition: all .2s; min-height: 90px;
+}
+.admin-add-card:hover { border-color: #e8ff47; color: #e8ff47; background: rgba(232,255,71,.05); }
+
+/* ADMIN LOGIN MODAL */
+.pw-input-wrap input { letter-spacing: .2em; font-size: 1.2rem; text-align: center; font-weight: 700; }
+.pw-error { color: var(--accent3); font-size: .8rem; margin-top: 6px; display: none; text-align: center; }
+.pw-error.show { display: block; }
+.admin-badge {
+  display: none; align-items: center; gap: 5px;
+  font-size: .75rem; font-weight: 700; color: var(--accent2);
+  background: var(--accent2-light); padding: 4px 11px;
+  border-radius: 100px; border: 1px solid #a8e8d0; cursor: pointer;
+  white-space: nowrap;
+}
+.admin-badge.on { display: flex; }
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem 2.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: .78rem;
+  letter-spacing: .02em;
+}
+.site-footer strong { color: var(--text2); font-weight: 600; }
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   main { padding: 1.25rem 1rem 4rem; }
@@ -383,7 +488,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 </head>
 <body>
 
-<div class="top-banner">🤖 에이모 (AI모여라) — 교사 · 행정실 전용 업무 링크 허브</div>
+<div class="top-banner">🤖 에이모(AI모음) — 교사 · 행정실 전용 업무 링크 허브</div>
 
 <header>
   <div class="header-inner">
@@ -396,7 +501,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
       </div>
       <div class="logo-text-wrap">
         <div class="logo-text-main">에이모</div>
-        <div class="logo-text-sub" id="schoolName">AI모여라</div>
+        <div class="logo-text-sub" id="schoolName">AI모음</div>
       </div>
     </div>
 
@@ -411,9 +516,11 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 
     <div class="header-actions">
       <span class="edit-chip" id="editChip">✏️ 편집 중</span>
+      <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="클릭하면 관리자 모드 종료">🔓 관리자 모드</span>
       <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 사용 통계</button>
-      <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()">⚙️ 편집</button>
-      <button class="btn btn-primary btn-sm" onclick="openAddLink()">+ 링크 추가</button>
+      <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐 관리자</button>
+      <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️ 편집</button>
+      <button class="btn btn-primary btn-sm" id="addLinkBtn" onclick="openAddLink()" style="display:none">+ 링크 추가</button>
     </div>
   </div>
 </header>
@@ -421,7 +528,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 <main>
   <div class="page-hero">
     <div>
-      <h1 class="hero-title">에이모 <span>AI모여라</span></h1>
+      <h1 class="hero-title">에이모 <span>AI모음</span></h1>
       <p class="hero-sub">교사 · 행정실 업무에 필요한 모든 링크를 한 곳에서 관리하세요</p>
     </div>
     <div class="hero-stats">
@@ -437,6 +544,22 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
         <div class="stat-num" id="statClick">0</div>
         <div class="stat-label">총 클릭</div>
       </div>
+    </div>
+  </div>
+
+  <!-- ADMIN ONLY SECTION -->
+  <div class="admin-section" id="adminSection">
+    <div class="admin-section-header">
+      <div class="admin-section-title">
+        🔒 관리자 전용 링크
+        <span class="admin-lock-badge">ADMIN ONLY</span>
+      </div>
+      <div style="display:flex;gap:6px" id="adminSectionActions">
+        <button class="btn btn-sm" style="background:rgba(232,255,71,.15);color:#e8ff47;border:1px solid rgba(232,255,71,.3);font-size:.78rem" onclick="openAddAdminLink()">+ 링크 추가</button>
+      </div>
+    </div>
+    <div class="admin-section-body">
+      <div class="admin-link-grid" id="adminLinkGrid"></div>
     </div>
   </div>
 
@@ -458,6 +581,31 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 
 <div class="toast-wrap" id="toastWrap"></div>
 
+<!-- MODAL: ADMIN LOGIN -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal" style="max-width:360px">
+    <div class="modal-header">
+      <div class="modal-title">🔐 관리자 로그인</div>
+      <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
+    </div>
+    <p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">
+      편집 기능은 관리자만 사용할 수 있습니다.<br>비밀번호를 입력하세요.
+    </p>
+    <div class="form-group">
+      <label class="form-label">비밀번호</label>
+      <div class="pw-input-wrap">
+        <input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20"
+          onkeydown="if(event.key==='Enter')checkPw()"/>
+      </div>
+      <div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('adminModal')">취소</button>
+      <button class="btn btn-primary" onclick="checkPw()">로그인</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: LINK -->
 <div class="modal-overlay" id="linkModal">
   <div class="modal">
@@ -473,9 +621,12 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
       <label class="form-label">URL <span style="color:var(--accent3)">*</span></label>
       <input class="form-input" id="fUrl" placeholder="https://…"/>
     </div>
-    <div class="form-group">
+    <div class="form-group" id="fCatGroup">
       <label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label>
       <select class="form-select" id="fCat"></select>
+    </div>
+    <div id="adminLinkNote" style="display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354">
+      <span style="font-size:.82rem;color:#8890b0;font-weight:600">🔒 관리자 전용 링크 — 관리자 로그인 시에만 표시됩니다</span>
     </div>
     <div class="form-group">
       <label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label>
@@ -561,22 +712,30 @@ function defaults() {
       { id:'l7', catId:'c4', name:'정부24', url:'https://gov.kr', desc:'민원 서비스 통합 포털', emoji:'📜' },
     ],
     clicks: {},
+    adminLinks: [
+      { id:'a1', name:'학교 관리자 시스템', url:'https://www.neis.go.kr', desc:'학교 전산망 관리자 페이지', emoji:'🖥️' },
+      { id:'a2', name:'서버 관리 콘솔', url:'https://admin.example.com', desc:'학교 서버 관리 콘솔', emoji:'⚙️' },
+      { id:'a3', name:'보안 관리 포털', url:'https://security.example.com', desc:'보안 및 접근 관리', emoji:'🔒' },
+    ],
   };
 }
 
 function save() { localStorage.setItem(SK, JSON.stringify(st)); }
+// migrate: ensure adminLinks exists
+if (!st.adminLinks) st.adminLinks = [];
 function uid() { return Math.random().toString(36).slice(2,10); }
 function getClicks(id) { return (st.clicks && st.clicks[id]) || 0; }
 function totalClicks() { if (!st.clicks) return 0; return Object.values(st.clicks).reduce((s,v)=>s+v,0); }
 
 // ── RENDER ──────────────────────────────────────────────
 function renderAll() {
-  document.getElementById('schoolName').textContent = 'AI모여라';
+  document.getElementById('schoolName').textContent = 'AI모음';
   document.getElementById('statCat').textContent = st.categories.length;
   document.getElementById('statLink').textContent = st.links.length;
   document.getElementById('statClick').textContent = totalClicks();
   renderTabs();
   renderContent();
+  renderAdminSection();
   if (showStats) renderStatsPanel();
 }
 
@@ -748,8 +907,133 @@ function renderStatsPanel() {
   document.getElementById('statsTableWrap').innerHTML = h;
 }
 
+// ── ADMIN SECTION ────────────────────────────────────────
+function renderAdminSection() {
+  const sec = document.getElementById('adminSection');
+  const grid = document.getElementById('adminLinkGrid');
+  if (!isAdmin) { sec.classList.remove('visible'); return; }
+  sec.classList.add('visible');
+
+  const links = st.adminLinks || [];
+  let h = links.map(l => adminCardHTML(l)).join('');
+  if (editMode) {
+    h += `<button class="admin-add-card" onclick="openAddAdminLink()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      링크 추가
+    </button>`;
+  }
+  grid.innerHTML = h;
+
+  // show/hide add button in header
+  document.getElementById('adminSectionActions').style.display = editMode ? 'flex' : 'none';
+}
+
+function adminCardHTML(l) {
+  return `<a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener"
+    onclick="handleAdminClick(event,'${l.id}')">
+    <div class="admin-card-row">
+      <div class="admin-card-icon">${l.emoji||'🔗'}</div>
+      <div class="card-title-group">
+        <div class="admin-card-name">${l.name}</div>
+        <div class="admin-card-url">${l.url}</div>
+      </div>
+      ${editMode?`<button class="admin-card-delete" onclick="event.stopPropagation();deleteAdminLink('${l.id}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>`:''}
+    </div>
+    ${l.desc?`<div class="admin-card-desc">${l.desc}</div>`:''}
+    <div class="admin-card-footer">
+      <span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>
+      ${editMode
+        ?`<button class="admin-card-edit" onclick="event.stopPropagation();openEditAdminLink('${l.id}')">수정</button>`
+        :`<svg class="admin-card-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
+      }
+    </div>
+  </a>`;
+}
+
+function handleAdminClick(e, id) {
+  if (editMode) { e.preventDefault(); return; }
+}
+
+let editingAdminLinkId = null;
+
+function openAddAdminLink() {
+  editingAdminLinkId = null; selEmoji = EMOJIS[0];
+  document.getElementById('linkModalTitle').textContent = '🔒 관리자 링크 추가';
+  ['fName','fUrl','fDesc'].forEach(id => document.getElementById(id).value='');
+  // hide category select, show admin note
+  document.getElementById('fCatGroup').style.display = 'none';
+  document.getElementById('adminLinkNote').style.display = 'block';
+  buildEmojiGrid();
+  openM('linkModal');
+}
+
+function openEditAdminLink(id) {
+  const l = (st.adminLinks||[]).find(x=>x.id===id); if(!l) return;
+  editingAdminLinkId = id; selEmoji = l.emoji||EMOJIS[0];
+  document.getElementById('linkModalTitle').textContent = '🔒 관리자 링크 수정';
+  document.getElementById('fName').value = l.name;
+  document.getElementById('fUrl').value = l.url;
+  document.getElementById('fDesc').value = l.desc||'';
+  document.getElementById('fCatGroup').style.display = 'none';
+  document.getElementById('adminLinkNote').style.display = 'block';
+  buildEmojiGrid();
+  openM('linkModal');
+}
+
+function deleteAdminLink(id) {
+  const l = (st.adminLinks||[]).find(x=>x.id===id);
+  if(!confirm(`"${l?.name}" 링크를 삭제할까요?`)) return;
+  st.adminLinks = (st.adminLinks||[]).filter(x=>x.id!==id);
+  save(); renderAdminSection(); toast('삭제되었습니다');
+}
+
+// ── ADMIN AUTH ────────────────────────────────────────────
+const ADMIN_PW = '0425';
+let isAdmin = false;
+
+function openAdminModal() {
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').classList.remove('show');
+  openM('adminModal');
+  setTimeout(() => document.getElementById('pwInput').focus(), 200);
+}
+
+function checkPw() {
+  const val = document.getElementById('pwInput').value;
+  if (val === ADMIN_PW) {
+    isAdmin = true;
+    closeModal('adminModal');
+    document.getElementById('adminLoginBtn').style.display = 'none';
+    document.getElementById('adminBadge').classList.add('on');
+    document.getElementById('editBtn').style.display = '';
+    document.getElementById('addLinkBtn').style.display = '';
+    toast('관리자 모드로 로그인되었습니다 🔓', 'success');
+  } else {
+    document.getElementById('pwError').classList.add('show');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function adminLogout() {
+  if (!confirm('관리자 모드를 종료할까요?')) return;
+  isAdmin = false;
+  editMode = false;
+  document.getElementById('adminBadge').classList.remove('on');
+  document.getElementById('adminLoginBtn').style.display = '';
+  document.getElementById('editBtn').style.display = 'none';
+  document.getElementById('addLinkBtn').style.display = 'none';
+  document.getElementById('editChip').classList.remove('on');
+  document.getElementById('editBtn').textContent = '⚙️ 편집';
+  toast('관리자 모드가 종료되었습니다', 'info');
+  renderAll();
+}
+
 // ── EDIT MODE ────────────────────────────────────────────
 function toggleEdit() {
+  if (!isAdmin) { openAdminModal(); return; }
   editMode = !editMode;
   document.getElementById('editChip').classList.toggle('on', editMode);
   document.getElementById('editBtn').textContent = editMode ? '✅ 완료' : '⚙️ 편집';
@@ -773,9 +1057,12 @@ function fillCatSelect(presel) {
 }
 
 function openAddLink() {
-  editingLinkId = null; selEmoji = EMOJIS[0];
+  if (!isAdmin) { openAdminModal(); return; }
+  editingLinkId = null; editingAdminLinkId = null; selEmoji = EMOJIS[0];
   document.getElementById('linkModalTitle').textContent = '링크 추가';
   ['fName','fUrl','fDesc'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('fCatGroup').style.display = '';
+  document.getElementById('adminLinkNote').style.display = 'none';
   fillCatSelect(st.categories[0]?.id);
   buildEmojiGrid();
   openM('linkModal');
@@ -785,11 +1072,13 @@ function openAddLinkFor(catId) { openAddLink(); fillCatSelect(catId); }
 
 function openEditLink(id) {
   const l = st.links.find(x=>x.id===id); if(!l) return;
-  editingLinkId=id; selEmoji=l.emoji||EMOJIS[0];
+  editingLinkId=id; editingAdminLinkId=null; selEmoji=l.emoji||EMOJIS[0];
   document.getElementById('linkModalTitle').textContent='링크 수정';
   document.getElementById('fName').value=l.name;
   document.getElementById('fUrl').value=l.url;
   document.getElementById('fDesc').value=l.desc||'';
+  document.getElementById('fCatGroup').style.display = '';
+  document.getElementById('adminLinkNote').style.display = 'none';
   fillCatSelect(l.catId);
   buildEmojiGrid();
   openM('linkModal');
@@ -798,10 +1087,30 @@ function openEditLink(id) {
 function saveLink() {
   const name = document.getElementById('fName').value.trim();
   let url = document.getElementById('fUrl').value.trim();
-  const catId = document.getElementById('fCat').value;
   const desc = document.getElementById('fDesc').value.trim();
   if (!name||!url) { toast('이름과 URL을 입력하세요','error'); return; }
   if (!/^https?:\/\//i.test(url)) url='https://'+url;
+
+  // admin link mode
+  if (editingAdminLinkId !== undefined && document.getElementById('adminLinkNote').style.display !== 'none') {
+    if (!st.adminLinks) st.adminLinks = [];
+    if (editingAdminLinkId) {
+      const i = st.adminLinks.findIndex(x=>x.id===editingAdminLinkId);
+      if(i!==-1) st.adminLinks[i]={...st.adminLinks[i],name,url,desc,emoji:selEmoji};
+      toast('관리자 링크가 수정되었습니다 ✓');
+    } else {
+      st.adminLinks.push({id:uid(),name,url,desc,emoji:selEmoji});
+      toast('관리자 링크가 추가되었습니다 ✓');
+    }
+    save(); closeModal('linkModal');
+    // reset modal state
+    document.getElementById('fCatGroup').style.display = '';
+    document.getElementById('adminLinkNote').style.display = 'none';
+    editingAdminLinkId = null;
+    renderAdminSection(); return;
+  }
+
+  const catId = document.getElementById('fCat').value;
   if (editingLinkId) {
     const i=st.links.findIndex(x=>x.id===editingLinkId);
     if(i!==-1) st.links[i]={...st.links[i],name,url,catId,desc,emoji:selEmoji};
@@ -888,5 +1197,9 @@ function toast(msg, type='success'){
 
 renderAll();
 </script>
+  <footer class="site-footer">
+    <p><strong>구례</strong> &nbsp;|&nbsp; With AI</p>
+    <p style="margin-top:4px;font-size:.72rem;opacity:.6">에이모(AI모음) &copy; 2025</p>
+  </footer>
 </body>
 </html>
