@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+html_code = r'''<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8"/>
@@ -262,6 +263,12 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem;}
 /* ADMIN NOTE */
 .admin-link-note{display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354;}
 .admin-link-note span{font-size:.82rem;color:#8890b0;font-weight:600;}
+
+/* ── CAT MANAGE BUTTON (관리자용) ── */
+.cat-manage-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.cat-manage-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.cat-manage-btn.delete{border-color:transparent;color:var(--muted);}
+.cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light);}
 
 @media(max-width:768px){
   main{padding:1.25rem 1rem 4rem;}
@@ -632,6 +639,7 @@ function renderAll() {
 
 function getClicks(id) { return clickData[id] || 0; }
 
+/* ★★★ 변경 1: renderTabs — isAdmin이면 "+ 분야 추가" 버튼 표시 ★★★ */
 function renderTabs() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const bar = document.getElementById('tabBar');
@@ -648,7 +656,12 @@ function renderTabs() {
       style="${isActive?`background:${c.color};box-shadow:0 2px 8px ${c.color}44`:''}"
     >${c.name} <span class="badge">${n}</span></button>`;
   });
-  if (editMode) h += `<button class="tab-add-btn" onclick="openAddCat()">+ 분야 추가</button>`;
+
+  /* ★ 관리자이면 편집 모드 여부와 관계없이 분야 추가 버튼 표시 */
+  if (isAdmin) {
+    h += `<button class="tab-add-btn" onclick="openAddCat()">+ 분야 추가</button>`;
+  }
+
   bar.innerHTML = h;
 }
 
@@ -657,6 +670,7 @@ function matchQ(l, q) {
   return (l.name+l.url+(l.desc||'')).toLowerCase().includes(q);
 }
 
+/* ★★★ 변경 2: renderContent — isAdmin이면 분야 수정/삭제 버튼 표시 ★★★ */
 function renderContent() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const cats = activeTab==='all' ? categories : categories.filter(c=>c.id===activeTab);
@@ -665,8 +679,12 @@ function renderContent() {
 
   cats.forEach((cat, ci) => {
     const catLinks = links.filter(l => l.catId===cat.id && matchQ(l,q));
-    if (!editMode && catLinks.length===0) return;
+    /* 관리자는 링크가 0개여도 분야 헤더를 표시(삭제할 수 있도록) */
+    if (!isAdmin && !editMode && catLinks.length===0) return;
     total += catLinks.length;
+
+    /* ★ 관리자이면 수정/삭제 버튼 항상 표시 */
+    const showCatActions = isAdmin;
 
     h += `<div class="cat-section" style="animation-delay:${ci*0.05}s">
       <div class="cat-header">
@@ -675,9 +693,15 @@ function renderContent() {
           <span class="cat-name">${cat.name}</span>
           <span class="cat-count">${catLinks.length}개</span>
         </div>
-        ${editMode?`<div class="cat-actions">
-          <button class="btn btn-outline btn-sm" onclick="openEditCat('${cat.id}')">수정</button>
-          <button class="btn-danger-sm" onclick="deleteCat('${cat.id}')">삭제</button>
+        ${showCatActions?`<div class="cat-actions">
+          <button class="cat-manage-btn" onclick="openEditCat('${cat.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            수정
+          </button>
+          <button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            삭제
+          </button>
         </div>`:''}
       </div>
       <div class="link-grid">
@@ -690,7 +714,7 @@ function renderContent() {
     </div>`;
   });
 
-  if (total===0 && !editMode && categories.length > 0) {
+  if (total===0 && !isAdmin && !editMode && categories.length > 0) {
     h = `<div class="no-results"><div class="nr-icon">🔍</div>
       <div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div>
       <div style="font-size:.84rem">다른 검색어를 입력해보세요</div></div>`;
@@ -1013,12 +1037,14 @@ window.pickColor = c => { selColor=c; buildColorRow(); };
 
 let editingCatId=null;
 window.openAddCat = () => {
+  if (!isAdmin) { toast('관리자만 분야를 추가할 수 있습니다','error'); return; }
   editingCatId=null; selColor=PALETTE[0];
   document.getElementById('catModalTitle').textContent='업무 분야 추가';
   document.getElementById('fCatName').value='';
   buildColorRow(); openM('catModal');
 };
 window.openEditCat = id => {
+  if (!isAdmin) { toast('관리자만 분야를 수정할 수 있습니다','error'); return; }
   const c=categories.find(x=>x.id===id); if(!c) return;
   editingCatId=id; selColor=c.color;
   document.getElementById('catModalTitle').textContent='업무 분야 수정';
@@ -1026,6 +1052,7 @@ window.openEditCat = id => {
   buildColorRow(); openM('catModal');
 };
 window.saveCat = async () => {
+  if (!isAdmin) { toast('관리자만 분야를 관리할 수 있습니다','error'); return; }
   const name=document.getElementById('fCatName').value.trim();
   if(!name){toast('분야 이름을 입력하세요','error');return;}
   try {
@@ -1040,6 +1067,7 @@ window.saveCat = async () => {
   } catch(e){toast('오류: '+e.message,'error');}
 };
 window.deleteCat = async id => {
+  if (!isAdmin) { toast('관리자만 분야를 삭제할 수 있습니다','error'); return; }
   const c=categories.find(x=>x.id===id);
   const n=links.filter(l=>l.catId===id).length;
   if(!confirm(`"${c?.name}" 분야를 삭제할까요?\n포함된 링크 ${n}개도 함께 삭제됩니다.`)) return;
@@ -1074,4 +1102,34 @@ window.toast = (msg,type='success') => {
 };
 </script>
 </body>
-</html>
+</html>'''
+
+with open('/home/user/aimo_updated.html', 'w', encoding='utf-8') as f:
+    f.write(html_code)
+
+print("✅ 파일 생성 완료!")
+print("\n🔧 주요 변경 사항:")
+print("=" * 60)
+print()
+print("1️⃣ renderTabs() 함수 변경:")
+print("   - 기존: if (editMode) → '+ 분야 추가' 버튼 표시")
+print("   - 변경: if (isAdmin) → '+ 분야 추가' 버튼 표시")
+print("   → 관리자 로그인만 하면 편집 모드 없이도 분야 추가 가능")
+print()
+print("2️⃣ renderContent() 함수 변경:")
+print("   - 기존: editMode일 때만 분야 수정/삭제 버튼 표시")
+print("   - 변경: isAdmin이면 항상 분야 수정/삭제 버튼 표시")
+print("   → 관리자 로그인만 하면 각 분야 옆에 수정·삭제 버튼 노출")
+print()
+print("3️⃣ 빈 분야 표시 조건 변경:")
+print("   - 기존: editMode일 때만 링크 0개인 분야도 표시")
+print("   - 변경: isAdmin이면 링크 0개인 분야도 표시 (삭제할 수 있도록)")
+print()
+print("4️⃣ 카테고리 CRUD 함수에 관리자 권한 체크 추가:")
+print("   - openAddCat, openEditCat, saveCat, deleteCat 모두")
+print("   - isAdmin 체크 후 아닐 경우 toast 에러 메시지 표시")
+print()
+print("5️⃣ 분야 수정/삭제 버튼 디자인 개선:")
+print("   - .cat-manage-btn 새 스타일 추가")
+print("   - 수정: 연필 아이콘 + 텍스트")
+print("   - 삭제: 휴지통 아이콘 + 텍스트 (hover 시 빨간색)")
