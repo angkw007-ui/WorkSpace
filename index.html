@@ -230,43 +230,45 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .cat-manage-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 .cat-manage-btn.delete{border-color:transparent;color:var(--muted)}
 .cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light)}
-@media(max-width:768px){main{padding:1.25rem 1rem 4rem}.header-inner{padding:0 1rem}.header-center{display:none}.hero-stats{display:none}.page-hero{padding:1.5rem}.emoji-grid{grid-template-columns:repeat(7,1fr)}.header-actions .btn-outline{display:none}.desc-field-label{width:80px;font-size:.76rem;padding:8px}.link-grid{grid-template-columns:1fr}.notice-banner{flex-direction:column;gap:6px;text-align:center}}
 
-/* ===== 드래그&드롭 ===== */
-.link-card.dragging{opacity:.35;transform:scale(.96);box-shadow:none;pointer-events:none}
-.link-card[draggable=true]{cursor:grab}
-.link-card[draggable=true]:active{cursor:grabbing}
-.drag-handle{position:absolute;top:8px;right:8px;color:var(--muted);opacity:0;transition:opacity .15s;cursor:grab;z-index:2;padding:3px;border-radius:4px}
-.link-card:hover .drag-handle{opacity:.6}
-.link-card[draggable=true]:hover .drag-handle{opacity:1}
-.link-grid.drag-over{background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(124,58,237,.02));border-radius:var(--radius);outline:2.5px dashed var(--purple);outline-offset:4px;transition:all .15s}
-.drop-indicator{height:3px;background:var(--purple);border-radius:3px;margin:4px 0;animation:dropPulse .6s ease infinite alternate}
-@keyframes dropPulse{from{opacity:.5}to{opacity:1}}
-.drag-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.85;transform:scale(.92) rotate(1.5deg);box-shadow:var(--shadow-lg);border-radius:var(--radius);width:280px;background:var(--white);border:2px solid var(--purple);padding:14px 16px}
-.drag-cat-drop-zone{position:relative}
-.drag-cat-drop-zone::after{content:attr(data-drop-label);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--purple);background:rgba(124,58,237,.08);border-radius:var(--radius);border:2.5px dashed var(--purple);opacity:0;transition:opacity .2s;pointer-events:none;z-index:10}
-.drag-cat-drop-zone.drop-ready::after{opacity:1}
-
-/* ===== 게시판 뷰 ===== */
-.view-toggle{display:flex;align-items:center;gap:3px;margin-left:auto;background:var(--surface2);border-radius:8px;padding:3px}
-.view-btn{padding:5px 9px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:4px;font-family:'Noto Sans KR',sans-serif}
+/* ══════════════════════════════════════
+   드래그&드롭 (마우스 커스텀)
+══════════════════════════════════════ */
+.link-grid.edit-mode-grid{outline:2px dashed var(--border2);outline-offset:4px;border-radius:var(--radius);min-height:80px;transition:outline-color .2s,background .2s}
+.link-grid.edit-mode-grid.drag-over-grid{outline-color:var(--purple);background:rgba(124,58,237,.04)}
+.link-card.drag-source{opacity:.3;pointer-events:none}
+.drag-ghost-el{position:fixed;z-index:99999;pointer-events:none;background:var(--white);border:2px solid var(--purple);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(124,58,237,.25);width:260px;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);transform:rotate(2deg) scale(1.04)}
+.drag-ghost-el .dg-icon{font-size:1.3rem}
+.drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600}
+.drag-mode-hint.on{display:flex}
+/* ══════════════════════════════════════
+   분야 비밀번호 잠금
+══════════════════════════════════════ */
+.cat-lock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;margin-left:4px}
+.lock-overlay-card{position:relative}
+.lock-overlay-card::after{content:'🔒';position:absolute;inset:0;background:rgba(255,251,235,.85);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:var(--radius);backdrop-filter:blur(2px)}
+/* 뷰 토글 */
+.view-toggle-wrap{display:flex;align-items:center;gap:4px;background:var(--surface2);border-radius:8px;padding:3px}
+.view-btn{padding:5px 10px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:4px;font-family:'Noto Sans KR',sans-serif}
 .view-btn.active{background:var(--white);color:var(--purple);box-shadow:var(--shadow-sm)}
-/* 게시판 테이블 */
+/* 게시판 뷰 */
+.board-wrap{overflow-x:auto}
 .board-table{width:100%;border-collapse:collapse;font-size:.875rem;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1.5px solid var(--border)}
 .board-table thead tr{background:var(--surface2)}
-.board-table th{padding:11px 14px;text-align:left;font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.04em;border-bottom:1.5px solid var(--border);white-space:nowrap}
-.board-table th:last-child{text-align:right}
-.board-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text2)}
+.board-table th{padding:10px 14px;text-align:left;font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:.04em;border-bottom:1.5px solid var(--border);white-space:nowrap}
+.board-table th:last-child{text-align:right;width:70px}
+.board-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text2)}
 .board-table tr:last-child td{border-bottom:none}
-.board-table tbody tr{transition:background .12s;cursor:pointer}
-.board-table tbody tr:hover td{background:var(--accent-light)}
-.board-td-name{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:600}
-.board-td-name .bi{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-size:.9rem;flex-shrink:0}
-.board-td-url{font-size:.72rem;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.board-td-cat{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:100px}
-.board-td-clicks{text-align:right;font-size:.78rem;font-weight:600}
-.board-section-row td{background:var(--bg);padding:6px 14px;font-size:.75rem;font-weight:800;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-.board-action-col{text-align:right;white-space:nowrap}
+.board-table tbody tr:hover td{background:var(--accent-light);cursor:pointer}
+.board-sec-row td{background:var(--bg)!important;padding:6px 14px;font-size:.72rem;font-weight:800;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:default!important}
+.btd-name{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--text)}
+.btd-icon{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
+.btd-url{font-size:.7rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btd-cat{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:100px;white-space:nowrap}
+.btd-clicks{text-align:right;font-size:.78rem;font-weight:700}
+
+@media(max-width:768px){main{padding:1.25rem 1rem 4rem}.header-inner{padding:0 1rem}.header-center{display:none}.hero-stats{display:none}.page-hero{padding:1.5rem}.emoji-grid{grid-template-columns:repeat(7,1fr)}.header-actions .btn-outline{display:none}.desc-field-label{width:80px;font-size:.76rem;padding:8px}.link-grid{grid-template-columns:1fr}.notice-banner{flex-direction:column;gap:6px;text-align:center}}
+.drag-handle-icon{position:absolute;top:6px;right:8px;font-size:1rem;color:var(--muted);cursor:grab;opacity:0;transition:opacity .15s;user-select:none;z-index:5;padding:2px 4px;border-radius:4px}.link-card:hover .drag-handle-icon{opacity:.6}.link-card.edit-draggable:hover .drag-handle-icon{opacity:1}.link-card.edit-draggable{cursor:grab}
 </style>
 </head>
 <body>
@@ -294,21 +296,21 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   <div class="login-prompt" id="loginPrompt" style="display:none"><h2>🔐 로그인하면 링크를 직접 등록할 수 있어요</h2><p>Google 계정으로 로그인하면 누구나 링크를 추가할 수 있습니다.<br>본인이 올린 링크는 본인만 삭제할 수 있어요.</p><button class="btn btn-google" onclick="signInWithGoogle()"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a7.03 7.03 0 01-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A7 7 0 015.49 12c0-.72.13-1.43.35-2.09V7.07H2.18A11 11 0 001 12c0 1.78.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Google 계정으로 로그인</button></div>
   <div class="admin-personal-section" id="adminPersonalSection"><div class="admin-section-header"><div class="admin-section-title">🔒 관리자 개인 링크 <span class="admin-lock-badge">ADMIN ONLY</span></div><div id="adminPersonalActions" style="display:none"><button class="btn btn-sm" style="background:rgba(232,255,71,.15);color:#e8ff47;border:1px solid rgba(232,255,71,.3);font-size:.78rem" onclick="openAddAdminLink()">+ 링크 추가</button></div></div><div class="admin-section-body"><div class="admin-link-grid" id="adminLinkGrid"></div></div></div>
   <div class="stats-panel" id="statsPanel"><div class="stats-panel-title">📊 링크 사용 현황 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순</span></div><div id="statsTableWrap"></div></div>
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap">
-    <div class="tab-bar" id="tabBar" style="margin-bottom:0;flex:1;min-width:0"></div>
-    <div class="view-toggle" id="viewToggle">
-      <button class="view-btn active" id="viewCardBtn" onclick="setView('card')" title="카드 보기">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>카드
-      </button>
-      <button class="view-btn" id="viewBoardBtn" onclick="setView('board')" title="게시판 보기">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>목록
-      </button>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap">
+    <div class="tab-bar" id="tabBar" style="margin-bottom:0;flex:1;min-width:0;overflow-x:auto"></div>
+    <span class="drag-mode-hint" id="dragHint">✋ 편집모드: 카드를 드래그해서 분야 이동</span>
+    <div class="view-toggle-wrap">
+      <button class="view-btn active" id="vBtnCard" onclick="setView('card')">⊞ 카드</button>
+      <button class="view-btn" id="vBtnBoard" onclick="setView('board')">☰ 목록</button>
     </div>
   </div>
   <div id="content"></div>
 </main>
 <footer class="site-footer"><p>에이모(AI모음) &copy; 2025</p><div class="footer-dev"><span>Developed by Choi Gwangcheul, Gurye Middle School with AI</span></div></footer>
 </div>
+
+<!-- 분야 잠금 비밀번호 모달 -->
+<div class="modal-overlay" id="catPwModal"><div class="modal" style="max-width:360px"><div class="modal-header"><div class="modal-title" id="catPwModalTitle">🔒 분야 잠금</div><button class="modal-close" onclick="closeModal('catPwModal')">✕</button></div><p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6" id="catPwModalDesc">이 분야의 링크를 열려면 비밀번호가 필요합니다.</p><div class="form-group"><label class="form-label">비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="catPwInput" placeholder="••••" maxlength="30" onkeydown="if(event.key==='Enter')checkCatPw()"/></div><div class="pw-error" id="catPwError">비밀번호가 올바르지 않습니다.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catPwModal')">취소</button><button class="btn btn-primary" onclick="checkCatPw()">확인</button></div></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- MODALS -->
@@ -331,7 +333,7 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('linkModal')">취소</button><button class="btn btn-primary" onclick="saveLink()">저장</button></div>
 </div></div>
 
-<div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
+<div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="form-group"><label class="form-label">🔒 분야 잠금 비밀번호 <span style="color:var(--muted);font-weight:400">(선택 — 설정 시 링크 클릭에 비밀번호 필요)</span></label><input class="form-input" type="text" id="fCatPw" placeholder="비밀번호 입력 (없으면 공개)" maxlength="30"/><div style="font-size:.75rem;color:var(--muted);margin-top:4px">비워두면 잠금 없음. 관리자는 항상 열람 가능.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
 
 <div class="modal-overlay" id="promptModal"><div class="modal" style="max-width:540px"><div class="modal-header"><div class="modal-title">💬 프롬프트 상세보기</div><button class="modal-close" onclick="closeModal('promptModal')">✕</button></div><div class="prompt-modal-content"><div class="prompt-detail-section" id="promptAiSection"><div class="prompt-detail-label ai-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작 AI</div><div class="prompt-detail-box" id="promptAiText"></div></div><div class="prompt-detail-section"><div class="prompt-detail-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><div class="prompt-detail-box" id="promptText"></div></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="prompt-copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button></div></div></div></div>
 
@@ -355,8 +357,13 @@ const CAT_BG={'#7c3aed':'#f3eeff','#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c
 const getBg=c=>CAT_BG[c]||'#f0f2f8';
 const EMOJIS=['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
 let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=false,selColor=PALETTE[0],selEmoji=EMOJIS[0];
-let viewMode='card'; // 'card' | 'board'
-let dragSrcId=null,dragSrcCatId=null;
+let viewMode='card'; // 'card'|'board'
+// 드래그 상태
+let _dragLinkId=null,_dragCatId=null,_ghostEl=null,_sourceEl=null;
+// 분야 잠금: { catId: true } — 세션 동안 인증된 분야
+let catUnlocked={};
+// 클릭 대기 콜백 (분야잠금 확인 후 실행)
+let _pendingCatPwCb=null,_pendingCatId=null;
 let editingLinkId=null,editingAdminLinkId=null,isAdminLinkMode=false;
 let categories=[],links=[],adminLinks=[],clickData={};
 let unsubCats,unsubLinks,unsubAdminLinks,unsubClicks;
@@ -419,14 +426,6 @@ function renderTabs(){
 }
 function matchQ(l,q){return !q||(l.name+l.url+(l.desc||'')+(l.aiTool||'')+(l.prompt||'')).toLowerCase().includes(q)}
 
-/* ====== 뷰 모드 토글 ====== */
-window.setView=mode=>{
-  viewMode=mode;
-  document.getElementById('viewCardBtn').classList.toggle('active',mode==='card');
-  document.getElementById('viewBoardBtn').classList.toggle('active',mode==='board');
-  renderContent();
-};
-
 function renderContent(){
   if(viewMode==='board'){renderBoardView();return;}
   const q=document.getElementById('searchInput').value.toLowerCase();
@@ -434,16 +433,26 @@ function renderContent(){
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
   let h='',total=0;
   cats.forEach((cat,ci)=>{
-    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q)).sort((a,b)=>getClicks(b.id)-getClicks(a.id));
+    const catLinks=vLinks
+      .filter(l=>l.catId===cat.id&&matchQ(l,q))
+      .sort((a,b)=>getClicks(b.id)-getClicks(a.id));
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
-    const isDragTarget=isAdmin&&editMode;
-    h+=`<div class="cat-section${isDragTarget?' drag-cat-drop-zone':''}" data-cat-id="${cat.id}" data-drop-label="이 분야로 이동" style="animation-delay:${ci*.05}s">
+    const gridClass=isAdmin&&editMode?'link-grid edit-mode-grid':'link-grid';
+    const lockBadge=cat.lockPw?`<span class="cat-lock-badge">🔒 잠금</span>`:'';
+    h+=`<div class="cat-section" style="animation-delay:${ci*.05}s" data-cat-id="${cat.id}">
       <div class="cat-header">
-        <div class="cat-title-row"><div class="cat-stripe" style="background:${cat.color}"></div><span class="cat-name">${cat.name}</span><span class="cat-count">${catLinks.length}개</span></div>
-        ${isAdmin?`<div class="cat-actions"><button class="cat-manage-btn" onclick="openEditCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button><button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> 삭제</button></div>`:''}
+        <div class="cat-title-row">
+          <div class="cat-stripe" style="background:${cat.color}"></div>
+          <span class="cat-name">${cat.name}${lockBadge}</span>
+          <span class="cat-count">${catLinks.length}개</span>
+        </div>
+        ${isAdmin?`<div class="cat-actions">
+          <button class="cat-manage-btn" onclick="openEditCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 수정</button>
+          <button class="cat-manage-btn delete" onclick="deleteCat('${cat.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3,6 5,6 21,6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg> 삭제</button>
+        </div>`:''}
       </div>
-      <div class="link-grid" data-cat-id="${cat.id}">
+      <div class="${gridClass}" data-cat-id="${cat.id}">
         ${catLinks.map(l=>cardHTML(l,cat)).join('')}
         ${currentUser?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`:''}
       </div>
@@ -452,126 +461,6 @@ function renderContent(){
   if(!total&&!isAdmin&&!editMode&&categories.length)h=`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
   document.getElementById('content').innerHTML=h;
   if(isAdmin&&editMode) initDragDrop();
-}
-
-/* ====== 게시판 뷰 ====== */
-function renderBoardView(){
-  const q=document.getElementById('searchInput').value.toLowerCase();
-  const vLinks=visibleLinks();
-  const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
-  let rows='',total=0;
-  cats.forEach(cat=>{
-    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q)).sort((a,b)=>getClicks(b.id)-getClicks(a.id));
-    if(!catLinks.length)return;
-    total+=catLinks.length;
-    rows+=`<tr class="board-section-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:7px;vertical-align:middle"></span>${escHtml(cat.name)}</td></tr>`;
-    catLinks.forEach((l,i)=>{
-      const n=getClicks(l.id),hotClass=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';
-      const ic=n>=20?'🔥':n>=5?'✨':'👁️';
-      const isOwner=currentUser&&currentUser.uid===l.uploaderId,canEdit=isAdmin||isOwner,canDel=isAdmin||isOwner;
-      rows+=`<tr onclick="handleBoardClick(event,'${l.id}','${l.url}')">
-        <td style="width:36px;color:var(--muted);font-size:.78rem;font-weight:600">${i+1}</td>
-        <td><div class="board-td-name">
-          <div class="bi" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div>
-          <div><div style="font-weight:700;color:var(--text)">${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div>
-          <div class="board-td-url">${escHtml(l.url)}</div></div>
-        </div></td>
-        <td style="max-width:180px;font-size:.78rem;color:var(--text2)">${escHtml((l.desc||'').substring(0,50))}${(l.desc||'').length>50?'…':''}</td>
-        <td><span class="board-td-cat" style="background:${getBg(cat.color)};color:${cat.color}">${escHtml(cat.name)}</span></td>
-        <td class="board-td-clicks" style="${hotClass}">${ic} ${n}</td>
-        <td class="board-action-col" onclick="event.stopPropagation()">
-          ${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''}
-          ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}
-        </td>
-      </tr>`;
-    });
-  });
-  const tableHTML=total?`
-    <div style="overflow-x:auto">
-      <table class="board-table">
-        <thead><tr>
-          <th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`:`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
-  document.getElementById('content').innerHTML=tableHTML;
-}
-window.handleBoardClick=(e,id,url)=>{
-  if(e.defaultPrevented)return;
-  handleClick(e,id);
-  window.open(url,'_blank','noopener');
-};
-
-/* ====== 드래그&드롭 ====== */
-function initDragDrop(){
-  const cards=document.querySelectorAll('.link-card[data-link-id]');
-  const grids=document.querySelectorAll('.link-grid[data-cat-id]');
-  cards.forEach(card=>{
-    card.addEventListener('dragstart',onDragStart);
-    card.addEventListener('dragend',onDragEnd);
-  });
-  grids.forEach(grid=>{
-    grid.addEventListener('dragover',onDragOver);
-    grid.addEventListener('dragleave',onDragLeave);
-    grid.addEventListener('drop',onDrop);
-  });
-  // cat-section drop zones
-  document.querySelectorAll('.drag-cat-drop-zone').forEach(sec=>{
-    sec.addEventListener('dragover',e=>{e.preventDefault();sec.classList.add('drop-ready');});
-    sec.addEventListener('dragleave',e=>{if(!sec.contains(e.relatedTarget))sec.classList.remove('drop-ready');});
-    sec.addEventListener('drop',e=>{
-      e.preventDefault();sec.classList.remove('drop-ready');
-      const tgtCat=sec.dataset.catId;
-      if(tgtCat&&dragSrcId&&dragSrcCatId!==tgtCat) moveLinkToCat(dragSrcId,tgtCat);
-    });
-  });
-}
-
-function onDragStart(e){
-  dragSrcId=this.dataset.linkId;
-  dragSrcCatId=this.dataset.catId;
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed='move';
-  e.dataTransfer.setData('text/plain',dragSrcId);
-  // Ghost image
-  const ghost=document.createElement('div');
-  ghost.className='drag-ghost';
-  ghost.innerHTML=this.querySelector('.card-name')?.textContent||'';
-  ghost.style.top='-200px';
-  document.body.appendChild(ghost);
-  e.dataTransfer.setDragImage(ghost,140,30);
-  setTimeout(()=>ghost.remove(),0);
-}
-function onDragEnd(){
-  this.classList.remove('dragging');
-  document.querySelectorAll('.link-grid.drag-over').forEach(g=>g.classList.remove('drag-over'));
-  document.querySelectorAll('.drag-cat-drop-zone.drop-ready').forEach(s=>s.classList.remove('drop-ready'));
-  dragSrcId=null;dragSrcCatId=null;
-}
-function onDragOver(e){
-  e.preventDefault();e.dataTransfer.dropEffect='move';
-  this.classList.add('drag-over');
-}
-function onDragLeave(e){
-  if(!this.contains(e.relatedTarget))this.classList.remove('drag-over');
-}
-function onDrop(e){
-  e.preventDefault();this.classList.remove('drag-over');
-  const tgtCat=this.dataset.catId;
-  if(!tgtCat||!dragSrcId)return;
-  if(dragSrcCatId!==tgtCat) moveLinkToCat(dragSrcId,tgtCat);
-}
-
-async function moveLinkToCat(linkId,newCatId){
-  const link=links.find(l=>l.id===linkId);
-  const newCat=categories.find(c=>c.id===newCatId);
-  if(!link||!newCat)return;
-  const oldCat=categories.find(c=>c.id===link.catId);
-  try{
-    await setDoc(doc(db,'links',linkId),{catId:newCatId},{merge:true});
-    toast(`"${link.name}" → ${newCat.name} 이동 ✓`,'success');
-  }catch(err){toast('이동 실패: '+err.message,'error');}
 }
 
 function cardHTML(l,cat){
@@ -593,7 +482,12 @@ function cardHTML(l,cat){
   const hasDesc=l.desc&&l.desc.trim();
   const editBtn=canEdit?`<button class="card-edit-btn" onclick="event.stopPropagation();event.preventDefault();openEditLink('${l.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button>`:`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
 
-  return `<a class="link-card ${secretClass}" href="${l.url}" target="_blank" rel="noopener" style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}" onclick="handleClick(event,'${l.id}')" ${isAdmin&&editMode?`draggable="true" data-link-id="${l.id}" data-cat-id="${cat.id}"`:''}>
+  // 드래그 핸들 (편집모드에서만)
+  const dragHandle=isAdmin&&editMode?`<div class="drag-handle-icon" title="드래그해서 분야 이동">⠿</div>`:'';
+  return `<a class="link-card ${secretClass}" href="${l.url}" target="_blank" rel="noopener"
+    style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}"
+    data-link-id="${l.id}" data-cat-id="${cat.id}"
+    onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
     <div class="card-header-row">
       <div class="card-icon">${l.emoji||'🔗'}</div>
       <div class="card-title-group"><div class="card-name">${escHtml(l.name)} ${secretBadge}</div><div class="card-url">${escHtml(l.url)}</div></div>
@@ -622,7 +516,55 @@ window.copyPrompt=async()=>{
   catch(e){toast('복사 실패','error')}
 };
 
-async function handleClick(e,id){if(e.defaultPrevented)return;try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}}
+async function handleClick(e,id){
+  if(e.defaultPrevented)return;
+  try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}
+}
+
+// 분야 잠금 확인 후 링크 열기
+window.catLockedClick=function(e,linkId,catId,url){
+  e.preventDefault();
+  if(isAdmin&&editMode)return; // 편집모드에서는 클릭 막음(드래그용)
+  const cat=categories.find(c=>c.id===catId);
+  if(cat&&cat.lockPw&&!isAdmin&&!catUnlocked[catId]){
+    // 비밀번호 필요
+    _pendingCatId=catId;
+    _pendingCatPwCb=()=>{
+      handleClick({defaultPrevented:false},linkId);
+      window.open(url,'_blank','noopener');
+    };
+    document.getElementById('catPwModalTitle').textContent=`🔒 ${cat.name} — 잠금 해제`;
+    document.getElementById('catPwModalDesc').textContent=`이 분야(${cat.name})의 링크를 열려면 비밀번호가 필요합니다.`;
+    document.getElementById('catPwInput').value='';
+    document.getElementById('catPwError').classList.remove('show');
+    openM('catPwModal');
+    setTimeout(()=>document.getElementById('catPwInput').focus(),200);
+    return;
+  }
+  handleClick({defaultPrevented:false},linkId);
+  window.open(url,'_blank','noopener');
+};
+
+window.checkCatPw=()=>{
+  const val=document.getElementById('catPwInput').value;
+  // 현재 잠금 대상 분야 찾기
+  const titleEl=document.getElementById('catPwModalTitle').textContent;
+  // _pendingCatPwCb 는 클릭한 링크의 catId를 클로저로 가짐
+  // 분야 비밀번호 매칭: catUnlocked에 저장하면 세션 동안 열림
+  // 현재 어떤 분야인지는 modal desc에서 파싱하는 대신, 변수로 추적
+  const cat=_pendingCatId?categories.find(c=>c.id===_pendingCatId):null;
+  if(cat&&val===cat.lockPw){
+    catUnlocked[cat.id]=true;
+    closeModal('catPwModal');
+    if(_pendingCatPwCb){_pendingCatPwCb();_pendingCatPwCb=null;_pendingCatId=null;}
+    toast(`${cat.name} 잠금 해제 ✓`);
+  }else{
+    document.getElementById('catPwError').classList.add('show');
+    document.getElementById('catPwInput').value='';
+    document.getElementById('catPwInput').focus();
+  }
+};
+
 
 function renderAdminSection(){
   const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),act=document.getElementById('adminPersonalActions');
@@ -709,7 +651,14 @@ window.changePw=async()=>{
   try{await setDoc(doc(db,'meta','adminConfig'),{password:nw},{merge:true});adminPw=nw;closeModal('pwChangeModal');toast('비밀번호가 변경되었습니다 🔑','success')}
   catch(e){err.textContent='오류: '+e.message;err.classList.add('show')}
 };
-window.toggleEdit=()=>{if(!isAdmin){openAdminModal();return}editMode=!editMode;document.getElementById('editChip').classList.toggle('on',editMode);document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';if(editMode)toast('✋ 카드를 드래그해서 분야 간 이동할 수 있습니다','info');renderAll();};
+window.toggleEdit=()=>{
+  if(!isAdmin){openAdminModal();return}
+  editMode=!editMode;
+  document.getElementById('editChip').classList.toggle('on',editMode);
+  document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';
+  document.getElementById('dragHint').classList.toggle('on',editMode);
+  renderAll();
+};
 
 function buildEmojiGrid(){document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`<button class="emoji-btn ${e===selEmoji?'selected':''}" onclick="pickEmoji('${e}')">${e}</button>`).join('')}
 window.pickEmoji=e=>{selEmoji=e;buildEmojiGrid()};
@@ -752,15 +701,171 @@ window.deleteAdminLink=async id=>{const l=adminLinks.find(x=>x.id===id);if(!l||!
 function buildColorRow(){document.getElementById('colorRow').innerHTML=PALETTE.map(c=>`<div class="swatch ${c===selColor?'selected':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`).join('')}
 window.pickColor=c=>{selColor=c;buildColorRow()};
 let editingCatId=null;
-window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';buildColorRow();openM('catModal')};
-window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;buildColorRow();openM('catModal')};
-window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('이름 필요','error');return}try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor},{merge:true});toast('수정 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length});toast('추가 ✓')}closeModal('catModal')}catch(e){toast('오류','error')}};
+window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';document.getElementById('fCatPw').value='';buildColorRow();openM('catModal')};
+window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;document.getElementById('fCatPw').value=c.lockPw||'';buildColorRow();openM('catModal')};
+window.saveCat=async()=>{
+  if(!isAdmin)return;
+  const name=document.getElementById('fCatName').value.trim();
+  if(!name){toast('이름 필요','error');return}
+  const lockPw=document.getElementById('fCatPw').value.trim();
+  try{
+    if(editingCatId){
+      await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw},{merge:true});
+      if(!lockPw) delete catUnlocked[editingCatId]; // 잠금 해제하면 캐시 제거
+      toast('수정 ✓');
+    }else{
+      await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw});
+      toast('추가 ✓');
+    }
+    closeModal('catModal');
+  }catch(e){toast('오류','error')};
+};
 window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
 
 window.setTab=id=>{activeTab=id;renderAll()};
 window.openM=id=>document.getElementById(id).classList.add('open');
 window.closeModal=id=>document.getElementById(id).classList.remove('open');
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')})});
+
+/* ══════════════════════════════════════
+   뷰 모드 토글
+══════════════════════════════════════ */
+window.setView=mode=>{
+  viewMode=mode;
+  document.getElementById('vBtnCard').classList.toggle('active',mode==='card');
+  document.getElementById('vBtnBoard').classList.toggle('active',mode==='board');
+  renderContent();
+};
+
+/* ══════════════════════════════════════
+   게시판 뷰
+══════════════════════════════════════ */
+function renderBoardView(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const vLinks=visibleLinks();
+  const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
+  let rows='',total=0;
+  cats.forEach(cat=>{
+    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q)).sort((a,b)=>getClicks(b.id)-getClicks(a.id));
+    if(!catLinks.length)return;
+    total+=catLinks.length;
+    const lockBadge=cat.lockPw?'🔒 ':'';
+    rows+=`<tr class="board-sec-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>${lockBadge}${escHtml(cat.name)}</td></tr>`;
+    catLinks.forEach((l,i)=>{
+      const n=getClicks(l.id);
+      const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';
+      const ic=n>=20?'🔥':n>=5?'✨':'👁️';
+      const isOwner=currentUser&&currentUser.uid===l.uploaderId,canEdit=isAdmin||isOwner,canDel=isAdmin||isOwner;
+      rows+=`<tr onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
+        <td style="color:var(--muted);font-size:.78rem;font-weight:600;width:36px">${i+1}</td>
+        <td><div class="btd-name">
+          <div class="btd-icon" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div>
+          <div><div>${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div>
+          <div class="btd-url">${escHtml(l.url)}</div></div>
+        </div></td>
+        <td style="max-width:160px;font-size:.78rem;color:var(--text2)">${escHtml((l.desc||'').substring(0,45))}${(l.desc||'').length>45?'…':''}</td>
+        <td><span class="btd-cat" style="background:${getBg(cat.color)};color:${cat.color}">${escHtml(cat.name)}</span></td>
+        <td class="btd-clicks" style="${style}">${ic} ${n}</td>
+        <td style="text-align:right;white-space:nowrap" onclick="event.stopPropagation()">
+          ${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''}
+          ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}
+        </td>
+      </tr>`;
+    });
+  });
+  document.getElementById('content').innerHTML=total
+    ?`<div class="board-wrap"><table class="board-table">
+        <thead><tr><th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th></tr></thead>
+        <tbody>${rows}</tbody></table></div>`
+    :`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
+}
+
+/* ══════════════════════════════════════
+   드래그&드롭 — 마우스 이벤트 기반
+══════════════════════════════════════ */
+function initDragDrop(){
+  // 이전 리스너 정리
+  cleanupDrag();
+  // 각 카드에 mousedown 바인딩
+  document.querySelectorAll('#content .link-card').forEach(card=>{
+    if(card.classList.contains('add-card'))return;
+    card.classList.add('edit-draggable');
+    const onDown=e=>{
+      // 버튼 클릭은 무시
+      if(e.target.closest('button'))return;
+      e.preventDefault();
+      startDrag(e,card);
+    };
+    card._dragDown=onDown;
+    card.addEventListener('mousedown',onDown);
+  });
+}
+
+function cleanupDrag(){
+  document.querySelectorAll('#content .link-card').forEach(card=>{
+    if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown;}
+    card.classList.remove('edit-draggable','drag-source');
+  });
+  if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
+}
+
+function startDrag(e,card){
+  _dragLinkId=card.dataset.linkId||card.getAttribute('data-link-id');
+  _dragCatId=card.dataset.catId||card.getAttribute('data-cat-id');
+  if(!_dragLinkId)return;
+  _sourceEl=card;
+
+  // 고스트 엘리먼트 생성
+  const name=card.querySelector('.card-name')?.textContent?.trim()||'링크';
+  const icon=card.querySelector('.card-icon')?.textContent?.trim()||'🔗';
+  _ghostEl=document.createElement('div');
+  _ghostEl.className='drag-ghost-el';
+  _ghostEl.innerHTML=`<span class="dg-icon">${icon}</span><span>${name}</span>`;
+  _ghostEl.style.left=(e.clientX-130)+'px';
+  _ghostEl.style.top=(e.clientY-20)+'px';
+  document.body.appendChild(_ghostEl);
+  card.classList.add('drag-source');
+
+  const onMove=ev=>{
+    _ghostEl.style.left=(ev.clientX-130)+'px';
+    _ghostEl.style.top=(ev.clientY-20)+'px';
+    // 드롭 대상 그리드 하이라이트
+    document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+      const r=g.getBoundingClientRect();
+      const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
+      g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
+    });
+  };
+  const onUp=ev=>{
+    document.removeEventListener('mousemove',onMove);
+    document.removeEventListener('mouseup',onUp);
+    // 드롭 대상 찾기
+    if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
+    _sourceEl&&_sourceEl.classList.remove('drag-source');
+    document.querySelectorAll('.edit-mode-grid').forEach(g=>{
+      g.classList.remove('drag-over-grid');
+      const r=g.getBoundingClientRect();
+      const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
+      if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){
+        moveLinkToCat(_dragLinkId,g.dataset.catId);
+      }
+    });
+    _dragLinkId=null;_dragCatId=null;_sourceEl=null;
+  };
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+}
+
+async function moveLinkToCat(linkId,newCatId){
+  const link=links.find(l=>l.id===linkId);
+  const newCat=categories.find(c=>c.id===newCatId);
+  if(!link||!newCat)return;
+  try{
+    await setDoc(doc(db,'links',linkId),{catId:newCatId},{merge:true});
+    toast(`"${link.name}" → [${newCat.name}] 이동 ✓`,'success');
+  }catch(err){toast('이동 실패: '+err.message,'error');}
+}
+
 window.toast=(msg,type='success')=>{const w=document.getElementById('toastWrap'),t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;w.appendChild(t);setTimeout(()=>t.remove(),3000)};
 </script>
 </body>
