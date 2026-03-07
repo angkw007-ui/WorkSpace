@@ -10,7 +10,6 @@
 :root {
   --bg: #f7f8fc;
   --white: #ffffff;
-  --surface: #ffffff;
   --surface2: #f0f2f8;
   --border: #e4e7f0;
   --border2: #d0d4e8;
@@ -20,474 +19,271 @@
   --accent2-light: #e8f8f3;
   --accent3: #e05c2a;
   --accent3-light: #fdf0ea;
-  --accent4: #8b42cc;
-  --accent4-light: #f5eefb;
   --text: #1a1d2e;
   --text2: #4a4f6a;
   --muted: #9099b8;
-  --shadow-sm: 0 1px 3px rgba(30,40,100,.07), 0 1px 2px rgba(30,40,100,.05);
+  --shadow-sm: 0 1px 3px rgba(30,40,100,.07);
   --shadow: 0 4px 16px rgba(30,40,100,.09), 0 1px 3px rgba(30,40,100,.06);
-  --shadow-lg: 0 12px 40px rgba(30,40,100,.13), 0 2px 8px rgba(30,40,100,.07);
+  --shadow-lg: 0 12px 40px rgba(30,40,100,.13);
   --radius: 14px;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;min-height:100vh;line-height:1.6;}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Noto Sans KR', sans-serif;
-  min-height: 100vh;
-  line-height: 1.6;
-}
+/* LOADING SCREEN */
+#loadingScreen{position:fixed;inset:0;background:var(--white);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
+.loading-logo{font-family:'Noto Serif KR',serif;font-size:1.8rem;font-weight:900;color:var(--accent);}
+.loading-sub{font-size:.875rem;color:var(--muted);}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
 /* TOP BANNER */
-.top-banner {
-  background: var(--accent);
-  color: white;
-  text-align: center;
-  padding: 7px 1rem;
-  font-size: .78rem;
-  font-weight: 500;
-  letter-spacing: .02em;
-}
+.top-banner{background:var(--accent);color:white;text-align:center;padding:7px 1rem;font-size:.78rem;font-weight:500;letter-spacing:.02em;}
 
 /* HEADER */
-header {
-  background: var(--white);
-  border-bottom: 1.5px solid var(--border);
-  position: sticky; top: 0; z-index: 200;
-  box-shadow: var(--shadow-sm);
-}
-.header-inner {
-  max-width: 1280px; margin: 0 auto;
-  padding: 0 2rem; height: 68px;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-}
-.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
-.logo-mark {
-  width: 40px; height: 40px; background: var(--accent);
-  border-radius: 10px; display: grid; place-items: center;
-  flex-shrink: 0; box-shadow: 0 2px 8px rgba(37,84,199,.3);
-}
-.logo-mark svg { color: white; }
-.logo-text-main { font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.2; }
-.logo-text-sub { font-size: .7rem; color: var(--muted); font-weight: 400; }
+header{background:var(--white);border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:var(--shadow-sm);}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-mark{width:40px;height:40px;background:var(--accent);border-radius:10px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(37,84,199,.3);}
+.logo-mark svg{color:white;}
+.logo-text-main{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2;}
+.logo-text-sub{font-size:.7rem;color:var(--muted);font-weight:400;}
+.header-center{flex:1;max-width:420px;}
+.search-wrap{position:relative;}
+.search-wrap input{width:100%;padding:9px 16px 9px 40px;border:1.5px solid var(--border2);border-radius:100px;background:var(--bg);font-size:.875rem;font-family:'Noto Sans KR',sans-serif;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;}
+.search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,84,199,.1);background:white;}
+.search-wrap input::placeholder{color:var(--muted);}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+.header-actions{display:flex;align-items:center;gap:8px;}
 
-.header-center { flex: 1; max-width: 420px; }
-.search-wrap { position: relative; }
-.search-wrap input {
-  width: 100%; padding: 9px 16px 9px 40px;
-  border: 1.5px solid var(--border2); border-radius: 100px;
-  background: var(--bg); font-size: .875rem;
-  font-family: 'Noto Sans KR', sans-serif; color: var(--text);
-  outline: none; transition: border-color .2s, box-shadow .2s;
-}
-.search-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,84,199,.1); background: white; }
-.search-wrap input::placeholder { color: var(--muted); }
-.search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-
-.header-actions { display: flex; align-items: center; gap: 8px; }
+/* USER AVATAR */
+.user-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;cursor:pointer;transition:border-color .2s;}
+.user-avatar:hover{border-color:var(--accent);}
+.user-name{font-size:.82rem;font-weight:600;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* BUTTONS */
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 8px;
-  font-size: .84rem; font-weight: 600;
-  cursor: pointer; border: none;
-  font-family: 'Noto Sans KR', sans-serif;
-  transition: all .18s; text-decoration: none; white-space: nowrap;
-}
-.btn-primary { background: var(--accent); color: white; box-shadow: 0 2px 8px rgba(37,84,199,.25); }
-.btn-primary:hover { background: #1e44aa; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,84,199,.35); }
-.btn-outline { background: transparent; color: var(--text2); border: 1.5px solid var(--border2); }
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-.btn-sm { padding: 6px 13px; font-size: .8rem; }
-.btn-danger-sm {
-  background: none; border: none; color: var(--muted); font-size: .78rem;
-  cursor: pointer; padding: 5px 8px; border-radius: 6px;
-  font-family: 'Noto Sans KR', sans-serif; font-weight: 600; transition: all .15s;
-}
-.btn-danger-sm:hover { color: var(--accent3); background: var(--accent3-light); }
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.84rem;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .18s;text-decoration:none;white-space:nowrap;}
+.btn-primary{background:var(--accent);color:white;box-shadow:0 2px 8px rgba(37,84,199,.25);}
+.btn-primary:hover{background:#1e44aa;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--text2);border:1.5px solid var(--border2);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.btn-google{background:white;color:#444;border:1.5px solid var(--border2);box-shadow:var(--shadow-sm);}
+.btn-google:hover{box-shadow:var(--shadow);transform:translateY(-1px);}
+.btn-sm{padding:6px 13px;font-size:.8rem;}
+.btn-danger-sm{background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;padding:5px 8px;border-radius:6px;font-family:'Noto Sans KR',sans-serif;font-weight:600;transition:all .15s;}
+.btn-danger-sm:hover{color:var(--accent3);background:var(--accent3-light);}
+
+/* ADMIN BADGE */
+.admin-badge{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent2);background:var(--accent2-light);padding:4px 11px;border-radius:100px;border:1px solid #a8e8d0;cursor:pointer;white-space:nowrap;}
+.admin-badge.on{display:flex;}
+.edit-chip{display:none;align-items:center;gap:5px;font-size:.75rem;font-weight:700;color:var(--accent3);background:var(--accent3-light);padding:4px 11px;border-radius:100px;border:1px solid #f0c0a8;}
+.edit-chip.on{display:flex;}
 
 /* MAIN */
-main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
+main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem;}
 
 /* HERO */
-.page-hero {
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 20px; padding: 2rem 2.5rem;
-  margin-bottom: 1.5rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-  box-shadow: var(--shadow-sm); overflow: hidden; position: relative;
-}
-.page-hero::after {
-  content: '🏫'; position: absolute; right: 2.5rem; top: 50%;
-  transform: translateY(-50%); font-size: 5.5rem; opacity: .07; pointer-events: none;
-}
-.hero-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: var(--text); line-height: 1.3; }
-.hero-title span { color: var(--accent); }
-.hero-sub { font-size: .9rem; color: var(--text2); margin-top: .4rem; }
-.hero-stats { display: flex; gap: 1rem; flex-shrink: 0; }
-.stat-box {
-  text-align: center; background: var(--bg);
-  border: 1.5px solid var(--border); border-radius: 12px;
-  padding: 12px 18px; min-width: 88px;
-}
-.stat-num { font-size: 1.75rem; font-weight: 900; color: var(--accent); line-height: 1; font-family: 'Noto Serif KR', serif; }
-.stat-label { font-size: .7rem; color: var(--muted); margin-top: 3px; font-weight: 500; }
+.page-hero{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:2rem 2.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;box-shadow:var(--shadow-sm);overflow:hidden;position:relative;}
+.page-hero::after{content:'🏫';position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);font-size:5.5rem;opacity:.07;pointer-events:none;}
+.hero-title{font-family:'Noto Serif KR',serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;line-height:1.3;}
+.hero-title span{color:var(--accent);}
+.hero-sub{font-size:.9rem;color:var(--text2);margin-top:.4rem;}
+.hero-stats{display:flex;gap:1rem;flex-shrink:0;}
+.stat-box{text-align:center;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;min-width:88px;}
+.stat-num{font-size:1.75rem;font-weight:900;color:var(--accent);line-height:1;font-family:'Noto Serif KR',serif;}
+.stat-label{font-size:.7rem;color:var(--muted);margin-top:3px;font-weight:500;}
+
+/* LOGIN PROMPT */
+.login-prompt{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;margin-bottom:1.5rem;box-shadow:var(--shadow-sm);}
+.login-prompt h2{font-size:1.15rem;font-weight:700;margin-bottom:.5rem;}
+.login-prompt p{font-size:.875rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.7;}
 
 /* STATS PANEL */
-.stats-panel {
-  display: none; background: var(--white);
-  border: 1.5px solid var(--border); border-radius: 16px;
-  padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);
-}
-.stats-panel.open { display: block; animation: fadeUp .25s ease; }
-.stats-panel-title {
-  font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem;
-  display: flex; align-items: center; gap: 8px;
-  color: var(--text);
-}
-.stats-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
-.stats-table th {
-  text-align: left; padding: 8px 12px; background: var(--bg);
-  color: var(--muted); font-weight: 700; font-size: .72rem;
-  text-transform: uppercase; letter-spacing: .05em;
-}
-.stats-table th:first-child { border-radius: 8px 0 0 8px; }
-.stats-table th:last-child { border-radius: 0 8px 8px 0; text-align: right; }
-.stats-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
-.stats-table tr:last-child td { border-bottom: none; }
-.stats-table tr:hover td { background: var(--bg); }
-.stats-table td:last-child { text-align: right; }
-.rank-badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 24px; height: 24px; border-radius: 50%;
-  font-size: .75rem; font-weight: 700;
-}
-.rank-1 { background: #ffd700; color: #7a5e00; }
-.rank-2 { background: #e0e0e0; color: #555; }
-.rank-3 { background: #d4956a; color: #5a2e00; }
-.rank-n { background: var(--surface2); color: var(--muted); font-size: .72rem; }
-.bar-wrap { display: flex; align-items: center; gap: 8px; }
-.bar-track { flex: 1; height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 4px; transition: width .5s ease; }
-.stats-zero { text-align: center; padding: 2rem; color: var(--muted); font-size: .875rem; }
+.stats-panel{display:none;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow-sm);}
+.stats-panel.open{display:block;animation:fadeUp .25s ease;}
+.stats-panel-title{font-size:1rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
+.stats-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.stats-table th{text-align:left;padding:8px 12px;background:var(--bg);color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;}
+.stats-table th:first-child{border-radius:8px 0 0 8px;}
+.stats-table th:last-child{border-radius:0 8px 8px 0;text-align:right;}
+.stats-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle;}
+.stats-table tr:last-child td{border-bottom:none;}
+.stats-table tr:hover td{background:var(--bg);}
+.stats-table td:last-child{text-align:right;}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.75rem;font-weight:700;}
+.rank-1{background:#ffd700;color:#7a5e00;}
+.rank-2{background:#e0e0e0;color:#555;}
+.rank-3{background:#d4956a;color:#5a2e00;}
+.rank-n{background:var(--surface2);color:var(--muted);font-size:.72rem;}
+.bar-wrap{display:flex;align-items:center;gap:8px;}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease;}
 
 /* TABS */
-.tab-bar {
-  display: flex; align-items: center; gap: 4px;
-  margin-bottom: 1.5rem; flex-wrap: wrap;
-  background: var(--white); padding: 6px;
-  border-radius: 12px; border: 1.5px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.tab {
-  padding: 7px 15px; border-radius: 8px; font-size: .84rem; font-weight: 500;
-  cursor: pointer; border: none; background: transparent; color: var(--text2);
-  font-family: 'Noto Sans KR', sans-serif; transition: all .15s;
-  display: flex; align-items: center; gap: 5px;
-}
-.tab:hover { background: var(--bg); color: var(--text); }
-.tab.active { color: white; font-weight: 700; box-shadow: 0 2px 8px rgba(37,84,199,.2); }
-.tab .badge { font-size: .7rem; padding: 1px 6px; border-radius: 100px; font-weight: 600; }
-.tab.active .badge { background: rgba(255,255,255,.25); }
-.tab:not(.active) .badge { background: var(--surface2); color: var(--muted); }
-.tab-divider { width: 1px; height: 22px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
-.tab-add-btn {
-  margin-left: auto; padding: 6px 14px; border-radius: 8px; font-size: .8rem; font-weight: 600;
-  cursor: pointer; border: 1.5px dashed var(--border2); background: transparent;
-  color: var(--muted); font-family: 'Noto Sans KR', sans-serif; transition: all .15s;
-}
-.tab-add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.tab-bar{display:flex;align-items:center;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap;background:var(--white);padding:6px;border-radius:12px;border:1.5px solid var(--border);box-shadow:var(--shadow-sm);}
+.tab{padding:7px 15px;border-radius:8px;font-size:.84rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.tab:hover{background:var(--bg);color:var(--text);}
+.tab.active{color:white;font-weight:700;box-shadow:0 2px 8px rgba(37,84,199,.2);}
+.tab .badge{font-size:.7rem;padding:1px 6px;border-radius:100px;font-weight:600;}
+.tab.active .badge{background:rgba(255,255,255,.25);}
+.tab:not(.active) .badge{background:var(--surface2);color:var(--muted);}
+.tab-divider{width:1px;height:22px;background:var(--border);margin:0 2px;flex-shrink:0;}
+.tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.tab-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
 
 /* CATEGORY SECTION */
-.cat-section { margin-bottom: 2.5rem; animation: fadeUp .3s ease both; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-.cat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.cat-title-row { display: flex; align-items: center; gap: 10px; }
-.cat-stripe { width: 4px; height: 22px; border-radius: 4px; }
-.cat-name { font-size: 1.05rem; font-weight: 700; color: var(--text); }
-.cat-count { font-size: .75rem; color: var(--muted); background: var(--surface2); padding: 2px 9px; border-radius: 100px; font-weight: 600; }
-.cat-actions { display: flex; gap: 4px; }
+.cat-section{margin-bottom:2.5rem;animation:fadeUp .3s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.cat-title-row{display:flex;align-items:center;gap:10px;}
+.cat-stripe{width:4px;height:22px;border-radius:4px;}
+.cat-name{font-size:1.05rem;font-weight:700;color:var(--text);}
+.cat-count{font-size:.75rem;color:var(--muted);background:var(--surface2);padding:2px 9px;border-radius:100px;font-weight:600;}
+.cat-actions{display:flex;gap:4px;}
 
 /* LINK GRID */
-.link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
 
 /* LINK CARD */
-.link-card {
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px;
-  cursor: pointer; transition: all .2s;
-  position: relative; display: flex; flex-direction: column; gap: 10px;
-  text-decoration: none; color: inherit; box-shadow: var(--shadow-sm); overflow: hidden;
-}
-.link-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--cat-color, var(--accent)); opacity: 0; transition: opacity .2s;
-}
-.link-card:hover { border-color: var(--cat-color, var(--accent)); transform: translateY(-2px); box-shadow: var(--shadow); }
-.link-card:hover::before { opacity: 1; }
+.link-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all .2s;position:relative;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);overflow:hidden;}
+.link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cat-color,var(--accent));opacity:0;transition:opacity .2s;}
+.link-card:hover{border-color:var(--cat-color,var(--accent));transform:translateY(-2px);box-shadow:var(--shadow);}
+.link-card:hover::before{opacity:1;}
+.card-header-row{display:flex;align-items:flex-start;gap:12px;}
+.card-icon{width:40px;height:40px;border-radius:10px;background:var(--cat-bg,var(--accent-light));display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;transition:transform .2s;}
+.link-card:hover .card-icon{transform:scale(1.08);}
+.card-title-group{flex:1;min-width:0;}
+.card-name{font-size:.95rem;font-weight:700;color:var(--text);line-height:1.3;}
+.card-url{font-size:.72rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
+.card-desc{font-size:.8rem;color:var(--text2);line-height:1.5;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border);}
+.click-pill{display:inline-flex;align-items:center;gap:4px;background:var(--surface2);border-radius:100px;padding:3px 9px;font-size:.72rem;font-weight:600;color:var(--muted);transition:all .2s;}
+.click-pill.hot{background:#fdf0ea;color:var(--accent3);}
+.click-pill.warm{background:#e8f8f3;color:var(--accent2);}
+.card-arrow{color:var(--muted);transition:transform .2s,color .2s;flex-shrink:0;}
+.link-card:hover .card-arrow{transform:translateX(3px);color:var(--accent);}
 
-.card-header-row { display: flex; align-items: flex-start; gap: 12px; }
-.card-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  background: var(--cat-bg, var(--accent-light));
-  display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; transition: transform .2s;
-}
-.link-card:hover .card-icon { transform: scale(1.08); }
-.card-title-group { flex: 1; min-width: 0; }
-.card-name { font-size: .95rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-.card-url { font-size: .72rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
-.card-delete-btn {
-  opacity: 0; transition: opacity .15s;
-  background: none; border: none; color: var(--muted); cursor: pointer;
-  padding: 4px; border-radius: 4px; display: flex; align-items: center; flex-shrink: 0;
-}
-.card-delete-btn:hover { color: var(--accent3); }
-.link-card:hover .card-delete-btn { opacity: 1; }
-.card-desc { font-size: .8rem; color: var(--text2); line-height: 1.5; }
-.card-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border);
-}
+/* CARD ACTION BUTTONS */
+.card-action-btn{opacity:0;transition:opacity .15s;background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:4px;display:flex;align-items:center;}
+.card-action-btn:hover{color:var(--accent3);}
+.link-card:hover .card-action-btn{opacity:1;}
+.card-edit-btn{opacity:0;transition:opacity .15s;background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;padding:3px 8px;border-radius:5px;font-family:'Noto Sans KR',sans-serif;font-weight:600;}
+.card-edit-btn:hover{color:var(--accent);background:var(--accent-light);}
+.link-card:hover .card-edit-btn{opacity:1;}
 
-/* CLICK COUNT */
-.click-count { display: flex; align-items: center; gap: 5px; font-size: .75rem; color: var(--muted); font-weight: 500; }
-.click-count.hot { color: var(--accent3); }
-.click-count.warm { color: var(--accent2); }
-.click-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: var(--surface2); border-radius: 100px;
-  padding: 3px 9px; font-size: .72rem; font-weight: 600; color: var(--muted);
-  transition: all .2s;
-}
-.click-pill.hot { background: #fdf0ea; color: var(--accent3); }
-.click-pill.warm { background: #e8f8f3; color: var(--accent2); }
-
-.card-edit-btn {
-  opacity: 0; transition: opacity .15s;
-  background: none; border: none; color: var(--muted); font-size: .75rem;
-  cursor: pointer; padding: 3px 8px; border-radius: 5px;
-  font-family: 'Noto Sans KR', sans-serif; font-weight: 600;
-}
-.card-edit-btn:hover { color: var(--accent); background: var(--accent-light); }
-.link-card:hover .card-edit-btn { opacity: 1; }
-.card-arrow { color: var(--muted); transition: transform .2s, color .2s; flex-shrink: 0; }
-.link-card:hover .card-arrow { transform: translateX(3px); color: var(--accent); }
+/* UPLOADER TAG */
+.uploader-tag{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;color:var(--muted);background:var(--surface2);padding:2px 7px;border-radius:100px;}
+.uploader-tag img{width:14px;height:14px;border-radius:50%;}
 
 /* ADD CARD */
-.add-card {
-  border: 1.5px dashed var(--border2); border-radius: var(--radius);
-  padding: 16px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-  color: var(--muted); font-size: .84rem; background: transparent;
-  font-family: 'Noto Sans KR', sans-serif; transition: all .2s; min-height: 100px;
-}
-.add-card:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.add-card{border:1.5px dashed var(--border2);border-radius:var(--radius);padding:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:100px;}
+.add-card:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+
+/* ── ADMIN PERSONAL SECTION ── */
+.admin-personal-section{display:none;margin-bottom:2.5rem;animation:fadeUp .3s ease both;}
+.admin-personal-section.visible{display:block;}
+.admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e 0%,#2d3250 100%);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none;}
+.admin-section-title{display:flex;align-items:center;gap:10px;color:white;font-size:1rem;font-weight:700;}
+.admin-lock-badge{background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;border:1px solid rgba(255,255,255,.15);letter-spacing:.04em;}
+.admin-section-body{background:#f4f5fb;border:1.5px solid #3a3f5c;border-top:none;border-radius:0 0 14px 14px;padding:16px;}
+.admin-link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.admin-link-card{background:#1e2238;border:1.5px solid #2e3354;border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;position:relative;overflow:hidden;}
+.admin-link-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#e8ff47;opacity:0;transition:opacity .2s;}
+.admin-link-card:hover{background:#252a45;border-color:#e8ff47;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.admin-link-card:hover::before{opacity:1;}
+.admin-card-row{display:flex;align-items:flex-start;gap:10px;}
+.admin-card-icon{width:36px;height:36px;border-radius:8px;background:rgba(232,255,71,.12);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;}
+.admin-card-name{font-size:.9rem;font-weight:700;color:#e8eaf5;line-height:1.3;}
+.admin-card-url{font-size:.7rem;color:#6b7099;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;}
+.admin-card-desc{font-size:.78rem;color:#8890b0;line-height:1.5;}
+.admin-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid #2e3354;margin-top:auto;}
+.admin-card-btn{opacity:0;transition:opacity .15s;background:none;border:none;cursor:pointer;padding:4px;border-radius:4px;display:flex;}
+.admin-link-card:hover .admin-card-btn{opacity:1;}
+.admin-card-delete{color:#6b7099;}
+.admin-card-delete:hover{color:#ff6b6b;}
+.admin-card-edit{color:#6b7099;font-size:.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:600;padding:3px 8px;border-radius:5px;}
+.admin-card-edit:hover{color:#e8ff47;background:rgba(232,255,71,.1);}
+.admin-card-arrow{color:#6b7099;transition:transform .2s,color .2s;}
+.admin-link-card:hover .admin-card-arrow{transform:translateX(3px);color:#e8ff47;}
+.admin-add-card{border:1.5px dashed #2e3354;border-radius:11px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#6b7099;font-size:.84rem;background:transparent;font-family:'Noto Sans KR',sans-serif;transition:all .2s;min-height:90px;}
+.admin-add-card:hover{border-color:#e8ff47;color:#e8ff47;background:rgba(232,255,71,.05);}
 
 /* MODAL */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(20,30,70,.35); backdrop-filter: blur(6px);
-  z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem;
-  opacity: 0; pointer-events: none; transition: opacity .2s;
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 20px; width: 100%; max-width: 500px; padding: 2rem;
-  transform: scale(.96) translateY(10px); transition: transform .2s;
-  box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;
-}
-.modal-overlay.open .modal { transform: scale(1) translateY(0); }
-.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
-.modal-title { font-size: 1.1rem; font-weight: 700; }
-.modal-close {
-  background: var(--bg); border: 1.5px solid var(--border); width: 32px; height: 32px;
-  border-radius: 8px; cursor: pointer; font-size: 1rem; color: var(--text2);
-  display: grid; place-items: center; transition: all .15s;
-}
-.modal-close:hover { background: var(--accent3-light); color: var(--accent3); border-color: var(--accent3); }
-.form-group { margin-bottom: 1rem; }
-.form-label { display: block; font-size: .82rem; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
-.form-input, .form-select, .form-textarea {
-  width: 100%; padding: 10px 14px; background: var(--bg);
-  border: 1.5px solid var(--border); border-radius: 9px; color: var(--text);
-  font-size: .9rem; font-family: 'Noto Sans KR', sans-serif;
-  outline: none; transition: border-color .2s, box-shadow .2s;
-}
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,84,199,.1); background: white;
-}
-.form-select option { background: white; }
-.form-textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.5rem; }
+.modal-overlay{position:fixed;inset:0;background:rgba(20,30,70,.35);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--white);border:1.5px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:2rem;transform:scale(.96) translateY(10px);transition:transform .2s;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;}
+.modal-overlay.open .modal{transform:scale(1) translateY(0);}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.modal-title{font-size:1.1rem;font-weight:700;}
+.modal-close{background:var(--bg);border:1.5px solid var(--border);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;color:var(--text2);display:grid;place-items:center;transition:all .15s;}
+.modal-close:hover{background:var(--accent3-light);color:var(--accent3);border-color:var(--accent3);}
+.form-group{margin-bottom:1rem;}
+.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:5px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;color:var(--text);font-size:.9rem;font-family:'Noto Sans KR',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,84,199,.1);background:white;}
+.form-select option{background:white;}
+.form-textarea{resize:vertical;min-height:72px;line-height:1.5;}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:1.5rem;}
 
 /* EMOJI GRID */
-.emoji-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; }
-.emoji-btn {
-  padding: 6px; border: 1.5px solid transparent;
-  background: var(--bg); font-size: 1.1rem; cursor: pointer; border-radius: 7px; transition: all .12s;
-}
-.emoji-btn:hover { background: var(--accent-light); }
-.emoji-btn.selected { border-color: var(--accent); background: var(--accent-light); }
+.emoji-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;}
+.emoji-btn{padding:6px;border:1.5px solid transparent;background:var(--bg);font-size:1.1rem;cursor:pointer;border-radius:7px;transition:all .12s;}
+.emoji-btn:hover{background:var(--accent-light);}
+.emoji-btn.selected{border-color:var(--accent);background:var(--accent-light);}
 
 /* COLOR SWATCHES */
-.color-row { display: flex; gap: 7px; flex-wrap: wrap; }
-.swatch {
-  width: 30px; height: 30px; border-radius: 8px; cursor: pointer;
-  border: 2.5px solid transparent; transition: transform .15s, border-color .15s;
-}
-.swatch:hover { transform: scale(1.12); }
-.swatch.selected { border-color: #333; box-shadow: 0 0 0 2px white inset; }
+.color-row{display:flex;gap:7px;flex-wrap:wrap;}
+.swatch{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2.5px solid transparent;transition:transform .15s,border-color .15s;}
+.swatch:hover{transform:scale(1.12);}
+.swatch.selected{border-color:#333;box-shadow:0 0 0 2px white inset;}
 
-/* EDIT CHIP */
-.edit-chip {
-  display: none; align-items: center; gap: 5px;
-  font-size: .75rem; font-weight: 700; color: var(--accent3);
-  background: var(--accent3-light); padding: 4px 11px;
-  border-radius: 100px; border: 1px solid #f0c0a8;
-}
-.edit-chip.on { display: flex; }
+/* PW MODAL */
+.pw-input-wrap input{letter-spacing:.2em;font-size:1.2rem;text-align:center;font-weight:700;}
+.pw-error{color:var(--accent3);font-size:.8rem;margin-top:6px;display:none;text-align:center;}
+.pw-error.show{display:block;}
 
 /* TOAST */
-.toast-wrap { position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-.toast {
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 12px; padding: 12px 18px; font-size: .875rem; font-weight: 500;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: var(--shadow); animation: slideIn .25s ease; max-width: 300px;
-}
-@keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
-.toast.success { border-left: 3px solid var(--accent2); }
-.toast.error { border-left: 3px solid var(--accent3); }
-.toast.info { border-left: 3px solid var(--accent); }
+.toast-wrap{position:fixed;bottom:2rem;right:2rem;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.toast{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:.875rem;font-weight:500;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);animation:slideIn .25s ease;max-width:300px;}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.toast.success{border-left:3px solid var(--accent2);}
+.toast.error{border-left:3px solid var(--accent3);}
+.toast.info{border-left:3px solid var(--accent);}
 
 /* NO RESULTS */
-.no-results { text-align: center; padding: 4rem 2rem; color: var(--muted); }
-.no-results .nr-icon { font-size: 3rem; margin-bottom: 1rem; opacity: .35; }
-
-/* ADMIN ONLY SECTION */
-.admin-section {
-  display: none;
-  margin-bottom: 2.5rem;
-  animation: fadeUp .3s ease both;
-}
-.admin-section.visible { display: block; }
-.admin-section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  background: linear-gradient(135deg, #1a1d2e 0%, #2d3250 100%);
-  border-radius: 14px 14px 0 0;
-  padding: 14px 20px;
-  border: 1.5px solid #3a3f5c;
-  border-bottom: none;
-}
-.admin-section-title {
-  display: flex; align-items: center; gap: 10px;
-  color: white; font-size: 1rem; font-weight: 700;
-}
-.admin-lock-badge {
-  background: rgba(255,255,255,.12); color: rgba(255,255,255,.7);
-  font-size: .7rem; font-weight: 700; padding: 3px 9px;
-  border-radius: 100px; border: 1px solid rgba(255,255,255,.15);
-  letter-spacing: .04em;
-}
-.admin-section-body {
-  background: #f4f5fb;
-  border: 1.5px solid #3a3f5c;
-  border-top: none;
-  border-radius: 0 0 14px 14px;
-  padding: 16px;
-}
-.admin-link-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;
-}
-.admin-link-card {
-  background: #1e2238;
-  border: 1.5px solid #2e3354;
-  border-radius: 11px; padding: 14px 16px;
-  cursor: pointer; transition: all .2s;
-  display: flex; flex-direction: column; gap: 8px;
-  text-decoration: none; color: inherit;
-  position: relative; overflow: hidden;
-}
-.admin-link-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: #e8ff47; opacity: 0; transition: opacity .2s;
-}
-.admin-link-card:hover { background: #252a45; border-color: #e8ff47; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.3); }
-.admin-link-card:hover::before { opacity: 1; }
-.admin-card-row { display: flex; align-items: flex-start; gap: 10px; }
-.admin-card-icon {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: rgba(232,255,71,.12); display: grid; place-items: center;
-  font-size: 1.1rem; flex-shrink: 0;
-}
-.admin-card-name { font-size: .9rem; font-weight: 700; color: #e8eaf5; line-height: 1.3; }
-.admin-card-url { font-size: .7rem; color: #6b7099; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
-.admin-card-desc { font-size: .78rem; color: #8890b0; line-height: 1.5; }
-.admin-card-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 8px; border-top: 1px solid #2e3354; margin-top: auto;
-}
-.admin-card-delete { opacity: 0; transition: opacity .15s; background: none; border: none; color: #6b7099; cursor: pointer; padding: 4px; border-radius: 4px; display: flex; }
-.admin-link-card:hover .admin-card-delete { opacity: 1; }
-.admin-card-delete:hover { color: #ff6b6b; }
-.admin-card-edit { opacity: 0; transition: opacity .15s; background: none; border: none; color: #6b7099; font-size: .75rem; cursor: pointer; padding: 3px 8px; border-radius: 5px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600; }
-.admin-link-card:hover .admin-card-edit { opacity: 1; }
-.admin-card-edit:hover { color: #e8ff47; background: rgba(232,255,71,.1); }
-.admin-card-arrow { color: #6b7099; transition: transform .2s, color .2s; }
-.admin-link-card:hover .admin-card-arrow { transform: translateX(3px); color: #e8ff47; }
-.admin-add-card {
-  border: 1.5px dashed #2e3354; border-radius: 11px; padding: 14px;
-  cursor: pointer; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 6px;
-  color: #6b7099; font-size: .84rem; background: transparent;
-  font-family: 'Noto Sans KR', sans-serif; transition: all .2s; min-height: 90px;
-}
-.admin-add-card:hover { border-color: #e8ff47; color: #e8ff47; background: rgba(232,255,71,.05); }
-
-/* ADMIN LOGIN MODAL */
-.pw-input-wrap input { letter-spacing: .2em; font-size: 1.2rem; text-align: center; font-weight: 700; }
-.pw-error { color: var(--accent3); font-size: .8rem; margin-top: 6px; display: none; text-align: center; }
-.pw-error.show { display: block; }
-.admin-badge {
-  display: none; align-items: center; gap: 5px;
-  font-size: .75rem; font-weight: 700; color: var(--accent2);
-  background: var(--accent2-light); padding: 4px 11px;
-  border-radius: 100px; border: 1px solid #a8e8d0; cursor: pointer;
-  white-space: nowrap;
-}
-.admin-badge.on { display: flex; }
+.no-results{text-align:center;padding:4rem 2rem;color:var(--muted);}
+.no-results .nr-icon{font-size:3rem;margin-bottom:1rem;opacity:.35;}
 
 /* FOOTER */
-.site-footer {
-  text-align: center;
-  padding: 2rem 1rem 2.5rem;
-  border-top: 1px solid var(--border);
-  margin-top: 2rem;
-  color: var(--muted);
-  font-size: .78rem;
-  letter-spacing: .02em;
-}
-.site-footer strong { color: var(--text2); font-weight: 600; }
+.site-footer{text-align:center;padding:2rem 1rem 2.5rem;border-top:1px solid var(--border);margin-top:2rem;color:var(--muted);font-size:.78rem;letter-spacing:.02em;}
+.site-footer strong{color:var(--text2);font-weight:600;}
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  main { padding: 1.25rem 1rem 4rem; }
-  .header-inner { padding: 0 1rem; }
-  .header-center { display: none; }
-  .hero-stats { display: none; }
-  .page-hero { padding: 1.5rem; }
-  .emoji-grid { grid-template-columns: repeat(7, 1fr); }
-  .header-actions .btn-outline { display: none; }
+/* ADMIN NOTE */
+.admin-link-note{display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354;}
+.admin-link-note span{font-size:.82rem;color:#8890b0;font-weight:600;}
+
+@media(max-width:768px){
+  main{padding:1.25rem 1rem 4rem;}
+  .header-inner{padding:0 1rem;}
+  .header-center{display:none;}
+  .hero-stats{display:none;}
+  .page-hero{padding:1.5rem;}
+  .emoji-grid{grid-template-columns:repeat(7,1fr);}
+  .header-actions .btn-outline{display:none;}
 }
 </style>
 </head>
 <body>
 
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="loading-logo">에이모</div>
+  <div class="spinner"></div>
+  <div class="loading-sub">로딩 중...</div>
+</div>
+
+<div id="appRoot" style="display:none">
 <div class="top-banner">🤖 에이모(AI모음) — 교사 · 행정실 전용 업무 링크 허브</div>
 
 <header>
@@ -499,28 +295,33 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
           <polyline points="9,22 9,12 15,12 15,22"/>
         </svg>
       </div>
-      <div class="logo-text-wrap">
+      <div>
         <div class="logo-text-main">에이모</div>
-        <div class="logo-text-sub" id="schoolName">AI모음</div>
+        <div class="logo-text-sub">AI모음</div>
       </div>
     </div>
-
     <div class="header-center">
       <div class="search-wrap">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <input type="text" id="searchInput" placeholder="링크 이름, 설명 검색…" oninput="renderAll()"/>
       </div>
     </div>
-
     <div class="header-actions">
       <span class="edit-chip" id="editChip">✏️ 편집 중</span>
-      <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="클릭하면 관리자 모드 종료">🔓 관리자 모드</span>
-      <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 사용 통계</button>
+      <span class="admin-badge" id="adminBadge" onclick="adminLogout()" title="클릭하면 관리자 모드 종료">🔓 관리자</span>
+      <button class="btn btn-outline btn-sm" id="statsBtn" onclick="toggleStats()">📊 통계</button>
       <button class="btn btn-outline btn-sm" id="adminLoginBtn" onclick="openAdminModal()">🔐 관리자</button>
       <button class="btn btn-outline btn-sm" id="editBtn" onclick="toggleEdit()" style="display:none">⚙️ 편집</button>
-      <button class="btn btn-primary btn-sm" id="addLinkBtn" onclick="openAddLink()" style="display:none">+ 링크 추가</button>
+      <button class="btn btn-primary btn-sm" id="addLinkBtnTop" onclick="openAddLink()" style="display:none">+ 링크</button>
+      <!-- USER -->
+      <div id="userArea" style="display:flex;align-items:center;gap:8px;display:none">
+        <img id="userPhoto" class="user-avatar" src="" onclick="signOutUser()" title="로그아웃"/>
+        <span class="user-name" id="userName"></span>
+      </div>
+      <button class="btn btn-google btn-sm" id="loginBtn" onclick="signInWithGoogle()">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google 로그인
+      </button>
     </div>
   </div>
 </header>
@@ -532,29 +333,30 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
       <p class="hero-sub">교사 · 행정실 업무에 필요한 모든 링크를 한 곳에서 관리하세요</p>
     </div>
     <div class="hero-stats">
-      <div class="stat-box">
-        <div class="stat-num" id="statCat">0</div>
-        <div class="stat-label">업무 분야</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num" id="statLink">0</div>
-        <div class="stat-label">등록 링크</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num" id="statClick">0</div>
-        <div class="stat-label">총 클릭</div>
-      </div>
+      <div class="stat-box"><div class="stat-num" id="statCat">0</div><div class="stat-label">업무 분야</div></div>
+      <div class="stat-box"><div class="stat-num" id="statLink">0</div><div class="stat-label">등록 링크</div></div>
+      <div class="stat-box"><div class="stat-num" id="statClick">0</div><div class="stat-label">총 클릭</div></div>
     </div>
   </div>
 
-  <!-- ADMIN ONLY SECTION -->
-  <div class="admin-section" id="adminSection">
+  <!-- LOGIN PROMPT (비로그인) -->
+  <div class="login-prompt" id="loginPrompt" style="display:none">
+    <h2>🔐 로그인하면 링크를 직접 등록할 수 있어요</h2>
+    <p>Google 계정으로 로그인하면 누구나 링크를 추가할 수 있습니다.<br>본인이 올린 링크는 본인만 삭제할 수 있어요.</p>
+    <button class="btn btn-google" onclick="signInWithGoogle()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Google 계정으로 로그인
+    </button>
+  </div>
+
+  <!-- ADMIN PERSONAL SECTION -->
+  <div class="admin-personal-section" id="adminPersonalSection">
     <div class="admin-section-header">
       <div class="admin-section-title">
-        🔒 관리자 전용 링크
+        🔒 관리자 개인 링크
         <span class="admin-lock-badge">ADMIN ONLY</span>
       </div>
-      <div style="display:flex;gap:6px" id="adminSectionActions">
+      <div id="adminPersonalActions" style="display:none">
         <button class="btn btn-sm" style="background:rgba(232,255,71,.15);color:#e8ff47;border:1px solid rgba(232,255,71,.3);font-size:.78rem" onclick="openAddAdminLink()">+ 링크 추가</button>
       </div>
     </div>
@@ -565,10 +367,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
 
   <!-- STATS PANEL -->
   <div class="stats-panel" id="statsPanel">
-    <div class="stats-panel-title">
-      📊 링크 사용 현황
-      <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순 정렬</span>
-    </div>
+    <div class="stats-panel-title">📊 링크 사용 현황 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순</span></div>
     <div id="statsTableWrap"></div>
   </div>
 
@@ -579,6 +378,12 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
   <div id="content"></div>
 </main>
 
+<footer class="site-footer">
+  <p><strong>구례</strong> &nbsp;|&nbsp; With AI</p>
+  <p style="margin-top:4px;font-size:.72rem;opacity:.6">에이모(AI모음) &copy; 2025</p>
+</footer>
+</div><!-- #appRoot -->
+
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- MODAL: ADMIN LOGIN -->
@@ -588,14 +393,11 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
       <div class="modal-title">🔐 관리자 로그인</div>
       <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
     </div>
-    <p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">
-      편집 기능은 관리자만 사용할 수 있습니다.<br>비밀번호를 입력하세요.
-    </p>
+    <p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">편집 기능은 관리자만 사용할 수 있습니다.<br>비밀번호를 입력하세요.</p>
     <div class="form-group">
       <label class="form-label">비밀번호</label>
       <div class="pw-input-wrap">
-        <input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20"
-          onkeydown="if(event.key==='Enter')checkPw()"/>
+        <input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPw()"/>
       </div>
       <div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div>
     </div>
@@ -606,7 +408,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
   </div>
 </div>
 
-<!-- MODAL: LINK -->
+<!-- MODAL: LINK ADD/EDIT -->
 <div class="modal-overlay" id="linkModal">
   <div class="modal">
     <div class="modal-header">
@@ -615,7 +417,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
     </div>
     <div class="form-group">
       <label class="form-label">링크 이름 <span style="color:var(--accent3)">*</span></label>
-      <input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인, 학교 홈페이지…"/>
+      <input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인…"/>
     </div>
     <div class="form-group">
       <label class="form-label">URL <span style="color:var(--accent3)">*</span></label>
@@ -625,8 +427,8 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
       <label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label>
       <select class="form-select" id="fCat"></select>
     </div>
-    <div id="adminLinkNote" style="display:none;margin-bottom:1rem;padding:10px 14px;background:#1e2238;border-radius:9px;border:1.5px solid #2e3354">
-      <span style="font-size:.82rem;color:#8890b0;font-weight:600">🔒 관리자 전용 링크 — 관리자 로그인 시에만 표시됩니다</span>
+    <div class="admin-link-note" id="adminLinkNote">
+      <span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span>
     </div>
     <div class="form-group">
       <label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label>
@@ -652,7 +454,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
     </div>
     <div class="form-group">
       <label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label>
-      <input class="form-input" id="fCatName" placeholder="예: 교무, 행정, 생활지도, 급식…"/>
+      <input class="form-input" id="fCatName" placeholder="예: 교무, 행정, 생활지도…"/>
     </div>
     <div class="form-group">
       <label class="form-label">색상</label>
@@ -665,124 +467,213 @@ main { max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 6rem; }
   </div>
 </div>
 
-<script>
-const SK = 'school-hub-v3';
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot,
+  query, orderBy, updateDoc, increment, getDoc, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// ── FIREBASE INIT ─────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyD8TTAOCUQelTo-PIe6tsno3Llsr2JjCyA",
+  authDomain: "aimo-20052.firebaseapp.com",
+  projectId: "aimo-20052",
+  storageBucket: "aimo-20052.firebasestorage.app",
+  messagingSenderId: "905838846324",
+  appId: "1:905838846324:web:2946669a4cb195e2decc21"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ── CONSTANTS ─────────────────────────────────────────
+const ADMIN_PW = '0425';
 const PALETTE = ['#2554c7','#0ea87e','#e05c2a','#8b42cc','#d4970a','#1098c4','#c42573','#3d8b40'];
 const CAT_BG = {'#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c2a':'#fdf0ea','#8b42cc':'#f5eefb','#d4970a':'#fdf6e0','#1098c4':'#e5f5fc','#c42573':'#fce8f2','#3d8b40':'#eaf5ea'};
 const getBg = c => CAT_BG[c] || '#f0f2f8';
+const EMOJIS = ['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
 
-const EMOJIS = [
-  '🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱',
-  '🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒',
-  '📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚',
-  '🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣',
-  '🗒️','🏃','📯','🗳️','📬','🖊️','📐','🧮','🎒',
-];
-
-let st = loadState();
+// ── STATE ─────────────────────────────────────────────
+let currentUser = null;
+let isAdmin = false;
 let editMode = false;
 let activeTab = 'all';
 let showStats = false;
-let editingLinkId = null;
-let editingCatId = null;
 let selColor = PALETTE[0];
 let selEmoji = EMOJIS[0];
+let editingLinkId = null;
+let editingAdminLinkId = null;
+let isAdminLinkMode = false;
 
-function loadState() {
-  try { const r = localStorage.getItem(SK); if (r) return JSON.parse(r); } catch(e) {}
-  return defaults();
+// Firestore data
+let categories = [];
+let links = [];
+let adminLinks = [];
+let clickData = {};
+
+// Unsubscribe handles
+let unsubCats, unsubLinks, unsubAdminLinks, unsubClicks;
+
+// ── AUTH ──────────────────────────────────────────────
+window.signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch(e) { toast('로그인 실패: ' + e.message, 'error'); }
+};
+
+window.signOutUser = async () => {
+  if (!confirm('로그아웃 하시겠습니까?')) return;
+  await signOut(auth);
+  toast('로그아웃 되었습니다', 'info');
+};
+
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  updateUserUI();
+  if (user) {
+    startListeners();
+  } else {
+    stopListeners();
+    categories = []; links = []; adminLinks = []; clickData = {};
+    renderAll();
+  }
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('appRoot').style.display = 'block';
+});
+
+function updateUserUI() {
+  const loginBtn = document.getElementById('loginBtn');
+  const userArea = document.getElementById('userArea');
+  const loginPrompt = document.getElementById('loginPrompt');
+
+  if (currentUser) {
+    loginBtn.style.display = 'none';
+    userArea.style.display = 'flex';
+    document.getElementById('userPhoto').src = currentUser.photoURL || '';
+    document.getElementById('userName').textContent = currentUser.displayName?.split(' ')[0] || '사용자';
+    loginPrompt.style.display = 'none';
+  } else {
+    loginBtn.style.display = '';
+    userArea.style.display = 'none';
+    loginPrompt.style.display = 'block';
+    // reset admin
+    isAdmin = false; editMode = false;
+    document.getElementById('adminBadge').classList.remove('on');
+    document.getElementById('adminLoginBtn').style.display = '';
+    document.getElementById('editBtn').style.display = 'none';
+    document.getElementById('addLinkBtnTop').style.display = 'none';
+    document.getElementById('editChip').classList.remove('on');
+  }
 }
 
-function defaults() {
-  return {
-    categories: [
-      { id:'c1', name:'교무·수업', color:'#2554c7' },
-      { id:'c2', name:'행정·문서', color:'#0ea87e' },
-      { id:'c3', name:'생활지도', color:'#e05c2a' },
-      { id:'c4', name:'학부모·민원', color:'#8b42cc' },
-    ],
-    links: [
-      { id:'l1', catId:'c1', name:'NEIS (나이스)', url:'https://www.neis.go.kr', desc:'교육행정정보시스템 — 성적, 출결, 학적 등', emoji:'🖥️' },
-      { id:'l2', catId:'c1', name:'학교 홈페이지', url:'https://www.school.go.kr', desc:'학교 공식 홈페이지', emoji:'🏫' },
-      { id:'l3', catId:'c1', name:'에듀넷', url:'https://www.edunet.net', desc:'교수·학습 자료 포털', emoji:'📚' },
-      { id:'l4', catId:'c2', name:'에듀파인', url:'https://edufine.go.kr', desc:'학교 회계·예산 시스템', emoji:'💰' },
-      { id:'l5', catId:'c2', name:'e-사람 (인사)', url:'https://esaram.go.kr', desc:'교원 인사 행정 시스템', emoji:'👨‍🏫' },
-      { id:'l6', catId:'c3', name:'학교폭력 신고', url:'https://safe182.go.kr', desc:'학교폭력 신고·상담센터', emoji:'🔔' },
-      { id:'l7', catId:'c4', name:'정부24', url:'https://gov.kr', desc:'민원 서비스 통합 포털', emoji:'📜' },
-    ],
-    clicks: {},
-    adminLinks: [
-      { id:'a1', name:'학교 관리자 시스템', url:'https://www.neis.go.kr', desc:'학교 전산망 관리자 페이지', emoji:'🖥️' },
-      { id:'a2', name:'서버 관리 콘솔', url:'https://admin.example.com', desc:'학교 서버 관리 콘솔', emoji:'⚙️' },
-      { id:'a3', name:'보안 관리 포털', url:'https://security.example.com', desc:'보안 및 접근 관리', emoji:'🔒' },
-    ],
-  };
+// ── FIRESTORE LISTENERS ───────────────────────────────
+function startListeners() {
+  // Categories
+  unsubCats = onSnapshot(
+    query(collection(db,'categories'), orderBy('order','asc')),
+    snap => {
+      categories = snap.docs.map(d => ({id:d.id,...d.data()}));
+      if (categories.length === 0) seedDefaultCategories();
+      renderAll();
+    }
+  );
+  // Links
+  unsubLinks = onSnapshot(
+    query(collection(db,'links'), orderBy('createdAt','desc')),
+    snap => {
+      links = snap.docs.map(d => ({id:d.id,...d.data()}));
+      renderAll();
+    }
+  );
+  // Admin links
+  unsubAdminLinks = onSnapshot(
+    query(collection(db,'adminLinks'), orderBy('createdAt','desc')),
+    snap => {
+      adminLinks = snap.docs.map(d => ({id:d.id,...d.data()}));
+      renderAdminSection();
+    }
+  );
+  // Clicks
+  unsubClicks = onSnapshot(doc(db,'meta','clicks'), snap => {
+    clickData = snap.exists() ? snap.data() : {};
+    renderAll();
+  });
 }
 
-function save() { localStorage.setItem(SK, JSON.stringify(st)); }
-// migrate: ensure adminLinks exists
-if (!st.adminLinks) st.adminLinks = [];
-function uid() { return Math.random().toString(36).slice(2,10); }
-function getClicks(id) { return (st.clicks && st.clicks[id]) || 0; }
-function totalClicks() { if (!st.clicks) return 0; return Object.values(st.clicks).reduce((s,v)=>s+v,0); }
+function stopListeners() {
+  [unsubCats, unsubLinks, unsubAdminLinks, unsubClicks].forEach(u => u && u());
+}
 
-// ── RENDER ──────────────────────────────────────────────
+// ── SEED DEFAULT CATEGORIES ───────────────────────────
+async function seedDefaultCategories() {
+  const defaults = [
+    {name:'교무·수업', color:'#2554c7', order:0},
+    {name:'행정·문서', color:'#0ea87e', order:1},
+    {name:'생활지도',  color:'#e05c2a', order:2},
+    {name:'학부모·민원', color:'#8b42cc', order:3},
+  ];
+  for (const c of defaults) await addDoc(collection(db,'categories'), c);
+}
+
+// ── RENDER ─────────────────────────────────────────────
 function renderAll() {
-  document.getElementById('schoolName').textContent = 'AI모음';
-  document.getElementById('statCat').textContent = st.categories.length;
-  document.getElementById('statLink').textContent = st.links.length;
-  document.getElementById('statClick').textContent = totalClicks();
+  document.getElementById('statCat').textContent = categories.length;
+  document.getElementById('statLink').textContent = links.length;
+  document.getElementById('statClick').textContent = Object.values(clickData).reduce((s,v)=>s+v,0);
   renderTabs();
   renderContent();
   renderAdminSection();
   if (showStats) renderStatsPanel();
 }
 
+function getClicks(id) { return clickData[id] || 0; }
+
 function renderTabs() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const bar = document.getElementById('tabBar');
-  const allN = st.links.filter(l => matchQ(l,q)).length;
+  const allN = links.filter(l => matchQ(l,q)).length;
 
   let h = `<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')"
-    style="${activeTab==='all'?'background:var(--accent)':''}">
-    전체 <span class="badge">${allN}</span>
-  </button><div class="tab-divider"></div>`;
+    style="${activeTab==='all'?'background:var(--accent)':''}"
+  >전체 <span class="badge">${allN}</span></button><div class="tab-divider"></div>`;
 
-  st.categories.forEach(c => {
-    const n = st.links.filter(l => l.catId===c.id && matchQ(l,q)).length;
-    const isActive = activeTab === c.id;
+  categories.forEach(c => {
+    const n = links.filter(l => l.catId===c.id && matchQ(l,q)).length;
+    const isActive = activeTab===c.id;
     h += `<button class="tab ${isActive?'active':''}" onclick="setTab('${c.id}')"
       style="${isActive?`background:${c.color};box-shadow:0 2px 8px ${c.color}44`:''}"
     >${c.name} <span class="badge">${n}</span></button>`;
   });
-
   if (editMode) h += `<button class="tab-add-btn" onclick="openAddCat()">+ 분야 추가</button>`;
   bar.innerHTML = h;
 }
 
 function matchQ(l, q) {
   if (!q) return true;
-  return (l.name + l.url + (l.desc||'')).toLowerCase().includes(q);
+  return (l.name+l.url+(l.desc||'')).toLowerCase().includes(q);
 }
 
 function renderContent() {
   const q = document.getElementById('searchInput').value.toLowerCase();
-  const cats = activeTab==='all' ? st.categories : st.categories.filter(c=>c.id===activeTab);
+  const cats = activeTab==='all' ? categories : categories.filter(c=>c.id===activeTab);
   const cont = document.getElementById('content');
   let h = ''; let total = 0;
 
   cats.forEach((cat, ci) => {
-    const links = st.links.filter(l => l.catId===cat.id && matchQ(l,q));
-    if (!editMode && links.length===0) return;
-    total += links.length;
+    const catLinks = links.filter(l => l.catId===cat.id && matchQ(l,q));
+    if (!editMode && catLinks.length===0) return;
+    total += catLinks.length;
 
     h += `<div class="cat-section" style="animation-delay:${ci*0.05}s">
       <div class="cat-header">
         <div class="cat-title-row">
           <div class="cat-stripe" style="background:${cat.color}"></div>
           <span class="cat-name">${cat.name}</span>
-          <span class="cat-count">${links.length}개</span>
+          <span class="cat-count">${catLinks.length}개</span>
         </div>
         ${editMode?`<div class="cat-actions">
           <button class="btn btn-outline btn-sm" onclick="openEditCat('${cat.id}')">수정</button>
@@ -790,8 +681,8 @@ function renderContent() {
         </div>`:''}
       </div>
       <div class="link-grid">
-        ${links.map(l => cardHTML(l, cat)).join('')}
-        ${editMode?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')">
+        ${catLinks.map(l => cardHTML(l, cat)).join('')}
+        ${currentUser?`<button class="add-card" onclick="openAddLinkFor('${cat.id}')">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
           링크 추가
         </button>`:''}
@@ -799,20 +690,27 @@ function renderContent() {
     </div>`;
   });
 
-  if (total===0 && !editMode) {
-    h = `<div class="no-results">
-      <div class="nr-icon">🔍</div>
+  if (total===0 && !editMode && categories.length > 0) {
+    h = `<div class="no-results"><div class="nr-icon">🔍</div>
       <div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div>
-      <div style="font-size:.84rem">다른 검색어를 입력해보세요</div>
-    </div>`;
+      <div style="font-size:.84rem">다른 검색어를 입력해보세요</div></div>`;
   }
   cont.innerHTML = h;
 }
 
 function cardHTML(l, cat) {
   const n = getClicks(l.id);
-  const hotClass = n >= 20 ? 'hot' : n >= 5 ? 'warm' : '';
-  const icon = n >= 20 ? '🔥' : n >= 5 ? '✨' : '👁️';
+  const hotClass = n>=20?'hot':n>=5?'warm':'';
+  const icon = n>=20?'🔥':n>=5?'✨':'👁️';
+  const isOwner = currentUser && currentUser.uid === l.uploaderId;
+  const canDelete = isAdmin || isOwner;
+  const canEdit = isAdmin || isOwner;
+
+  const uploaderTag = l.uploaderName
+    ? `<span class="uploader-tag">
+        ${l.uploaderPhoto?`<img src="${l.uploaderPhoto}" onerror="this.style.display='none'">`:''}
+        ${l.uploaderName}
+      </span>` : '';
 
   return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener"
     style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}"
@@ -823,14 +721,17 @@ function cardHTML(l, cat) {
         <div class="card-name">${l.name}</div>
         <div class="card-url">${l.url}</div>
       </div>
-      ${editMode?`<button class="card-delete-btn" onclick="event.stopPropagation();deleteLink('${l.id}')" title="삭제">
+      ${canDelete?`<button class="card-action-btn" onclick="event.stopPropagation();deleteLink('${l.id}')" title="삭제">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>`:''}
     </div>
     ${l.desc?`<div class="card-desc">${l.desc}</div>`:''}
     <div class="card-footer">
-      <span class="click-pill ${hotClass}">${icon} ${n}회 사용</span>
-      ${editMode
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="click-pill ${hotClass}">${icon} ${n}회</span>
+        ${uploaderTag}
+      </div>
+      ${canEdit&&editMode
         ?`<button class="card-edit-btn" onclick="event.stopPropagation();openEditLink('${l.id}')">수정</button>`
         :`<svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
       }
@@ -838,106 +739,42 @@ function cardHTML(l, cat) {
   </a>`;
 }
 
-function handleClick(e, id) {
+async function handleClick(e, id) {
   if (editMode) { e.preventDefault(); return; }
-  if (!st.clicks) st.clicks = {};
-  st.clicks[id] = (st.clicks[id]||0) + 1;
-  save();
-  document.getElementById('statClick').textContent = totalClicks();
-  if (showStats) renderStatsPanel();
-  // Update the pill on this card without full re-render
-  const n = st.clicks[id];
-  const hotClass = n>=20?'hot':n>=5?'warm':'';
-  const icon = n>=20?'🔥':n>=5?'✨':'👁️';
-  e.currentTarget.querySelector('.click-pill').className = `click-pill ${hotClass}`;
-  e.currentTarget.querySelector('.click-pill').textContent = `${icon} ${n}회 사용`;
+  try {
+    await setDoc(doc(db,'meta','clicks'), {[id]: increment(1)}, {merge:true});
+  } catch(err) {}
 }
 
-// ── STATS PANEL ──────────────────────────────────────────
-function toggleStats() {
-  showStats = !showStats;
-  document.getElementById('statsPanel').classList.toggle('open', showStats);
-  document.getElementById('statsBtn').textContent = showStats ? '📊 통계 닫기' : '📊 사용 통계';
-  if (showStats) renderStatsPanel();
-}
-
-function renderStatsPanel() {
-  const sorted = [...st.links].sort((a,b) => getClicks(b.id) - getClicks(a.id));
-  const max = sorted.length > 0 ? getClicks(sorted[0].id) : 0;
-
-  if (max === 0) {
-    document.getElementById('statsTableWrap').innerHTML =
-      `<div class="stats-zero">아직 클릭 기록이 없습니다. 링크를 클릭하면 사용 통계가 집계됩니다.</div>`;
-    return;
-  }
-
-  let h = `<table class="stats-table">
-    <thead><tr>
-      <th style="width:44px">순위</th>
-      <th>링크 이름</th>
-      <th style="width:120px">분야</th>
-      <th>사용 빈도</th>
-      <th style="width:70px">횟수</th>
-    </tr></thead><tbody>`;
-
-  sorted.forEach((l, i) => {
-    const cat = st.categories.find(c => c.id===l.catId) || {name:'(없음)',color:'#ccc'};
-    const n = getClicks(l.id);
-    const pct = max>0 ? Math.round(n/max*100) : 0;
-    const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
-    h += `<tr>
-      <td><span class="rank-badge ${rankCls}">${i+1}</span></td>
-      <td><strong style="color:var(--text)">${l.emoji||''} ${l.name}</strong></td>
-      <td>
-        <span style="display:inline-flex;align-items:center;gap:5px;font-size:.82rem">
-          <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;flex-shrink:0"></span>
-          ${cat.name}
-        </span>
-      </td>
-      <td>
-        <div class="bar-wrap">
-          <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cat.color}"></div></div>
-        </div>
-      </td>
-      <td><strong style="color:${cat.color}">${n}회</strong></td>
-    </tr>`;
-  });
-
-  h += `</tbody></table>`;
-  document.getElementById('statsTableWrap').innerHTML = h;
-}
-
-// ── ADMIN SECTION ────────────────────────────────────────
+// ── ADMIN PERSONAL SECTION ─────────────────────────────
 function renderAdminSection() {
-  const sec = document.getElementById('adminSection');
+  const sec = document.getElementById('adminPersonalSection');
   const grid = document.getElementById('adminLinkGrid');
+  const actions = document.getElementById('adminPersonalActions');
   if (!isAdmin) { sec.classList.remove('visible'); return; }
   sec.classList.add('visible');
+  actions.style.display = editMode ? 'flex' : 'none';
 
-  const links = st.adminLinks || [];
-  let h = links.map(l => adminCardHTML(l)).join('');
+  let h = adminLinks.map(l => adminCardHTML(l)).join('');
   if (editMode) {
     h += `<button class="admin-add-card" onclick="openAddAdminLink()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
       링크 추가
     </button>`;
   }
-  grid.innerHTML = h;
-
-  // show/hide add button in header
-  document.getElementById('adminSectionActions').style.display = editMode ? 'flex' : 'none';
+  grid.innerHTML = h || `<div style="color:#6b7099;font-size:.84rem;padding:1rem">아직 등록된 관리자 링크가 없습니다.</div>`;
 }
 
 function adminCardHTML(l) {
   return `<a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener"
-    onclick="handleAdminClick(event,'${l.id}')">
+    onclick="if(editMode){event.preventDefault();}">
     <div class="admin-card-row">
       <div class="admin-card-icon">${l.emoji||'🔗'}</div>
       <div class="card-title-group">
         <div class="admin-card-name">${l.name}</div>
         <div class="admin-card-url">${l.url}</div>
       </div>
-      ${editMode?`<button class="admin-card-delete" onclick="event.stopPropagation();deleteAdminLink('${l.id}')">
+      ${editMode?`<button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();deleteAdminLink('${l.id}')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>`:''}
     </div>
@@ -945,247 +782,288 @@ function adminCardHTML(l) {
     <div class="admin-card-footer">
       <span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>
       ${editMode
-        ?`<button class="admin-card-edit" onclick="event.stopPropagation();openEditAdminLink('${l.id}')">수정</button>`
+        ?`<button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();openEditAdminLink('${l.id}')">수정</button>`
         :`<svg class="admin-card-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`
       }
     </div>
   </a>`;
 }
 
-function handleAdminClick(e, id) {
-  if (editMode) { e.preventDefault(); return; }
+// ── STATS ──────────────────────────────────────────────
+window.toggleStats = () => {
+  showStats = !showStats;
+  document.getElementById('statsPanel').classList.toggle('open', showStats);
+  document.getElementById('statsBtn').textContent = showStats ? '📊 닫기' : '📊 통계';
+  if (showStats) renderStatsPanel();
+};
+
+function renderStatsPanel() {
+  const sorted = [...links].sort((a,b) => getClicks(b.id)-getClicks(a.id));
+  const max = sorted.length>0 ? getClicks(sorted[0].id) : 0;
+  if (max===0) {
+    document.getElementById('statsTableWrap').innerHTML = `<div style="text-align:center;padding:2rem;color:var(--muted);font-size:.875rem">아직 클릭 기록이 없습니다.</div>`;
+    return;
+  }
+  let h = `<table class="stats-table"><thead><tr>
+    <th style="width:44px">순위</th><th>링크 이름</th><th style="width:120px">분야</th>
+    <th>사용 빈도</th><th style="width:70px">횟수</th>
+  </tr></thead><tbody>`;
+  sorted.forEach((l,i) => {
+    const cat = categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};
+    const n = getClicks(l.id);
+    const pct = max>0?Math.round(n/max*100):0;
+    const rk = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+    h += `<tr><td><span class="rank-badge ${rk}">${i+1}</span></td>
+      <td><strong>${l.emoji||''} ${l.name}</strong></td>
+      <td><span style="display:inline-flex;align-items:center;gap:5px;font-size:.82rem">
+        <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block"></span>${cat.name}
+      </span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${cat.color}"></div></div></div></td>
+      <td><strong style="color:${cat.color}">${n}회</strong></td>
+    </tr>`;
+  });
+  h += `</tbody></table>`;
+  document.getElementById('statsTableWrap').innerHTML = h;
 }
 
-let editingAdminLinkId = null;
-
-function openAddAdminLink() {
-  editingAdminLinkId = null; selEmoji = EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent = '🔒 관리자 링크 추가';
-  ['fName','fUrl','fDesc'].forEach(id => document.getElementById(id).value='');
-  // hide category select, show admin note
-  document.getElementById('fCatGroup').style.display = 'none';
-  document.getElementById('adminLinkNote').style.display = 'block';
-  buildEmojiGrid();
-  openM('linkModal');
-}
-
-function openEditAdminLink(id) {
-  const l = (st.adminLinks||[]).find(x=>x.id===id); if(!l) return;
-  editingAdminLinkId = id; selEmoji = l.emoji||EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent = '🔒 관리자 링크 수정';
-  document.getElementById('fName').value = l.name;
-  document.getElementById('fUrl').value = l.url;
-  document.getElementById('fDesc').value = l.desc||'';
-  document.getElementById('fCatGroup').style.display = 'none';
-  document.getElementById('adminLinkNote').style.display = 'block';
-  buildEmojiGrid();
-  openM('linkModal');
-}
-
-function deleteAdminLink(id) {
-  const l = (st.adminLinks||[]).find(x=>x.id===id);
-  if(!confirm(`"${l?.name}" 링크를 삭제할까요?`)) return;
-  st.adminLinks = (st.adminLinks||[]).filter(x=>x.id!==id);
-  save(); renderAdminSection(); toast('삭제되었습니다');
-}
-
-// ── ADMIN AUTH ────────────────────────────────────────────
-const ADMIN_PW = '0425';
-let isAdmin = false;
-
-function openAdminModal() {
-  document.getElementById('pwInput').value = '';
+// ── ADMIN AUTH ─────────────────────────────────────────
+const ADMIN_PW_VAL = '0425';
+window.openAdminModal = () => {
+  document.getElementById('pwInput').value='';
   document.getElementById('pwError').classList.remove('show');
   openM('adminModal');
-  setTimeout(() => document.getElementById('pwInput').focus(), 200);
-}
-
-function checkPw() {
-  const val = document.getElementById('pwInput').value;
-  if (val === ADMIN_PW) {
-    isAdmin = true;
+  setTimeout(()=>document.getElementById('pwInput').focus(),200);
+};
+window.checkPw = () => {
+  if (document.getElementById('pwInput').value === ADMIN_PW_VAL) {
+    isAdmin=true;
     closeModal('adminModal');
-    document.getElementById('adminLoginBtn').style.display = 'none';
+    document.getElementById('adminLoginBtn').style.display='none';
     document.getElementById('adminBadge').classList.add('on');
-    document.getElementById('editBtn').style.display = '';
-    document.getElementById('addLinkBtn').style.display = '';
-    toast('관리자 모드로 로그인되었습니다 🔓', 'success');
+    document.getElementById('editBtn').style.display='';
+    document.getElementById('addLinkBtnTop').style.display='';
+    toast('관리자 모드 활성화 🔓','success');
+    renderAll();
   } else {
     document.getElementById('pwError').classList.add('show');
-    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').value='';
     document.getElementById('pwInput').focus();
   }
-}
-
-function adminLogout() {
+};
+window.adminLogout = () => {
   if (!confirm('관리자 모드를 종료할까요?')) return;
-  isAdmin = false;
-  editMode = false;
+  isAdmin=false; editMode=false;
   document.getElementById('adminBadge').classList.remove('on');
-  document.getElementById('adminLoginBtn').style.display = '';
-  document.getElementById('editBtn').style.display = 'none';
-  document.getElementById('addLinkBtn').style.display = 'none';
+  document.getElementById('adminLoginBtn').style.display='';
+  document.getElementById('editBtn').style.display='none';
+  document.getElementById('addLinkBtnTop').style.display='none';
   document.getElementById('editChip').classList.remove('on');
-  document.getElementById('editBtn').textContent = '⚙️ 편집';
-  toast('관리자 모드가 종료되었습니다', 'info');
+  document.getElementById('editBtn').textContent='⚙️ 편집';
+  toast('관리자 모드 종료','info');
   renderAll();
-}
+};
 
-// ── EDIT MODE ────────────────────────────────────────────
-function toggleEdit() {
-  if (!isAdmin) { openAdminModal(); return; }
-  editMode = !editMode;
-  document.getElementById('editChip').classList.toggle('on', editMode);
-  document.getElementById('editBtn').textContent = editMode ? '✅ 완료' : '⚙️ 편집';
+// ── EDIT MODE ──────────────────────────────────────────
+window.toggleEdit = () => {
+  if (!isAdmin) { window.openAdminModal(); return; }
+  editMode=!editMode;
+  document.getElementById('editChip').classList.toggle('on',editMode);
+  document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';
   renderAll();
-}
+};
 
-function setTab(id) { activeTab = id; renderAll(); }
-
-// ── LINK MODAL ───────────────────────────────────────────
+// ── LINK CRUD ──────────────────────────────────────────
 function buildEmojiGrid() {
-  document.getElementById('emojiGrid').innerHTML = EMOJIS.map(e =>
+  document.getElementById('emojiGrid').innerHTML = EMOJIS.map(e=>
     `<button class="emoji-btn ${e===selEmoji?'selected':''}" onclick="pickEmoji('${e}')">${e}</button>`
   ).join('');
 }
-function pickEmoji(e) { selEmoji=e; buildEmojiGrid(); }
+window.pickEmoji = e => { selEmoji=e; buildEmojiGrid(); };
 
 function fillCatSelect(presel) {
-  document.getElementById('fCat').innerHTML = st.categories.map(c =>
+  document.getElementById('fCat').innerHTML = categories.map(c=>
     `<option value="${c.id}" ${c.id===presel?'selected':''}>${c.name}</option>`
   ).join('');
 }
 
-function openAddLink() {
-  if (!isAdmin) { openAdminModal(); return; }
-  editingLinkId = null; editingAdminLinkId = null; selEmoji = EMOJIS[0];
-  document.getElementById('linkModalTitle').textContent = '링크 추가';
-  ['fName','fUrl','fDesc'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('fCatGroup').style.display = '';
-  document.getElementById('adminLinkNote').style.display = 'none';
-  fillCatSelect(st.categories[0]?.id);
+window.openAddLink = () => {
+  if (!currentUser) { toast('로그인이 필요합니다','error'); return; }
+  editingLinkId=null; editingAdminLinkId=null; isAdminLinkMode=false;
+  selEmoji=EMOJIS[0];
+  document.getElementById('linkModalTitle').textContent='링크 추가';
+  ['fName','fUrl','fDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fCatGroup').style.display='';
+  document.getElementById('adminLinkNote').style.display='none';
+  fillCatSelect(categories[0]?.id);
   buildEmojiGrid();
   openM('linkModal');
-}
+};
 
-function openAddLinkFor(catId) { openAddLink(); fillCatSelect(catId); }
+window.openAddLinkFor = catId => {
+  window.openAddLink();
+  fillCatSelect(catId);
+};
 
-function openEditLink(id) {
-  const l = st.links.find(x=>x.id===id); if(!l) return;
-  editingLinkId=id; editingAdminLinkId=null; selEmoji=l.emoji||EMOJIS[0];
+window.openEditLink = id => {
+  const l = links.find(x=>x.id===id); if(!l) return;
+  editingLinkId=id; editingAdminLinkId=null; isAdminLinkMode=false;
+  selEmoji=l.emoji||EMOJIS[0];
   document.getElementById('linkModalTitle').textContent='링크 수정';
   document.getElementById('fName').value=l.name;
   document.getElementById('fUrl').value=l.url;
   document.getElementById('fDesc').value=l.desc||'';
-  document.getElementById('fCatGroup').style.display = '';
-  document.getElementById('adminLinkNote').style.display = 'none';
+  document.getElementById('fCatGroup').style.display='';
+  document.getElementById('adminLinkNote').style.display='none';
   fillCatSelect(l.catId);
   buildEmojiGrid();
   openM('linkModal');
-}
+};
 
-function saveLink() {
-  const name = document.getElementById('fName').value.trim();
-  let url = document.getElementById('fUrl').value.trim();
-  const desc = document.getElementById('fDesc').value.trim();
-  if (!name||!url) { toast('이름과 URL을 입력하세요','error'); return; }
-  if (!/^https?:\/\//i.test(url)) url='https://'+url;
+window.openAddAdminLink = () => {
+  editingLinkId=null; editingAdminLinkId=null; isAdminLinkMode=true;
+  selEmoji=EMOJIS[0];
+  document.getElementById('linkModalTitle').textContent='🔒 관리자 개인 링크 추가';
+  ['fName','fUrl','fDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fCatGroup').style.display='none';
+  document.getElementById('adminLinkNote').style.display='block';
+  buildEmojiGrid();
+  openM('linkModal');
+};
 
-  // admin link mode
-  if (editingAdminLinkId !== undefined && document.getElementById('adminLinkNote').style.display !== 'none') {
-    if (!st.adminLinks) st.adminLinks = [];
-    if (editingAdminLinkId) {
-      const i = st.adminLinks.findIndex(x=>x.id===editingAdminLinkId);
-      if(i!==-1) st.adminLinks[i]={...st.adminLinks[i],name,url,desc,emoji:selEmoji};
-      toast('관리자 링크가 수정되었습니다 ✓');
+window.openEditAdminLink = id => {
+  const l = adminLinks.find(x=>x.id===id); if(!l) return;
+  editingLinkId=null; editingAdminLinkId=id; isAdminLinkMode=true;
+  selEmoji=l.emoji||EMOJIS[0];
+  document.getElementById('linkModalTitle').textContent='🔒 관리자 개인 링크 수정';
+  document.getElementById('fName').value=l.name;
+  document.getElementById('fUrl').value=l.url;
+  document.getElementById('fDesc').value=l.desc||'';
+  document.getElementById('fCatGroup').style.display='none';
+  document.getElementById('adminLinkNote').style.display='block';
+  buildEmojiGrid();
+  openM('linkModal');
+};
+
+window.saveLink = async () => {
+  const name=document.getElementById('fName').value.trim();
+  let url=document.getElementById('fUrl').value.trim();
+  const desc=document.getElementById('fDesc').value.trim();
+  if(!name||!url){toast('이름과 URL을 입력하세요','error');return;}
+  if(!/^https?:\/\//i.test(url)) url='https://'+url;
+
+  try {
+    if (isAdminLinkMode) {
+      // Admin personal link
+      const data = {name,url,desc,emoji:selEmoji,createdAt:Date.now()};
+      if (editingAdminLinkId) {
+        await setDoc(doc(db,'adminLinks',editingAdminLinkId),data,{merge:true});
+        toast('수정되었습니다 ✓');
+      } else {
+        await addDoc(collection(db,'adminLinks'),data);
+        toast('관리자 링크가 추가되었습니다 ✓');
+      }
     } else {
-      st.adminLinks.push({id:uid(),name,url,desc,emoji:selEmoji});
-      toast('관리자 링크가 추가되었습니다 ✓');
+      // General link
+      const catId=document.getElementById('fCat').value;
+      const data = {
+        name,url,desc,emoji:selEmoji,catId,createdAt:Date.now(),
+        uploaderId:currentUser.uid,
+        uploaderName:currentUser.displayName?.split(' ')[0]||'',
+        uploaderPhoto:currentUser.photoURL||''
+      };
+      if (editingLinkId) {
+        await setDoc(doc(db,'links',editingLinkId),data,{merge:true});
+        toast('링크가 수정되었습니다 ✓');
+      } else {
+        await addDoc(collection(db,'links'),data);
+        toast('링크가 추가되었습니다 ✓');
+      }
     }
-    save(); closeModal('linkModal');
-    // reset modal state
-    document.getElementById('fCatGroup').style.display = '';
-    document.getElementById('adminLinkNote').style.display = 'none';
-    editingAdminLinkId = null;
-    renderAdminSection(); return;
-  }
+    closeModal('linkModal');
+  } catch(e) { toast('오류: '+e.message,'error'); }
+};
 
-  const catId = document.getElementById('fCat').value;
-  if (editingLinkId) {
-    const i=st.links.findIndex(x=>x.id===editingLinkId);
-    if(i!==-1) st.links[i]={...st.links[i],name,url,catId,desc,emoji:selEmoji};
-    toast('링크가 수정되었습니다 ✓');
-  } else {
-    st.links.push({id:uid(),catId,name,url,desc,emoji:selEmoji});
-    toast('링크가 추가되었습니다 ✓');
-  }
-  save(); closeModal('linkModal'); renderAll();
-}
+window.deleteLink = async id => {
+  const l = links.find(x=>x.id===id); if(!l) return;
+  const isOwner = currentUser && currentUser.uid===l.uploaderId;
+  if (!isAdmin && !isOwner) { toast('본인이 올린 링크만 삭제할 수 있습니다','error'); return; }
+  if (!confirm(`"${l.name}" 링크를 삭제할까요?`)) return;
+  try {
+    await deleteDoc(doc(db,'links',id));
+    toast('삭제되었습니다');
+  } catch(e) { toast('오류: '+e.message,'error'); }
+};
 
-function deleteLink(id) {
-  const l=st.links.find(x=>x.id===id);
-  if(!confirm(`"${l?.name}" 링크를 삭제할까요?`)) return;
-  st.links=st.links.filter(x=>x.id!==id);
-  if(st.clicks) delete st.clicks[id];
-  save(); renderAll(); toast('삭제되었습니다');
-}
+window.deleteAdminLink = async id => {
+  const l = adminLinks.find(x=>x.id===id); if(!l) return;
+  if (!confirm(`"${l.name}" 링크를 삭제할까요?`)) return;
+  try {
+    await deleteDoc(doc(db,'adminLinks',id));
+    toast('삭제되었습니다');
+  } catch(e) { toast('오류: '+e.message,'error'); }
+};
 
-// ── CATEGORY MODAL ───────────────────────────────────────
+// ── CATEGORY CRUD ──────────────────────────────────────
 function buildColorRow() {
-  document.getElementById('colorRow').innerHTML = PALETTE.map(c =>
+  document.getElementById('colorRow').innerHTML = PALETTE.map(c=>
     `<div class="swatch ${c===selColor?'selected':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`
   ).join('');
 }
-function pickColor(c) { selColor=c; buildColorRow(); }
+window.pickColor = c => { selColor=c; buildColorRow(); };
 
-function openAddCat() {
+let editingCatId=null;
+window.openAddCat = () => {
   editingCatId=null; selColor=PALETTE[0];
   document.getElementById('catModalTitle').textContent='업무 분야 추가';
   document.getElementById('fCatName').value='';
   buildColorRow(); openM('catModal');
-}
-
-function openEditCat(id) {
-  const c=st.categories.find(x=>x.id===id); if(!c) return;
+};
+window.openEditCat = id => {
+  const c=categories.find(x=>x.id===id); if(!c) return;
   editingCatId=id; selColor=c.color;
   document.getElementById('catModalTitle').textContent='업무 분야 수정';
   document.getElementById('fCatName').value=c.name;
   buildColorRow(); openM('catModal');
-}
-
-function saveCat() {
+};
+window.saveCat = async () => {
   const name=document.getElementById('fCatName').value.trim();
   if(!name){toast('분야 이름을 입력하세요','error');return;}
-  if(editingCatId){
-    const i=st.categories.findIndex(x=>x.id===editingCatId);
-    if(i!==-1) st.categories[i]={...st.categories[i],name,color:selColor};
-    toast('분야가 수정되었습니다 ✓');
-  } else {
-    st.categories.push({id:uid(),name,color:selColor});
-    toast('분야가 추가되었습니다 ✓');
-  }
-  save(); closeModal('catModal'); renderAll();
-}
-
-function deleteCat(id) {
-  const c=st.categories.find(x=>x.id===id);
-  const n=st.links.filter(l=>l.catId===id).length;
+  try {
+    if(editingCatId){
+      await setDoc(doc(db,'categories',editingCatId),{name,color:selColor},{merge:true});
+      toast('분야가 수정되었습니다 ✓');
+    } else {
+      await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length});
+      toast('분야가 추가되었습니다 ✓');
+    }
+    closeModal('catModal');
+  } catch(e){toast('오류: '+e.message,'error');}
+};
+window.deleteCat = async id => {
+  const c=categories.find(x=>x.id===id);
+  const n=links.filter(l=>l.catId===id).length;
   if(!confirm(`"${c?.name}" 분야를 삭제할까요?\n포함된 링크 ${n}개도 함께 삭제됩니다.`)) return;
-  st.categories=st.categories.filter(x=>x.id!==id);
-  st.links=st.links.filter(l=>l.catId!==id);
-  if(activeTab===id) activeTab='all';
-  save(); renderAll(); toast('삭제되었습니다');
-}
+  try {
+    await deleteDoc(doc(db,'categories',id));
+    const toDelete=links.filter(l=>l.catId===id);
+    for(const l of toDelete) await deleteDoc(doc(db,'links',l.id));
+    if(activeTab===id) activeTab='all';
+    toast('삭제되었습니다');
+  } catch(e){toast('오류: '+e.message,'error');}
+};
 
-// ── MODAL HELPERS ────────────────────────────────────────
-function openM(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+// ── TABS & NAV ─────────────────────────────────────────
+window.setTab = id => { activeTab=id; renderAll(); };
+
+// ── MODAL HELPERS ──────────────────────────────────────
+window.openM = id => document.getElementById(id).classList.add('open');
+window.closeModal = id => document.getElementById(id).classList.remove('open');
 document.querySelectorAll('.modal-overlay').forEach(el=>{
   el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('open'); });
 });
 
-// ── TOAST ─────────────────────────────────────────────────
-function toast(msg, type='success'){
+// ── TOAST ──────────────────────────────────────────────
+window.toast = (msg,type='success') => {
   const w=document.getElementById('toastWrap');
   const t=document.createElement('div');
   t.className=`toast ${type}`;
@@ -1193,13 +1071,7 @@ function toast(msg, type='success'){
   t.innerHTML=`<span>${icon}</span><span>${msg}</span>`;
   w.appendChild(t);
   setTimeout(()=>t.remove(),3000);
-}
-
-renderAll();
+};
 </script>
-  <footer class="site-footer">
-    <p><strong>구례</strong> &nbsp;|&nbsp; With AI</p>
-    <p style="margin-top:4px;font-size:.72rem;opacity:.6">에이모(AI모음) &copy; 2025</p>
-  </footer>
 </body>
 </html>
