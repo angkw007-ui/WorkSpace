@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -93,8 +92,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .tab-divider{width:1px;height:22px;background:var(--border);margin:0 2px;flex-shrink:0}
 .tab-add-btn{margin-left:auto;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .tab-add-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
-
-/* ★ 카드 간격 축소 */
 .cat-section{margin-bottom:1.5rem;animation:fadeUp .3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
@@ -147,7 +144,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .prompt-detail-box{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.88rem;color:var(--text);line-height:1.7;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow-y:auto}
 .prompt-copy-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--white);color:var(--text2);font-family:'Noto Sans KR',sans-serif;transition:all .15s}
 .prompt-copy-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
-/* ADMIN SECTION */
 .admin-personal-section{display:none;margin-bottom:1.5rem;animation:fadeUp .3s ease both}
 .admin-personal-section.visible{display:block}
 .admin-section-header{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#1a1d2e,#2d3250);border-radius:14px 14px 0 0;padding:14px 20px;border:1.5px solid #3a3f5c;border-bottom:none}
@@ -232,7 +228,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .cat-manage-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 .cat-manage-btn.delete{border-color:transparent;color:var(--muted)}
 .cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light)}
-/* 드래그&드롭 */
 .link-grid.edit-mode-grid{outline:2px dashed var(--border2);outline-offset:4px;border-radius:var(--radius);min-height:80px;transition:outline-color .2s,background .2s}
 .link-grid.edit-mode-grid.drag-over-grid{outline-color:var(--purple);background:rgba(124,58,237,.04)}
 .link-card.drag-source{opacity:.3;pointer-events:none}
@@ -240,15 +235,12 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .drag-ghost-el .dg-icon{font-size:1.3rem}
 .drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600}
 .drag-mode-hint.on{display:flex}
-/* 분야 잠금 */
 .cat-lock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;margin-left:4px}
 .lock-overlay-card{position:relative}
 .lock-overlay-card::after{content:'🔒';position:absolute;inset:0;background:rgba(255,251,235,.85);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:var(--radius);backdrop-filter:blur(2px)}
-/* 뷰 토글 */
 .view-toggle-wrap{display:flex;align-items:center;gap:4px;background:var(--surface2);border-radius:8px;padding:3px;flex-shrink:0}
 .view-btn{padding:5px 10px;border:none;background:none;border-radius:6px;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:4px;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
 .view-btn.active{background:var(--white);color:var(--purple);box-shadow:var(--shadow-sm)}
-/* 게시판 뷰 */
 .board-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .board-table{width:100%;border-collapse:collapse;font-size:.875rem;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1.5px solid var(--border)}
 .board-table thead tr{background:var(--surface2)}
@@ -265,20 +257,12 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .btd-clicks{text-align:right;font-size:.78rem;font-weight:700}
 .drag-handle-icon{position:absolute;top:6px;right:8px;font-size:1rem;color:var(--muted);cursor:grab;opacity:0;transition:opacity .15s;user-select:none;z-index:5;padding:2px 4px;border-radius:4px}.link-card:hover .drag-handle-icon{opacity:.6}.link-card.edit-draggable:hover .drag-handle-icon{opacity:1}.link-card.edit-draggable{cursor:grab}
 
-/* ══════════════════════════════════════
-   ★ 모바일 최적화 — 완전 개선
-══════════════════════════════════════ */
-
-/* 태블릿 (769~1024px) */
 @media(max-width:1024px){
   .header-inner{padding:0 1.25rem}
   main{padding:1.5rem 1.25rem 3rem}
   .page-hero{padding:1.5rem 2rem;gap:1.5rem}
   .link-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-  .admin-link-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 }
-
-/* 모바일 (max-width: 768px) */
 @media(max-width:768px){
   :root{--radius:12px}
   main{padding:1rem .75rem 3rem}
@@ -295,132 +279,52 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   .header-actions .btn-sm{padding:5px 10px;font-size:.75rem}
   .header-actions .btn-primary{padding:5px 10px;font-size:.75rem}
   .user-avatar{width:30px;height:30px}
-  .user-name{font-size:.75rem;max-width:60px}
   .admin-badge,.edit-chip{font-size:.68rem;padding:3px 8px}
-
-  /* 히어로 */
   .page-hero{padding:1rem 1.1rem;border-radius:14px;flex-direction:column;align-items:flex-start;gap:.8rem;margin-bottom:.75rem}
   .page-hero::after{font-size:3.5rem;right:1rem}
   .hero-title{font-size:1.25rem}
-  .hero-sub{font-size:.8rem;margin-top:.2rem}
+  .hero-sub{font-size:.8rem}
   .hero-stats{display:flex;gap:.5rem;width:100%}
   .stat-box{flex:1;padding:8px 10px;min-width:0;border-radius:10px}
   .stat-num{font-size:1.3rem}
   .stat-label{font-size:.62rem}
-
-  /* 알림 */
-  .notice-banner{flex-direction:row;gap:8px;padding:10px 14px;font-size:.78rem;margin-bottom:1rem;border-radius:10px}
-  .notice-banner .notice-icon{font-size:1.1rem}
-  .notice-close{top:6px;right:6px}
-
-  /* 로그인 프롬프트 */
+  .notice-banner{gap:8px;padding:10px 14px;font-size:.78rem;margin-bottom:1rem;border-radius:10px}
   .login-prompt{padding:1.5rem 1rem;border-radius:14px}
   .login-prompt h2{font-size:1rem}
   .login-prompt p{font-size:.8rem;margin-bottom:1rem}
-
-  /* 탭바 */
   .tab-bar{padding:4px;border-radius:10px;gap:3px}
   .tab{padding:6px 12px;font-size:.78rem;border-radius:6px;min-height:34px}
-  .tab .badge{font-size:.65rem;padding:1px 5px}
-  .tab-add-btn{padding:5px 10px;font-size:.74rem}
-
-  /* 뷰 토글 & 탭 행 */
-  .view-toggle-wrap{border-radius:6px}
-  .view-btn{padding:4px 8px;font-size:.72rem}
-
-  /* 카테고리 섹션 */
+  .tab .badge{font-size:.65rem}
   .cat-section{margin-bottom:1rem}
   .cat-header{margin-bottom:.5rem}
   .cat-name{font-size:.92rem}
-  .cat-count{font-size:.68rem;padding:2px 7px}
-  .cat-stripe{width:3px;height:18px}
-  .cat-manage-btn{font-size:.68rem;padding:3px 8px}
-
-  /* ★ 카드 그리드: 1열, 더 촘촘하게 */
   .link-grid{grid-template-columns:1fr;gap:6px}
   .admin-link-grid{grid-template-columns:1fr;gap:6px}
-
-  /* ★ 카드 자체 */
   .link-card{padding:10px 12px;gap:5px;border-radius:12px}
-  .card-header-row{gap:8px}
   .card-icon{width:34px;height:34px;border-radius:8px;font-size:1rem}
   .card-name{font-size:.85rem}
-  .card-url{font-size:.66rem}
-  .card-desc{font-size:.74rem;line-height:1.4}
+  .card-desc{font-size:.74rem}
   .card-footer{padding-top:4px}
   .click-pill{font-size:.66rem;padding:2px 6px}
-  .uploader-tag{font-size:.64rem;padding:2px 5px}
-  .ai-tag{font-size:.62rem;padding:2px 6px}
-  .card-edit-btn{font-size:.68rem;padding:2px 6px}
-  .card-prompt-btn{padding:4px 8px;font-size:.7rem}
   .card-action-btn{opacity:.6;padding:6px;min-width:28px;min-height:28px;justify-content:center}
   .add-card{min-height:60px;padding:10px;font-size:.78rem}
-
-  /* 관리자 카드 */
   .admin-link-card{padding:10px 12px;gap:5px}
-  .admin-card-icon{width:32px;height:32px;font-size:1rem}
-  .admin-card-name{font-size:.82rem}
-  .admin-card-url{font-size:.64rem}
-  .admin-card-desc{font-size:.72rem}
-  .admin-card-footer{padding-top:5px}
-  .admin-add-card{min-height:60px;padding:10px}
   .admin-section-header{padding:10px 14px;border-radius:12px 12px 0 0}
-  .admin-section-title{font-size:.88rem;gap:8px}
+  .admin-section-title{font-size:.88rem}
   .admin-section-body{padding:10px}
-
-  /* 모달 — 모바일 풀스크린 느낌 */
   .modal-overlay{padding:.5rem;align-items:flex-end}
   .modal{border-radius:18px 18px 12px 12px;padding:1.5rem 1.25rem;max-height:88vh}
-  .modal-header{margin-bottom:1rem}
   .modal-title{font-size:1rem}
-  .modal-close{width:30px;height:30px}
-  .form-input,.form-select,.form-textarea{padding:9px 12px;font-size:.85rem;border-radius:8px}
-  .form-label{font-size:.78rem}
-  .emoji-grid{grid-template-columns:repeat(7,1fr);gap:2px}
-  .emoji-btn{padding:5px;font-size:1rem}
-  .color-row{gap:5px}
-  .swatch{width:28px;height:28px;border-radius:6px}
+  .form-input,.form-select,.form-textarea{padding:9px 12px;font-size:.85rem}
+  .emoji-grid{grid-template-columns:repeat(7,1fr)}
   .desc-field-label{width:76px;font-size:.74rem;padding:8px 6px}
-  .desc-field-input{font-size:.82rem;padding:8px 10px}
-
-  /* 통계 */
-  .stats-panel{padding:1rem;border-radius:12px;margin-bottom:1rem}
-  .stats-panel-title{font-size:.9rem;margin-bottom:1rem}
-  .stats-table{font-size:.78rem}
-  .stats-table th{padding:6px 8px;font-size:.66rem}
-  .stats-table td{padding:7px 8px}
-  .rank-badge{width:20px;height:20px;font-size:.68rem}
-
-  /* 게시판 뷰 */
+  .stats-panel{padding:1rem;border-radius:12px}
   .board-table{font-size:.78rem}
   .board-table th{padding:8px 10px;font-size:.66rem}
   .board-table td{padding:8px 10px}
-  .btd-icon{width:22px;height:22px;font-size:.75rem}
-  .btd-name{gap:6px}
-  .btd-url{max-width:120px;font-size:.64rem}
-
-  /* 푸터 */
-  .site-footer{padding:1.5rem .75rem 2rem;margin-top:1.5rem;font-size:.72rem}
-  .site-footer .footer-dev{font-size:.66rem}
-
-  /* 토스트 */
   .toast-wrap{bottom:1rem;right:.75rem;left:.75rem}
-  .toast{font-size:.8rem;padding:10px 14px;border-radius:10px;max-width:100%}
-
-  /* 드래그 */
-  .drag-ghost-el{width:200px;font-size:.82rem;padding:10px 12px}
-  .drag-mode-hint{font-size:.68rem;padding:4px 10px}
-
-  /* 비밀 토글 */
-  .secret-toggle-wrap{padding:10px 12px;gap:8px}
-  .secret-toggle-text{font-size:.78rem}
-  .secret-toggle-text small{font-size:.68rem}
-  .secret-toggle-track{width:36px;height:20px}
-  .secret-toggle-track::after{width:16px;height:16px}
-  .secret-toggle-wrap input:checked~.secret-toggle-track::after{transform:translateX(16px)}
+  .toast{font-size:.8rem;padding:10px 14px;max-width:100%}
 }
-
-/* 초소형 기기 (max-width: 380px) */
 @media(max-width:380px){
   main{padding:.75rem .5rem 2.5rem}
   .header-inner{padding:0 .5rem;height:50px}
@@ -428,25 +332,18 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   .logo-mark{width:30px;height:30px}
   .page-hero{padding:.75rem .9rem}
   .hero-title{font-size:1.1rem}
-  .stat-box{padding:6px 8px}
-  .stat-num{font-size:1.1rem}
   .link-card{padding:8px 10px;gap:4px}
-  .card-icon{width:30px;height:30px;font-size:.9rem;border-radius:7px}
-  .card-name{font-size:.82rem}
+  .card-icon{width:30px;height:30px;font-size:.9rem}
   .tab{padding:5px 9px;font-size:.72rem;min-height:30px}
-  .tab .badge{font-size:.6rem}
   .emoji-grid{grid-template-columns:repeat(6,1fr)}
   .modal{padding:1.25rem 1rem}
 }
-
-/* iOS safe area */
-@supports(padding-bottom: env(safe-area-inset-bottom)){
+@supports(padding-bottom:env(safe-area-inset-bottom)){
   .toast-wrap{bottom:calc(1rem + env(safe-area-inset-bottom))}
   .site-footer{padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
 }
 </style>
-</head>
-<body>
+</head><body>
 <div id="loadingScreen"><div class="loading-logo">에이모</div><div class="spinner"></div><div class="loading-sub">로딩 중...</div></div>
 <div id="appRoot" style="display:none">
 <div class="top-banner">🤖 에이모(AI모음) — 교사 · 행정실 전용 업무 링크 허브</div>
@@ -483,35 +380,21 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 </main>
 <footer class="site-footer"><p>에이모(AI모음) &copy; 2025</p><div class="footer-dev"><span>Developed by Choi Gwangcheul, Gurye Middle School with AI</span></div></footer>
 </div>
-
-<!-- 분야 잠금 비밀번호 모달 -->
 <div class="modal-overlay" id="catPwModal"><div class="modal" style="max-width:360px"><div class="modal-header"><div class="modal-title" id="catPwModalTitle">🔒 분야 잠금</div><button class="modal-close" onclick="closeModal('catPwModal')">✕</button></div><p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6" id="catPwModalDesc">이 분야의 링크를 열려면 비밀번호가 필요합니다.</p><div class="form-group"><label class="form-label">비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="catPwInput" placeholder="••••" maxlength="30" onkeydown="if(event.key==='Enter')checkCatPw()"/></div><div class="pw-error" id="catPwError">비밀번호가 올바르지 않습니다.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catPwModal')">취소</button><button class="btn btn-primary" onclick="checkCatPw()">확인</button></div></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
-
-<!-- MODALS -->
 <div class="modal-overlay" id="adminModal"><div class="modal" style="max-width:360px"><div class="modal-header"><div class="modal-title">🔐 관리자 로그인</div><button class="modal-close" onclick="closeModal('adminModal')">✕</button></div><p style="font-size:.875rem;color:var(--text2);margin-bottom:1.25rem;line-height:1.6">관리자 비밀번호를 입력하세요.</p><div class="form-group"><label class="form-label">비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwInput" placeholder="••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPw()"/></div><div class="pw-error" id="pwError">비밀번호가 올바르지 않습니다.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('adminModal')">취소</button><button class="btn btn-primary" onclick="checkPw()">로그인</button></div></div></div>
-
 <div class="modal-overlay" id="linkModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="linkModalTitle">링크 추가</div><button class="modal-close" onclick="closeModal('linkModal')">✕</button></div>
   <div class="form-group"><label class="form-label">링크 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fName" placeholder="예: NEIS, 에듀파인…"/></div>
   <div class="form-group"><label class="form-label">URL <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fUrl" placeholder="https://…"/></div>
   <div class="form-group" id="fCatGroup"><label class="form-label">업무 분야 <span style="color:var(--accent3)">*</span></label><select class="form-select" id="fCat"></select></div>
   <div class="admin-link-note" id="adminLinkNote"><span>🔒 관리자 개인 링크 — 관리자 로그인 시에만 표시됩니다</span></div>
   <div class="form-group"><label class="form-label">설명 <span style="color:var(--muted);font-weight:400">(선택)</span></label><div class="desc-fields-wrap"><div class="desc-field-row"><div class="desc-field-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작AI</div><input class="desc-field-input" id="fAiTool" placeholder="예: ChatGPT, Claude, Gemini…"/></div><div class="desc-field-row"><div class="desc-field-label prompt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><textarea class="desc-field-input" id="fPrompt" rows="2" placeholder="사용한 프롬프트…" style="resize:vertical;min-height:50px"></textarea></div><div class="desc-field-row"><div class="desc-field-label" style="color:var(--text2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>기타 설명</div><textarea class="desc-field-input" id="fDesc" rows="2" placeholder="추가 설명…" style="resize:vertical;min-height:50px"></textarea></div></div></div>
-  <div class="form-group" id="fSecretGroup">
-    <label class="secret-toggle-wrap" for="fSecret">
-      <input type="checkbox" id="fSecret"/>
-      <div class="secret-toggle-track"></div>
-      <div class="secret-toggle-text">🔐 비밀 링크<small>나만 볼 수 있어요</small></div>
-    </label>
-  </div>
+  <div class="form-group" id="fSecretGroup"><label class="secret-toggle-wrap" for="fSecret"><input type="checkbox" id="fSecret"/><div class="secret-toggle-track"></div><div class="secret-toggle-text">🔐 비밀 링크<small>나만 볼 수 있어요</small></div></label></div>
   <div class="form-group"><label class="form-label">아이콘</label><div class="emoji-grid" id="emojiGrid"></div></div>
   <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('linkModal')">취소</button><button class="btn btn-primary" onclick="saveLink()">저장</button></div>
 </div></div>
-
 <div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="form-group"><label class="form-label">🔒 분야 잠금 비밀번호 <span style="color:var(--muted);font-weight:400">(선택 — 설정 시 링크 클릭에 비밀번호 필요)</span></label><input class="form-input" type="text" id="fCatPw" placeholder="비밀번호 입력 (없으면 공개)" maxlength="30"/><div style="font-size:.75rem;color:var(--muted);margin-top:4px">비워두면 잠금 없음. 관리자는 항상 열람 가능.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
-
 <div class="modal-overlay" id="promptModal"><div class="modal" style="max-width:540px"><div class="modal-header"><div class="modal-title">💬 프롬프트 상세보기</div><button class="modal-close" onclick="closeModal('promptModal')">✕</button></div><div class="prompt-modal-content"><div class="prompt-detail-section" id="promptAiSection"><div class="prompt-detail-label ai-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작 AI</div><div class="prompt-detail-box" id="promptAiText"></div></div><div class="prompt-detail-section"><div class="prompt-detail-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><div class="prompt-detail-box" id="promptText"></div></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="prompt-copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button></div></div></div></div>
-
 <div class="modal-overlay" id="pwChangeModal"><div class="modal" style="max-width:400px"><div class="modal-header"><div class="modal-title">🔑 관리자 비밀번호 변경</div><button class="modal-close" onclick="closeModal('pwChangeModal')">✕</button></div>
 <div class="form-group"><label class="form-label">현재 비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwOld" placeholder="현재 비밀번호"/></div></div>
 <div class="form-group"><label class="form-label">새 비밀번호 <span style="color:var(--accent3);font-weight:400">(8자 이상)</span></label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwNew" placeholder="새 비밀번호 (8자 이상)"/></div></div>
@@ -519,7 +402,6 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 <div class="pw-error" id="pwChangeError"></div>
 <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('pwChangeModal')">취소</button><button class="btn btn-primary" onclick="changePw()">변경</button></div>
 </div></div>
-
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import{getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -597,7 +479,6 @@ function renderTabs(){
 }
 function matchQ(l,q){return !q||(l.name+l.url+(l.desc||'')+(l.aiTool||'')+(l.prompt||'')).toLowerCase().includes(q)}
 
-/* ★ 수정1: 조회순 정렬 삭제 — .sort() 제거 */
 function renderContent(){
   if(viewMode==='board'){renderBoardView();return;}
   const q=document.getElementById('searchInput').value.toLowerCase();
@@ -605,7 +486,6 @@ function renderContent(){
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
   let h='',total=0;
   cats.forEach((cat,ci)=>{
-    /* ★ 정렬 삭제: 등록 순서(createdAt desc) 그대로 유지 */
     const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
@@ -671,24 +551,10 @@ function cardHTML(l,cat){
   </a>`;
 }
 
-window.showPromptPopup=id=>{
-  const l=links.find(x=>x.id===id);if(!l)return;
-  const aiSec=document.getElementById('promptAiSection');
-  if(l.aiTool&&l.aiTool.trim()){aiSec.style.display='block';document.getElementById('promptAiText').textContent=l.aiTool}
-  else{aiSec.style.display='none'}
-  document.getElementById('promptText').textContent=l.prompt||'';
-  currentPromptText=l.prompt||'';
-  openM('promptModal');
-};
-window.copyPrompt=async()=>{
-  try{await navigator.clipboard.writeText(currentPromptText);toast('프롬프트가 복사되었습니다 📋')}
-  catch(e){toast('복사 실패','error')}
-};
+window.showPromptPopup=id=>{const l=links.find(x=>x.id===id);if(!l)return;const aiSec=document.getElementById('promptAiSection');if(l.aiTool&&l.aiTool.trim()){aiSec.style.display='block';document.getElementById('promptAiText').textContent=l.aiTool}else{aiSec.style.display='none'}document.getElementById('promptText').textContent=l.prompt||'';currentPromptText=l.prompt||'';openM('promptModal')};
+window.copyPrompt=async()=>{try{await navigator.clipboard.writeText(currentPromptText);toast('프롬프트가 복사되었습니다 📋')}catch(e){toast('복사 실패','error')}};
 
-async function handleClick(e,id){
-  if(e.defaultPrevented)return;
-  try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}
-}
+async function handleClick(e,id){if(e.defaultPrevented)return;try{await setDoc(doc(db,'meta','clicks'),{[id]:increment(1)},{merge:true})}catch(err){}}
 
 window.catLockedClick=function(e,linkId,catId,url){
   e.preventDefault();
@@ -696,10 +562,7 @@ window.catLockedClick=function(e,linkId,catId,url){
   const cat=categories.find(c=>c.id===catId);
   if(cat&&cat.lockPw&&!isAdmin&&!catUnlocked[catId]){
     _pendingCatId=catId;
-    _pendingCatPwCb=()=>{
-      handleClick({defaultPrevented:false},linkId);
-      window.open(url,'_blank','noopener');
-    };
+    _pendingCatPwCb=()=>{handleClick({defaultPrevented:false},linkId);window.open(url,'_blank','noopener')};
     document.getElementById('catPwModalTitle').textContent=`🔒 ${cat.name} — 잠금 해제`;
     document.getElementById('catPwModalDesc').textContent=`이 분야(${cat.name})의 링크를 열려면 비밀번호가 필요합니다.`;
     document.getElementById('catPwInput').value='';
@@ -715,111 +578,39 @@ window.catLockedClick=function(e,linkId,catId,url){
 window.checkCatPw=()=>{
   const val=document.getElementById('catPwInput').value;
   const cat=_pendingCatId?categories.find(c=>c.id===_pendingCatId):null;
-  if(cat&&val===cat.lockPw){
-    catUnlocked[cat.id]=true;
-    closeModal('catPwModal');
-    if(_pendingCatPwCb){_pendingCatPwCb();_pendingCatPwCb=null;_pendingCatId=null;}
-    toast(`${cat.name} 잠금 해제 ✓`);
-  }else{
-    document.getElementById('catPwError').classList.add('show');
-    document.getElementById('catPwInput').value='';
-    document.getElementById('catPwInput').focus();
-  }
+  if(cat&&val===cat.lockPw){catUnlocked[cat.id]=true;closeModal('catPwModal');if(_pendingCatPwCb){_pendingCatPwCb();_pendingCatPwCb=null;_pendingCatId=null;}toast(`${cat.name} 잠금 해제 ✓`)}
+  else{document.getElementById('catPwError').classList.add('show');document.getElementById('catPwInput').value='';document.getElementById('catPwInput').focus()}
 };
 
-/* ★ 수정1: 관리자 링크도 정렬 삭제 — 등록 순서 유지 */
 function renderAdminSection(){
   const sec=document.getElementById('adminPersonalSection'),grid=document.getElementById('adminLinkGrid'),act=document.getElementById('adminPersonalActions');
   if(!isAdmin){sec.classList.remove('visible');return}
   sec.classList.add('visible');act.style.display='flex';
   let h=adminLinks.map(l=>`
     <a class="admin-link-card" href="${l.url}" target="_blank" rel="noopener">
-      <div class="admin-card-row">
-        <div class="admin-card-icon">${l.emoji||'🔗'}</div>
-        <div class="card-title-group">
-          <div class="admin-card-name">${escHtml(l.name)}</div>
-          <div class="admin-card-url">${escHtml(l.url)}</div>
-        </div>
-      </div>
+      <div class="admin-card-row"><div class="admin-card-icon">${l.emoji||'🔗'}</div><div class="card-title-group"><div class="admin-card-name">${escHtml(l.name)}</div><div class="admin-card-url">${escHtml(l.url)}</div></div></div>
       ${l.desc?`<div class="admin-card-desc">${escHtml(l.desc)}</div>`:''}
-      <div class="admin-card-footer">
-        <span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span>
-        <div class="admin-card-actions">
-          <button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();event.preventDefault();openEditAdminLink('${l.id}')">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            수정
-          </button>
-          <button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();event.preventDefault();deleteAdminLink('${l.id}')" title="삭제">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
-          </button>
-        </div>
-      </div>
+      <div class="admin-card-footer"><span style="font-size:.72rem;color:#4a5080;font-weight:500">🔒 관리자 전용</span><div class="admin-card-actions"><button class="admin-card-btn admin-card-edit" onclick="event.stopPropagation();event.preventDefault();openEditAdminLink('${l.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>수정</button><button class="admin-card-btn admin-card-delete" onclick="event.stopPropagation();event.preventDefault();deleteAdminLink('${l.id}')" title="삭제"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div></div>
     </a>`).join('');
   h+=`<button class="admin-add-card" onclick="openAddAdminLink()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>`;
   grid.innerHTML=h||`<div style="color:#6b7099;font-size:.84rem;padding:1rem">아직 등록된 관리자 링크가 없습니다.</div>`;
 }
 
 window.toggleStats=()=>{showStats=!showStats;document.getElementById('statsPanel').classList.toggle('open',showStats);document.getElementById('statsBtn').textContent=showStats?'📊 닫기':'📊 통계';if(showStats)renderStatsPanel()};
-/* ★ 통계 패널은 정렬 유지 (통계 목적) */
 function renderStatsPanel(){const sorted=[...links].sort((a,b)=>getClicks(b.id)-getClicks(a.id));const max=sorted.length?getClicks(sorted[0].id):0;if(!max){document.getElementById('statsTableWrap').innerHTML=`<div style="text-align:center;padding:2rem;color:var(--muted)">클릭 기록 없음</div>`;return}let h=`<table class="stats-table"><thead><tr><th style="width:44px">순위</th><th>링크</th><th style="width:110px">분야</th><th>빈도</th><th style="width:60px">횟수</th></tr></thead><tbody>`;sorted.forEach((l,i)=>{const cat=categories.find(c=>c.id===l.catId)||{name:'',color:'#ccc'};const n=getClicks(l.id),p=Math.round(n/max*100),rk=i<3?`rank-${i+1}`:'rank-n';h+=`<tr><td><span class="rank-badge ${rk}">${i+1}</span></td><td><strong>${l.emoji||''} ${escHtml(l.name)}</strong></td><td><span style="font-size:.82rem"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:4px"></span>${escHtml(cat.name)}</span></td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${cat.color}"></div></div></div></td><td><strong style="color:${cat.color}">${n}</strong></td></tr>`});h+=`</tbody></table>`;document.getElementById('statsTableWrap').innerHTML=h}
 
 let adminPw='04250425';
-async function loadAdminPw(){
-  try{
-    const snap=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(m=>m.getDoc(doc(db,'meta','adminConfig')));
-    if(snap.exists()&&snap.data().password) adminPw=snap.data().password;
-  }catch(e){}
-}
+async function loadAdminPw(){try{const snap=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(m=>m.getDoc(doc(db,'meta','adminConfig')));if(snap.exists()&&snap.data().password)adminPw=snap.data().password}catch(e){}}
 loadAdminPw();
 onSnapshot(doc(db,'meta','adminConfig'),snap=>{if(snap.exists()&&snap.data().password)adminPw=snap.data().password});
 
 window.openAdminModal=()=>{document.getElementById('pwInput').value='';document.getElementById('pwError').classList.remove('show');openM('adminModal');setTimeout(()=>document.getElementById('pwInput').focus(),200)};
-window.checkPw=()=>{
-  if(document.getElementById('pwInput').value===adminPw){
-    isAdmin=true;closeModal('adminModal');
-    document.getElementById('adminLoginBtn').style.display='none';
-    document.getElementById('adminBadge').classList.add('on');
-    document.getElementById('editBtn').style.display='';
-    document.getElementById('addLinkBtnTop').style.display='';
-    document.getElementById('pwChangeBtn').style.display='';
-    toast('관리자 모드 활성화 🔓','success');renderAll();
-  }else{document.getElementById('pwError').classList.add('show');document.getElementById('pwInput').value='';document.getElementById('pwInput').focus()}
-};
-window.adminLogout=()=>{
-  if(!confirm('관리자 모드 종료?'))return;
-  isAdmin=false;editMode=false;
-  document.getElementById('adminBadge').classList.remove('on');
-  document.getElementById('adminLoginBtn').style.display='';
-  document.getElementById('editBtn').style.display='none';
-  document.getElementById('addLinkBtnTop').style.display='none';
-  document.getElementById('pwChangeBtn').style.display='none';
-  document.getElementById('editChip').classList.remove('on');
-  document.getElementById('editBtn').textContent='⚙️ 편집';
-  toast('관리자 모드 종료','info');renderAll();
-};
+window.checkPw=()=>{if(document.getElementById('pwInput').value===adminPw){isAdmin=true;closeModal('adminModal');document.getElementById('adminLoginBtn').style.display='none';document.getElementById('adminBadge').classList.add('on');document.getElementById('editBtn').style.display='';document.getElementById('addLinkBtnTop').style.display='';document.getElementById('pwChangeBtn').style.display='';toast('관리자 모드 활성화 🔓','success');renderAll()}else{document.getElementById('pwError').classList.add('show');document.getElementById('pwInput').value='';document.getElementById('pwInput').focus()}};
+window.adminLogout=()=>{if(!confirm('관리자 모드 종료?'))return;isAdmin=false;editMode=false;document.getElementById('adminBadge').classList.remove('on');document.getElementById('adminLoginBtn').style.display='';document.getElementById('editBtn').style.display='none';document.getElementById('addLinkBtnTop').style.display='none';document.getElementById('pwChangeBtn').style.display='none';document.getElementById('editChip').classList.remove('on');document.getElementById('editBtn').textContent='⚙️ 편집';toast('관리자 모드 종료','info');renderAll()};
 
-window.openPwChangeModal=()=>{
-  document.getElementById('pwOld').value='';document.getElementById('pwNew').value='';document.getElementById('pwNewConfirm').value='';
-  const err=document.getElementById('pwChangeError');err.textContent='';err.classList.remove('show');
-  openM('pwChangeModal');setTimeout(()=>document.getElementById('pwOld').focus(),200);
-};
-window.changePw=async()=>{
-  const old=document.getElementById('pwOld').value,nw=document.getElementById('pwNew').value,nwc=document.getElementById('pwNewConfirm').value;
-  const err=document.getElementById('pwChangeError');err.classList.remove('show');
-  if(old!==adminPw){err.textContent='현재 비밀번호가 올바르지 않습니다.';err.classList.add('show');return}
-  if(nw.length<8){err.textContent='새 비밀번호는 8자 이상이어야 합니다.';err.classList.add('show');return}
-  if(nw!==nwc){err.textContent='새 비밀번호가 일치하지 않습니다.';err.classList.add('show');return}
-  try{await setDoc(doc(db,'meta','adminConfig'),{password:nw},{merge:true});adminPw=nw;closeModal('pwChangeModal');toast('비밀번호가 변경되었습니다 🔑','success')}
-  catch(e){err.textContent='오류: '+e.message;err.classList.add('show')}
-};
-window.toggleEdit=()=>{
-  if(!isAdmin){openAdminModal();return}
-  editMode=!editMode;
-  document.getElementById('editChip').classList.toggle('on',editMode);
-  document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';
-  document.getElementById('dragHint').classList.toggle('on',editMode);
-  renderAll();
-};
+window.openPwChangeModal=()=>{document.getElementById('pwOld').value='';document.getElementById('pwNew').value='';document.getElementById('pwNewConfirm').value='';const err=document.getElementById('pwChangeError');err.textContent='';err.classList.remove('show');openM('pwChangeModal');setTimeout(()=>document.getElementById('pwOld').focus(),200)};
+window.changePw=async()=>{const old=document.getElementById('pwOld').value,nw=document.getElementById('pwNew').value,nwc=document.getElementById('pwNewConfirm').value;const err=document.getElementById('pwChangeError');err.classList.remove('show');if(old!==adminPw){err.textContent='현재 비밀번호가 올바르지 않습니다.';err.classList.add('show');return}if(nw.length<8){err.textContent='새 비밀번호는 8자 이상이어야 합니다.';err.classList.add('show');return}if(nw!==nwc){err.textContent='새 비밀번호가 일치하지 않습니다.';err.classList.add('show');return}try{await setDoc(doc(db,'meta','adminConfig'),{password:nw},{merge:true});adminPw=nw;closeModal('pwChangeModal');toast('비밀번호가 변경되었습니다 🔑','success')}catch(e){err.textContent='오류: '+e.message;err.classList.add('show')}};
+window.toggleEdit=()=>{if(!isAdmin){openAdminModal();return}editMode=!editMode;document.getElementById('editChip').classList.toggle('on',editMode);document.getElementById('editBtn').textContent=editMode?'✅ 완료':'⚙️ 편집';document.getElementById('dragHint').classList.toggle('on',editMode);renderAll()};
 
 function buildEmojiGrid(){document.getElementById('emojiGrid').innerHTML=EMOJIS.map(e=>`<button class="emoji-btn ${e===selEmoji?'selected':''}" onclick="pickEmoji('${e}')">${e}</button>`).join('')}
 window.pickEmoji=e=>{selEmoji=e;buildEmojiGrid()};
@@ -837,7 +628,7 @@ window.saveLink=async()=>{
   const aiTool=document.getElementById('fAiTool').value.trim(),prompt=document.getElementById('fPrompt').value.trim(),desc=document.getElementById('fDesc').value.trim();
   const isSecret=document.getElementById('fSecret').checked;
   if(!name||!url){toast('이름과 URL 필요','error');return}
-  if(!/^https?:\\/\\//i.test(url))url='https://'+url;
+  if(!/^https?:\/\//i.test(url))url='https://'+url;
   try{
     if(isAdminLinkMode){
       const d={name,url,aiTool,prompt,desc,emoji:selEmoji,createdAt:Date.now()};
@@ -864,192 +655,55 @@ window.pickColor=c=>{selColor=c;buildColorRow()};
 let editingCatId=null;
 window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';document.getElementById('fCatPw').value='';buildColorRow();openM('catModal')};
 window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;document.getElementById('fCatPw').value=c.lockPw||'';buildColorRow();openM('catModal')};
-window.saveCat=async()=>{
-  if(!isAdmin)return;
-  const name=document.getElementById('fCatName').value.trim();
-  if(!name){toast('이름 필요','error');return}
-  const lockPw=document.getElementById('fCatPw').value.trim();
-  try{
-    if(editingCatId){
-      await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw},{merge:true});
-      if(!lockPw) delete catUnlocked[editingCatId];
-      toast('수정 ✓');
-    }else{
-      await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw});
-      toast('추가 ✓');
-    }
-    closeModal('catModal');
-  }catch(e){toast('오류','error')};
-};
-window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
+window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('이름 필요','error');return}const lockPw=document.getElementById('fCatPw').value.trim();try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw},{merge:true});if(!lockPw)delete catUnlocked[editingCatId];toast('수정 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw});toast('추가 ✓')}closeModal('catModal')}catch(e){toast('오류','error')}};
+window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
 
 window.setTab=id=>{activeTab=id;renderAll()};
 window.openM=id=>document.getElementById(id).classList.add('open');
 window.closeModal=id=>document.getElementById(id).classList.remove('open');
 document.querySelectorAll('.modal-overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')})});
 
-window.setView=mode=>{
-  viewMode=mode;
-  document.getElementById('vBtnCard').classList.toggle('active',mode==='card');
-  document.getElementById('vBtnBoard').classList.toggle('active',mode==='board');
-  renderContent();
-};
+window.setView=mode=>{viewMode=mode;document.getElementById('vBtnCard').classList.toggle('active',mode==='card');document.getElementById('vBtnBoard').classList.toggle('active',mode==='board');renderContent()};
 
-/* ★ 수정1: 게시판 뷰도 정렬 삭제 */
 function renderBoardView(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const vLinks=visibleLinks();
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
   let rows='',total=0;
   cats.forEach(cat=>{
-    /* ★ 정렬 삭제: 등록 순서 그대로 */
     const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
     if(!catLinks.length)return;
     total+=catLinks.length;
     const lockBadge=cat.lockPw?'🔒 ':'';
     rows+=`<tr class="board-sec-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>${lockBadge}${escHtml(cat.name)}</td></tr>`;
     catLinks.forEach((l,i)=>{
-      const n=getClicks(l.id);
-      const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';
-      const ic=n>=20?'🔥':n>=5?'✨':'👁️';
+      const n=getClicks(l.id);const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';const ic=n>=20?'🔥':n>=5?'✨':'👁️';
       const isOwner=currentUser&&currentUser.uid===l.uploaderId,canEdit=isAdmin||isOwner,canDel=isAdmin||isOwner;
       rows+=`<tr onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
         <td style="color:var(--muted);font-size:.78rem;font-weight:600;width:36px">${i+1}</td>
-        <td><div class="btd-name">
-          <div class="btd-icon" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div>
-          <div><div>${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div>
-          <div class="btd-url">${escHtml(l.url)}</div></div>
-        </div></td>
+        <td><div class="btd-name"><div class="btd-icon" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div><div><div>${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div><div class="btd-url">${escHtml(l.url)}</div></div></div></td>
         <td style="max-width:160px;font-size:.78rem;color:var(--text2)">${escHtml((l.desc||'').substring(0,45))}${(l.desc||'').length>45?'…':''}</td>
         <td><span class="btd-cat" style="background:${getBg(cat.color)};color:${cat.color}">${escHtml(cat.name)}</span></td>
         <td class="btd-clicks" style="${style}">${ic} ${n}</td>
-        <td style="text-align:right;white-space:nowrap" onclick="event.stopPropagation()">
-          ${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''}
-          ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}
-        </td>
+        <td style="text-align:right;white-space:nowrap" onclick="event.stopPropagation()">${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''} ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}</td>
       </tr>`;
     });
   });
-  document.getElementById('content').innerHTML=total
-    ?`<div class="board-wrap"><table class="board-table">
-        <thead><tr><th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th></tr></thead>
-        <tbody>${rows}</tbody></table></div>`
-    :`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
+  document.getElementById('content').innerHTML=total?`<div class="board-wrap"><table class="board-table"><thead><tr><th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
 }
 
-/* 드래그&드롭 */
-function initDragDrop(){
-  cleanupDrag();
-  document.querySelectorAll('#content .link-card').forEach(card=>{
-    if(card.classList.contains('add-card'))return;
-    card.classList.add('edit-draggable');
-    const onDown=e=>{
-      if(e.target.closest('button'))return;
-      e.preventDefault();
-      startDrag(e,card);
-    };
-    card._dragDown=onDown;
-    card.addEventListener('mousedown',onDown);
-    /* ★ 모바일 터치 드래그 지원 */
-    const onTouch=e=>{
-      if(e.target.closest('button'))return;
-      const touch=e.touches[0];
-      startDrag({clientX:touch.clientX,clientY:touch.clientY,preventDefault:()=>e.preventDefault()},card,true);
-    };
-    card._dragTouch=onTouch;
-    card.addEventListener('touchstart',onTouch,{passive:false});
-  });
+function initDragDrop(){cleanupDrag();document.querySelectorAll('#content .link-card').forEach(card=>{if(card.classList.contains('add-card'))return;card.classList.add('edit-draggable');const onDown=e=>{if(e.target.closest('button'))return;e.preventDefault();startDrag(e,card)};card._dragDown=onDown;card.addEventListener('mousedown',onDown)})}
+function cleanupDrag(){document.querySelectorAll('#content .link-card').forEach(card=>{if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown}card.classList.remove('edit-draggable','drag-source')});if(_ghostEl){_ghostEl.remove();_ghostEl=null}}
+function startDrag(e,card){
+  _dragLinkId=card.dataset.linkId;_dragCatId=card.dataset.catId;if(!_dragLinkId)return;_sourceEl=card;
+  const name=card.querySelector('.card-name')?.textContent?.trim()||'링크';const icon=card.querySelector('.card-icon')?.textContent?.trim()||'🔗';
+  _ghostEl=document.createElement('div');_ghostEl.className='drag-ghost-el';_ghostEl.innerHTML=`<span class="dg-icon">${icon}</span><span>${name}</span>`;
+  _ghostEl.style.left=(e.clientX-130)+'px';_ghostEl.style.top=(e.clientY-20)+'px';document.body.appendChild(_ghostEl);card.classList.add('drag-source');
+  const onMove=ev=>{_ghostEl.style.left=(ev.clientX-130)+'px';_ghostEl.style.top=(ev.clientY-20)+'px';document.querySelectorAll('.edit-mode-grid').forEach(g=>{const r=g.getBoundingClientRect();const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId)})};
+  const onUp=ev=>{document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);if(_ghostEl){_ghostEl.remove();_ghostEl=null}_sourceEl&&_sourceEl.classList.remove('drag-source');document.querySelectorAll('.edit-mode-grid').forEach(g=>{g.classList.remove('drag-over-grid');const r=g.getBoundingClientRect();const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId)moveLinkToCat(_dragLinkId,g.dataset.catId)});_dragLinkId=null;_dragCatId=null;_sourceEl=null};
+  document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
 }
-
-function cleanupDrag(){
-  document.querySelectorAll('#content .link-card').forEach(card=>{
-    if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown;}
-    if(card._dragTouch){card.removeEventListener('touchstart',card._dragTouch);delete card._dragTouch;}
-    card.classList.remove('edit-draggable','drag-source');
-  });
-  if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
-}
-
-function startDrag(e,card,isTouch=false){
-  _dragLinkId=card.dataset.linkId||card.getAttribute('data-link-id');
-  _dragCatId=card.dataset.catId||card.getAttribute('data-cat-id');
-  if(!_dragLinkId)return;
-  _sourceEl=card;
-  const name=card.querySelector('.card-name')?.textContent?.trim()||'링크';
-  const icon=card.querySelector('.card-icon')?.textContent?.trim()||'🔗';
-  _ghostEl=document.createElement('div');
-  _ghostEl.className='drag-ghost-el';
-  _ghostEl.innerHTML=`<span class="dg-icon">${icon}</span><span>${name}</span>`;
-  _ghostEl.style.left=(e.clientX-130)+'px';
-  _ghostEl.style.top=(e.clientY-20)+'px';
-  document.body.appendChild(_ghostEl);
-  card.classList.add('drag-source');
-
-  if(isTouch){
-    const onTouchMove=ev=>{
-      ev.preventDefault();
-      const t=ev.touches[0];
-      _ghostEl.style.left=(t.clientX-130)+'px';
-      _ghostEl.style.top=(t.clientY-20)+'px';
-      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-        const r=g.getBoundingClientRect();
-        const inside=t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom;
-        g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
-      });
-    };
-    const onTouchEnd=ev=>{
-      document.removeEventListener('touchmove',onTouchMove);
-      document.removeEventListener('touchend',onTouchEnd);
-      if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
-      _sourceEl&&_sourceEl.classList.remove('drag-source');
-      const t=ev.changedTouches[0];
-      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-        g.classList.remove('drag-over-grid');
-        const r=g.getBoundingClientRect();
-        const inside=t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom;
-        if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){moveLinkToCat(_dragLinkId,g.dataset.catId);}
-      });
-      _dragLinkId=null;_dragCatId=null;_sourceEl=null;
-    };
-    document.addEventListener('touchmove',onTouchMove,{passive:false});
-    document.addEventListener('touchend',onTouchEnd);
-  }else{
-    const onMove=ev=>{
-      _ghostEl.style.left=(ev.clientX-130)+'px';
-      _ghostEl.style.top=(ev.clientY-20)+'px';
-      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-        const r=g.getBoundingClientRect();
-        const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
-        g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId);
-      });
-    };
-    const onUp=ev=>{
-      document.removeEventListener('mousemove',onMove);
-      document.removeEventListener('mouseup',onUp);
-      if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
-      _sourceEl&&_sourceEl.classList.remove('drag-source');
-      document.querySelectorAll('.edit-mode-grid').forEach(g=>{
-        g.classList.remove('drag-over-grid');
-        const r=g.getBoundingClientRect();
-        const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;
-        if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId){moveLinkToCat(_dragLinkId,g.dataset.catId);}
-      });
-      _dragLinkId=null;_dragCatId=null;_sourceEl=null;
-    };
-    document.addEventListener('mousemove',onMove);
-    document.addEventListener('mouseup',onUp);
-  }
-}
-
-async function moveLinkToCat(linkId,newCatId){
-  const link=links.find(l=>l.id===linkId);
-  const newCat=categories.find(c=>c.id===newCatId);
-  if(!link||!newCat)return;
-  try{
-    await setDoc(doc(db,'links',linkId),{catId:newCatId},{merge:true});
-    toast(`"${link.name}" → [${newCat.name}] 이동 ✓`,'success');
-  }catch(err){toast('이동 실패: '+err.message,'error');}
-}
+async function moveLinkToCat(linkId,newCatId){const link=links.find(l=>l.id===linkId);const newCat=categories.find(c=>c.id===newCatId);if(!link||!newCat)return;try{await setDoc(doc(db,'links',linkId),{catId:newCatId},{merge:true});toast(`"${link.name}" → [${newCat.name}] 이동 ✓`,'success')}catch(err){toast('이동 실패: '+err.message,'error')}}
 
 window.toast=(msg,type='success')=>{const w=document.getElementById('toastWrap'),t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;w.appendChild(t);setTimeout(()=>t.remove(),3000)};
 </script>
