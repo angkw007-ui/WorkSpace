@@ -1,628 +1,639 @@
 
-<!DOCTYPE html>
+html_code = r"""<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>학교업무 링크 모음</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f6fa;color:#333;line-height:1.5}
-
-  /* ── 헤더 ── */
-  .header{background:#fff;border-bottom:2px solid #6c5ce7;padding:12px 20px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
-  .header h1{font-size:1.15rem;color:#2d3436}
-  .header .subtitle{font-size:.75rem;color:#999;margin-top:1px}
-  .header-right{display:flex;gap:8px;align-items:center}
-  .header-right .user-badge{font-size:.72rem;color:#6c5ce7;background:#f0eeff;padding:3px 10px;border-radius:12px}
-  .btn-sm{padding:5px 12px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:.75rem;cursor:pointer;transition:all .2s}
-  .btn-sm:hover{background:#f0f0f0}
-  .btn-sm.active{background:#6c5ce7;color:#fff;border-color:#6c5ce7}
-  .btn-sm.danger{background:#ff7675;color:#fff;border-color:#ff7675}
-
-  /* ── 안내 배너 ── */
-  .notice-banner{background:#ffeaa7;border-left:4px solid #fdcb6e;padding:9px 14px;margin:12px 16px 0;border-radius:6px;font-size:.8rem;display:flex;align-items:center;gap:8px}
-  .notice-banner .close-btn{margin-left:auto;cursor:pointer;font-size:1rem;color:#636e72;background:none;border:none}
-
-  /* ── 탭 ── */
-  .tab-bar{display:flex;gap:6px;padding:12px 16px 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;align-items:center}
-  .tab-bar::-webkit-scrollbar{display:none}
-  .tab-btn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;font-size:.78rem;cursor:pointer;transition:all .2s;white-space:nowrap}
-  .tab-btn.active{background:#6c5ce7;color:#fff;border-color:#6c5ce7}
-  .tab-btn .count{display:inline-block;background:rgba(0,0,0,.07);border-radius:10px;padding:1px 6px;font-size:.68rem;margin-left:3px}
-  .tab-btn.active .count{background:rgba(255,255,255,.25)}
-  .tab-edit-btn{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px dashed #bbb;background:#fff;font-size:.85rem;cursor:pointer;display:none;align-items:center;justify-content:center;color:#888}
-  .admin-active .tab-edit-btn{display:flex}
-
-  /* ── 카드 그리드 ── */
-  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:10px;padding:10px 16px 90px}
-
-  /* ── 카드 ── */
-  .card{background:#fff;border-radius:10px;padding:13px 15px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:5px;position:relative;border:1.5px solid transparent}
-  .card:hover{border-color:#6c5ce7;box-shadow:0 3px 12px rgba(108,92,231,.12);transform:translateY(-1px)}
-  .card.secret{border-left:3px solid #fdcb6e;opacity:.85}
-  .card.locked{border-left:3px solid #ff7675}
-  .card.locked .card-title{color:#b2bec3}
-  .card .card-top{display:flex;align-items:center;justify-content:space-between}
-  .card .card-num{font-size:.68rem;color:#b2bec3;font-weight:600}
-  .card .card-icons{display:flex;gap:4px;align-items:center}
-  .card .card-icons span{font-size:.7rem}
-  .card .card-clicks{font-size:.68rem;color:#b2bec3}
-  .card .card-title{font-size:.9rem;font-weight:600;color:#2d3436;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .card:hover .card-title{color:#6c5ce7}
-  .card .card-desc{font-size:.74rem;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .card .card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:1px}
-  .card .card-author{font-size:.65rem;color:#b2bec3}
-  .category-badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.67rem;font-weight:500}
-
-  /* 카드 액션 버튼 */
-  .card-actions{display:none;position:absolute;top:8px;right:8px;gap:4px}
-  .card:hover .card-actions{display:flex}
-  .card-actions button{width:24px;height:24px;border-radius:5px;border:none;background:#f0f0f0;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-  .card-actions button:hover{background:#ddd}
-
-  .empty-state{grid-column:1/-1;text-align:center;padding:40px 20px;color:#b2bec3;font-size:.85rem}
-
-  /* ── FAB ── */
-  .fab-group{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:50}
-  .fab{width:48px;height:48px;border-radius:50%;border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.15);transition:transform .2s}
-  .fab:hover{transform:scale(1.1)}
-  .fab-add{background:#6c5ce7;color:#fff}
-  .fab-admin{background:#2d3436;color:#fff;font-size:.9rem}
-
-  /* ── 모달 ── */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
-  .modal-overlay.show{display:flex}
-  .modal{background:#fff;border-radius:14px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;padding:24px}
-  .modal h2{font-size:1.05rem;margin-bottom:16px;color:#2d3436}
-  .modal label{display:block;font-size:.78rem;color:#636e72;margin-bottom:4px;margin-top:12px}
-  .modal label:first-of-type{margin-top:0}
-  .modal input,.modal select,.modal textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:.85rem;font-family:inherit}
-  .modal input:focus,.modal select:focus,.modal textarea:focus{outline:none;border-color:#6c5ce7}
-  .modal textarea{resize:vertical;min-height:50px}
-  .modal .checkbox-row{display:flex;align-items:center;gap:8px;margin-top:12px}
-  .modal .checkbox-row input{width:auto}
-  .modal .checkbox-row label{margin:0;font-size:.82rem}
-  .modal .modal-btns{display:flex;gap:8px;margin-top:20px;justify-content:flex-end}
-  .modal .modal-btns button{padding:9px 20px;border-radius:8px;border:none;font-size:.85rem;cursor:pointer;font-weight:500}
-  .modal .modal-btns .btn-cancel{background:#f0f0f0;color:#636e72}
-  .modal .modal-btns .btn-save{background:#6c5ce7;color:#fff}
-  .modal .modal-btns .btn-delete{background:#ff7675;color:#fff}
-  .modal .modal-btns .btn-cancel:hover{background:#e0e0e0}
-  .modal .modal-btns .btn-save:hover{background:#5a4bd1}
-
-  /* ── 분야 관리 리스트 ── */
-  .cat-manage-list{list-style:none;margin-top:10px}
-  .cat-manage-list li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0}
-  .cat-manage-list li input{flex:1}
-  .cat-manage-list li .color-dot{width:20px;height:20px;border-radius:50%;border:1px solid #ddd;cursor:pointer}
-  .cat-manage-list li button{padding:4px 10px;border:none;border-radius:6px;font-size:.72rem;cursor:pointer}
-  .cat-manage-list li .btn-del-cat{background:#ffe0e0;color:#c0392b}
-
-  /* ── 모바일 ── */
-  @media(max-width:640px){
-    .header{padding:10px 14px}
-    .header h1{font-size:1rem}
-    .header-right .user-badge{display:none}
-    .notice-banner{margin:10px 10px 0;font-size:.76rem}
-    .tab-bar{padding:10px 10px 6px}
-    .card-grid{grid-template-columns:1fr;gap:8px;padding:8px 10px 90px}
-    .card{padding:12px 13px}
-    .modal{padding:20px;margin:8px}
-  }
-  @media(min-width:641px)and(max-width:1024px){.card-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(min-width:1025px){.card-grid{grid-template-columns:repeat(3,1fr);max-width:1100px;margin:0 auto}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f6fa;color:#333;line-height:1.5}
+.header{background:#fff;border-bottom:2px solid #6c5ce7;padding:12px 20px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:1.15rem;color:#2d3436}
+.header .subtitle{font-size:.75rem;color:#999;margin-top:1px}
+.header-right{display:flex;gap:8px;align-items:center}
+.user-badge{font-size:.72rem;color:#6c5ce7;background:#f0eeff;padding:3px 10px;border-radius:12px}
+.btn-sm{padding:5px 12px;border-radius:6px;border:1px solid #ddd;background:#fff;font-size:.75rem;cursor:pointer;transition:all .2s}
+.btn-sm:hover{background:#f0f0f0}
+.btn-sm.active{background:#6c5ce7;color:#fff;border-color:#6c5ce7}
+.notice-banner{background:#ffeaa7;border-left:4px solid #fdcb6e;padding:9px 14px;margin:12px 16px 0;border-radius:6px;font-size:.8rem;display:flex;align-items:center;gap:8px}
+.notice-banner .close-btn{margin-left:auto;cursor:pointer;font-size:1rem;color:#636e72;background:none;border:none}
+.tab-bar{display:flex;gap:6px;padding:12px 16px 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;align-items:center;flex-wrap:nowrap}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;font-size:.78rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab-btn.active{background:#6c5ce7;color:#fff;border-color:#6c5ce7}
+.tab-btn .cnt{display:inline-block;background:rgba(0,0,0,.07);border-radius:10px;padding:1px 6px;font-size:.68rem;margin-left:3px}
+.tab-btn.active .cnt{background:rgba(255,255,255,.25)}
+.tab-btn.settings{margin-left:auto;border-color:#fdcb6e;color:#e67e22}
+.tab-edit-btn{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1px dashed #bbb;background:#fff;font-size:.82rem;cursor:pointer;align-items:center;justify-content:center;color:#888;display:none}
+body.admin-on .tab-edit-btn{display:flex}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:10px;padding:10px 16px 100px}
+.card{background:#fff;border-radius:10px;padding:13px 15px;box-shadow:0 1px 4px rgba(0,0,0,.05);cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:5px;position:relative;border:1.5px solid transparent}
+.card:hover{border-color:#6c5ce7;box-shadow:0 3px 12px rgba(108,92,231,.12);transform:translateY(-1px)}
+.card.secret{border-left:3px solid #fdcb6e;background:#fffdf5}
+.card.locked{border-left:3px solid #ff7675}
+.card.locked .card-title{color:#b2bec3}
+.card .card-top{display:flex;align-items:center;justify-content:space-between}
+.card .card-num{font-size:.68rem;color:#b2bec3;font-weight:600}
+.card .card-icons{display:flex;gap:4px;align-items:center;font-size:.7rem}
+.card .card-clicks{font-size:.68rem;color:#b2bec3}
+.card .card-title{font-size:.9rem;font-weight:600;color:#2d3436;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card:hover .card-title{color:#6c5ce7}
+.card .card-desc{font-size:.74rem;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card .card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:1px}
+.card .card-author{font-size:.65rem;color:#b2bec3}
+.cat-badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.67rem;font-weight:500}
+.card-actions{display:none;position:absolute;top:8px;right:8px;gap:4px;z-index:5}
+.card:hover .card-actions.can-edit{display:flex}
+.card-actions button{width:26px;height:26px;border-radius:5px;border:none;background:rgba(240,240,240,.95);font-size:.72rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.card-actions button:hover{background:#ddd}
+.empty-state{grid-column:1/-1;text-align:center;padding:40px 20px;color:#b2bec3;font-size:.85rem}
+.fab-group{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.fab{width:48px;height:48px;border-radius:50%;border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.15);transition:transform .2s}
+.fab:hover{transform:scale(1.1)}
+.fab-add{background:#6c5ce7;color:#fff}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:14px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;padding:24px}
+.modal h2{font-size:1.05rem;margin-bottom:16px;color:#2d3436}
+.modal label{display:block;font-size:.78rem;color:#636e72;margin-bottom:4px;margin-top:12px}
+.modal label:first-of-type{margin-top:0}
+.modal input,.modal select,.modal textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:.85rem;font-family:inherit}
+.modal input:focus,.modal select:focus{outline:none;border-color:#6c5ce7}
+.chk-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.chk-row input[type=checkbox]{width:auto}
+.chk-row label{margin:0;font-size:.82rem}
+.modal-btns{display:flex;gap:8px;margin-top:20px;justify-content:flex-end}
+.modal-btns button{padding:9px 20px;border-radius:8px;border:none;font-size:.85rem;cursor:pointer;font-weight:500}
+.btn-cancel{background:#f0f0f0;color:#636e72}
+.btn-save{background:#6c5ce7;color:#fff}
+.btn-delete{background:#ff7675;color:#fff}
+.btn-cancel:hover{background:#e0e0e0}
+.btn-save:hover{background:#5a4bd1}
+.cat-list{list-style:none;margin-top:10px}
+.cat-list li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.cat-list li input[type=text]{flex:1}
+.cat-list li input[type=color]{width:36px;height:30px;padding:1px;border-radius:6px;cursor:pointer;border:1px solid #ddd}
+.cat-list li button{padding:4px 10px;border:none;border-radius:6px;font-size:.72rem;cursor:pointer;background:#ffe0e0;color:#c0392b}
+@media(max-width:640px){
+  .header{padding:10px 14px}
+  .header h1{font-size:1rem}
+  .user-badge{display:none}
+  .notice-banner{margin:10px 10px 0;font-size:.76rem}
+  .tab-bar{padding:10px 10px 6px}
+  .card-grid{grid-template-columns:1fr;gap:8px;padding:8px 10px 100px}
+  .card{padding:12px 13px}
+  .modal{padding:20px;margin:8px}
+}
+@media(min-width:641px) and (max-width:1024px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1025px){
+  .card-grid{grid-template-columns:repeat(3,1fr);max-width:1100px;margin:0 auto}
+}
 </style>
 </head>
 <body>
 
-<!-- 헤더 -->
 <div class="header">
   <div>
     <h1>📎 학교업무 링크 모음</h1>
-    <div class="subtitle" id="headerSubtitle">등록순 정렬</div>
+    <div class="subtitle" id="subTitle">등록순 정렬</div>
   </div>
   <div class="header-right">
     <span class="user-badge" id="userBadge"></span>
-    <button class="btn-sm" id="btnAdminToggle" onclick="toggleAdminMode()">🔑 관리자</button>
+    <button class="btn-sm" id="btnAdmin">🔑 관리자</button>
   </div>
 </div>
 
-<!-- 안내 배너 -->
-<div class="notice-banner" id="noticeBanner">
-  📢 <span><b>안내</b> 업무 외 링크 · 개인정보보호를 위해 필요시 삭제합니다.</span>
-  <button class="close-btn" onclick="document.getElementById('noticeBanner').style.display='none'">✕</button>
+<div class="notice-banner" id="banner">
+  📢 <span><b>안내</b> 업무 외 링크·개인정보보호를 위해 필요시 삭제합니다.</span>
+  <button class="close-btn" id="bannerClose">✕</button>
 </div>
 
-<!-- 탭 -->
 <div class="tab-bar" id="tabBar"></div>
+<div class="card-grid" id="grid"></div>
 
-<!-- 카드 그리드 -->
-<div class="card-grid" id="cardGrid"></div>
-
-<!-- FAB -->
 <div class="fab-group">
-  <button class="fab fab-add" title="새 링크 추가" onclick="openAddModal()">＋</button>
+  <button class="fab fab-add" id="fabAdd" title="새 링크 추가">＋</button>
 </div>
 
-<!-- ===== 모달: 링크 추가/수정 ===== -->
-<div class="modal-overlay" id="modalLink">
+<!-- 닉네임 -->
+<div class="modal-overlay" id="mUser">
   <div class="modal">
-    <h2 id="modalLinkTitle">새 링크 추가</h2>
-    <input type="hidden" id="linkEditId">
-    <label>제목 *</label>
-    <input type="text" id="linkTitleInput" placeholder="링크 제목">
-    <label>URL *</label>
-    <input type="url" id="linkUrlInput" placeholder="https://...">
-    <label>설명</label>
-    <input type="text" id="linkDescInput" placeholder="간단한 설명">
-    <label>분야</label>
-    <select id="linkCatSelect"></select>
-    <div class="checkbox-row">
-      <input type="checkbox" id="linkSecretCheck">
-      <label for="linkSecretCheck">🔒 비밀링크 (나만 보기)</label>
-    </div>
-    <div class="checkbox-row" id="lockRow" style="display:none">
-      <input type="checkbox" id="linkLockCheck">
-      <label for="linkLockCheck">🔐 잠금 (관리자만 열기 가능)</label>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-delete" id="btnDeleteLink" style="display:none" onclick="deleteLink()">삭제</button>
-      <span style="flex:1"></span>
-      <button class="btn-cancel" onclick="closeModal('modalLink')">취소</button>
-      <button class="btn-save" onclick="saveLink()">저장</button>
-    </div>
+    <h2>👋 환영합니다!</h2>
+    <p style="font-size:.85rem;color:#636e72;margin-bottom:8px">닉네임을 입력하면 본인이 등록한 링크를 수정·삭제할 수 있습니다.</p>
+    <label>닉네임</label>
+    <input type="text" id="iUserName" placeholder="예: 김선생">
+    <div class="modal-btns"><button class="btn-save" id="btnSetUser">확인</button></div>
   </div>
 </div>
 
-<!-- ===== 모달: 관리자 로그인 ===== -->
-<div class="modal-overlay" id="modalAdminLogin">
+<!-- 관리자 로그인 -->
+<div class="modal-overlay" id="mAdminLogin">
   <div class="modal">
     <h2>🔑 관리자 로그인</h2>
     <label>비밀번호</label>
-    <input type="password" id="adminPwInput" placeholder="관리자 비밀번호 입력" onkeydown="if(event.key==='Enter')adminLogin()">
+    <input type="password" id="iAdminPw" placeholder="관리자 비밀번호">
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('modalAdminLogin')">취소</button>
-      <button class="btn-save" onclick="adminLogin()">로그인</button>
+      <button class="btn-cancel" data-close="mAdminLogin">취소</button>
+      <button class="btn-save" id="btnAdminLogin">로그인</button>
     </div>
   </div>
 </div>
 
-<!-- ===== 모달: 관리자 설정 ===== -->
-<div class="modal-overlay" id="modalAdminSettings">
+<!-- 링크 추가/수정 -->
+<div class="modal-overlay" id="mLink">
   <div class="modal">
-    <h2>⚙️ 관리자 설정</h2>
-    <label>새 비밀번호</label>
-    <input type="password" id="newPwInput" placeholder="변경할 비밀번호">
-    <label>비밀번호 확인</label>
-    <input type="password" id="newPwConfirm" placeholder="비밀번호 재입력" onkeydown="if(event.key==='Enter')changeAdminPw()">
+    <h2 id="mLinkTitle">새 링크 추가</h2>
+    <input type="hidden" id="iLinkId">
+    <label>제목 *</label>
+    <input type="text" id="iTitle" placeholder="링크 제목">
+    <label>URL *</label>
+    <input type="url" id="iUrl" placeholder="https://...">
+    <label>설명</label>
+    <input type="text" id="iDesc" placeholder="간단한 설명">
+    <label>분야</label>
+    <select id="iCat"></select>
+    <div class="chk-row">
+      <input type="checkbox" id="iSecret">
+      <label for="iSecret">🔒 비밀링크 (나만 보기)</label>
+    </div>
+    <div class="chk-row" id="lockRow" style="display:none">
+      <input type="checkbox" id="iLock">
+      <label for="iLock">🔐 잠금 (관리자만 열기 가능)</label>
+    </div>
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('modalAdminSettings')">취소</button>
-      <button class="btn-save" onclick="changeAdminPw()">변경</button>
+      <button class="btn-delete" id="btnDelLink" style="display:none">삭제</button>
+      <span style="flex:1"></span>
+      <button class="btn-cancel" data-close="mLink">취소</button>
+      <button class="btn-save" id="btnSaveLink">저장</button>
     </div>
   </div>
 </div>
 
-<!-- ===== 모달: 분야 관리 ===== -->
-<div class="modal-overlay" id="modalCatManage">
+<!-- 관리자 설정 -->
+<div class="modal-overlay" id="mSettings">
+  <div class="modal">
+    <h2>⚙️ 관리자 비밀번호 변경</h2>
+    <label>새 비밀번호</label>
+    <input type="password" id="iNewPw" placeholder="변경할 비밀번호">
+    <label>비밀번호 확인</label>
+    <input type="password" id="iNewPwC" placeholder="비밀번호 재입력">
+    <div class="modal-btns">
+      <button class="btn-cancel" data-close="mSettings">취소</button>
+      <button class="btn-save" id="btnChangePw">변경</button>
+    </div>
+  </div>
+</div>
+
+<!-- 분야 관리 -->
+<div class="modal-overlay" id="mCat">
   <div class="modal">
     <h2>📂 분야 관리</h2>
-    <ul class="cat-manage-list" id="catManageList"></ul>
+    <ul class="cat-list" id="catList"></ul>
     <div style="margin-top:14px;display:flex;gap:8px">
-      <input type="text" id="newCatName" placeholder="새 분야 이름" style="flex:1">
-      <input type="color" id="newCatColor" value="#6c5ce7" style="width:40px;padding:2px;border-radius:6px;cursor:pointer">
-      <button class="btn-save" style="padding:8px 14px;font-size:.8rem" onclick="addCategory()">추가</button>
+      <input type="text" id="iNewCatName" placeholder="새 분야 이름" style="flex:1">
+      <input type="color" id="iNewCatColor" value="#6c5ce7" style="width:40px;padding:2px;border-radius:6px;cursor:pointer;border:1px solid #ddd">
+      <button class="btn-save" style="padding:8px 14px;font-size:.8rem" id="btnAddCat">추가</button>
     </div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal('modalCatManage')">닫기</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 모달: 사용자 이름 입력 ===== -->
-<div class="modal-overlay" id="modalUsername">
-  <div class="modal">
-    <h2>👋 환영합니다!</h2>
-    <p style="font-size:.85rem;color:#636e72;margin-bottom:8px">사용할 닉네임을 입력해주세요.<br>자신이 등록한 링크를 수정·삭제할 수 있습니다.</p>
-    <label>닉네임</label>
-    <input type="text" id="usernameInput" placeholder="예: 김선생" onkeydown="if(event.key==='Enter')setUsername()">
-    <div class="modal-btns">
-      <button class="btn-save" onclick="setUsername()">확인</button>
-    </div>
+    <div class="modal-btns"><button class="btn-cancel" data-close="mCat">닫기</button></div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════
-//  데이터 / 상태 관리 (localStorage)
-// ══════════════════════════════════════
+// ====== Storage ======
+var LS = {
+  get: function(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+  set: function(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+};
 
-const DEFAULT_CATS = [
-  {id:'school',label:'학교업무 물어보기',color:'#636e72',bg:'#edf2f7'},
-  {id:'webapp',label:'도움 웹앱',color:'#2980b9',bg:'#e3f2fd'},
-  {id:'gurye',label:'구례중',color:'#c0392b',bg:'#fce4ec'},
-  {id:'tool',label:'공구함',color:'#27ae60',bg:'#e8f5e9'},
-  {id:'personal',label:'개인',color:'#e67e22',bg:'#fff3e0'},
-];
+// ====== State ======
+var state = {
+  cats: LS.get('s_cats', [
+    {id:'school',label:'학교업무 물어보기',color:'#636e72',bg:'#edf2f7'},
+    {id:'webapp',label:'도움 웹앱',color:'#2980b9',bg:'#e3f2fd'},
+    {id:'gurye',label:'구례중',color:'#c0392b',bg:'#fce4ec'},
+    {id:'tool',label:'공구함',color:'#27ae60',bg:'#e8f5e9'},
+    {id:'personal',label:'개인',color:'#e67e22',bg:'#fff3e0'}
+  ]),
+  links: LS.get('s_links', [
+    {id:1,title:"2026. 학생활기록부 기재요령에 대하여",url:"#",desc:"학생부 기재 관련 전체 안내",cat:"school",clicks:11,author:"관리자",secret:false,locked:false},
+    {id:2,title:"NEIS 학생부 입력 매뉴얼",url:"#",desc:"나이스 학생부 단계별 안내",cat:"school",clicks:24,author:"관리자",secret:false,locked:false},
+    {id:3,title:"공문서 작성 가이드",url:"#",desc:"공문 서식 및 작성법",cat:"school",clicks:15,author:"관리자",secret:false,locked:false},
+    {id:4,title:"교원능력개발평가 안내",url:"#",desc:"평가 절차 및 일정",cat:"school",clicks:3,author:"관리자",secret:false,locked:false},
+    {id:5,title:"교육부 정책 브리핑",url:"#",desc:"최신 교육 정책 소식",cat:"school",clicks:7,author:"관리자",secret:false,locked:false},
+    {id:6,title:"학교 안전교육 자료 모음",url:"#",desc:"7대 안전교육 영역별 자료",cat:"school",clicks:6,author:"관리자",secret:false,locked:false},
+    {id:7,title:"방과후학교 운영 매뉴얼",url:"#",desc:"방과후 행정처리 안내",cat:"school",clicks:4,author:"관리자",secret:false,locked:false},
+    {id:8,title:"2026. 교육과정 편성·운영 지침",url:"#",desc:"교육부 고시 기반 지침",cat:"school",clicks:8,author:"관리자",secret:false,locked:false},
+    {id:9,title:"AI 수업자료 생성기",url:"#",desc:"ChatGPT 교육용 프롬프트",cat:"webapp",clicks:42,author:"관리자",secret:false,locked:false},
+    {id:10,title:"구례중 학사일정 2026",url:"#",desc:"연간 학사일정표",cat:"gurye",clicks:5,author:"관리자",secret:false,locked:false},
+    {id:11,title:"구례중 홈페이지",url:"#",desc:"학교 공식 사이트",cat:"gurye",clicks:9,author:"관리자",secret:false,locked:false},
+    {id:12,title:"한컴오피스 웹 에디터",url:"#",desc:"브라우저에서 바로 편집",cat:"tool",clicks:31,author:"관리자",secret:false,locked:false},
+    {id:13,title:"PDF 병합/분할 도구",url:"#",desc:"iLovePDF 바로가기",cat:"tool",clicks:27,author:"관리자",secret:false,locked:false},
+    {id:14,title:"학급 랜덤 뽑기",url:"#",desc:"이름 룰렛 / 번호 추첨",cat:"tool",clicks:35,author:"관리자",secret:false,locked:false},
+    {id:15,title:"Canva 포스터 제작",url:"#",desc:"무료 디자인 템플릿",cat:"tool",clicks:19,author:"관리자",secret:false,locked:false},
+    {id:16,title:"타이머 / 스톱워치",url:"#",desc:"수업용 온라인 타이머",cat:"tool",clicks:22,author:"관리자",secret:false,locked:false},
+    {id:17,title:"QR코드 생성기",url:"#",desc:"무료 QR코드 만들기",cat:"tool",clicks:10,author:"관리자",secret:false,locked:false},
+    {id:18,title:"미리캔버스",url:"#",desc:"한국형 디자인 플랫폼",cat:"tool",clicks:16,author:"관리자",secret:false,locked:false},
+    {id:19,title:"Google Workspace 교육용",url:"#",desc:"구글 드라이브·문서 활용",cat:"tool",clicks:20,author:"관리자",secret:false,locked:false},
+    {id:20,title:"Notion 업무 템플릿",url:"#",desc:"학교업무용 노션 서식",cat:"tool",clicks:13,author:"관리자",secret:false,locked:false},
+    {id:21,title:"이미지 배경 제거기",url:"#",desc:"remove.bg 바로가기",cat:"tool",clicks:14,author:"관리자",secret:false,locked:false},
+    {id:22,title:"교실 좌석 배치 도우미",url:"#",desc:"온라인 자리 배치표",cat:"tool",clicks:11,author:"관리자",secret:false,locked:false},
+    {id:23,title:"색상 팔레트 생성기",url:"#",desc:"Coolors 바로가기",cat:"tool",clicks:3,author:"관리자",secret:false,locked:false},
+    {id:24,title:"화면 캡처·녹화 도구",url:"#",desc:"ShareX / OBS 안내",cat:"tool",clicks:8,author:"관리자",secret:false,locked:false},
+    {id:25,title:"띠 배너 생성기",url:"#",desc:"현수막·배너 텍스트 제작",cat:"tool",clicks:4,author:"관리자",secret:false,locked:false},
+    {id:26,title:"교직원 복무 안내",url:"#",desc:"연가·병가·특별휴가 규정",cat:"personal",clicks:18,author:"관리자",secret:false,locked:false},
+    {id:27,title:"교사 커뮤니티 인디스쿨",url:"#",desc:"수업·업무 나눔 커뮤니티",cat:"personal",clicks:17,author:"관리자",secret:false,locked:false},
+    {id:28,title:"우리반 설문 만들기",url:"#",desc:"Google Forms 템플릿",cat:"personal",clicks:14,author:"관리자",secret:false,locked:false},
+    {id:29,title:"학교생활 꿀팁 블로그",url:"#",desc:"신규교사 적응 가이드",cat:"personal",clicks:12,author:"관리자",secret:false,locked:false},
+    {id:30,title:"수행평가 루브릭 샘플",url:"#",desc:"교과별 평가기준 예시",cat:"personal",clicks:9,author:"관리자",secret:false,locked:false},
+    {id:31,title:"영어 수업 Activity Bank",url:"#",desc:"레벨별 활동 자료",cat:"personal",clicks:8,author:"관리자",secret:false,locked:false},
+    {id:32,title:"학교 예산 편성 가이드",url:"#",desc:"예산 과목·집행 기준",cat:"personal",clicks:7,author:"관리자",secret:false,locked:false},
+    {id:33,title:"출장비 정산 양식",url:"#",desc:"여비 정산서 한글 서식",cat:"personal",clicks:6,author:"관리자",secret:false,locked:false},
+    {id:34,title:"독서록 양식 모음",url:"#",desc:"학년별 독서활동 서식",cat:"personal",clicks:5,author:"관리자",secret:false,locked:false},
+    {id:35,title:"개인 포트폴리오 참고",url:"#",desc:"교사 포트폴리오 예시",cat:"personal",clicks:2,author:"관리자",secret:false,locked:false}
+  ]),
+  adminPw: LS.get('s_pw', '1234'),
+  user: LS.get('s_user', ''),
+  isAdmin: false,
+  filter: 'all',
+  nextId: LS.get('s_nid', 100)
+};
 
-const DEFAULT_LINKS = [
-  {id:1,title:"2026. 학생활기록부 기재요령에 대하여",url:"#",desc:"학생부 기재 관련 전체 안내",cat:"school",clicks:11,author:"관리자",secret:false,locked:false},
-  {id:2,title:"NEIS 학생부 입력 매뉴얼",url:"#",desc:"나이스 학생부 단계별 안내",cat:"school",clicks:24,author:"관리자",secret:false,locked:false},
-  {id:3,title:"공문서 작성 가이드",url:"#",desc:"공문 서식 및 작성법",cat:"school",clicks:15,author:"관리자",secret:false,locked:false},
-  {id:4,title:"구례중 학사일정 2026",url:"#",desc:"연간 학사일정표",cat:"gurye",clicks:5,author:"관리자",secret:false,locked:false},
-  {id:5,title:"구례중 홈페이지",url:"#",desc:"학교 공식 사이트",cat:"gurye",clicks:9,author:"관리자",secret:false,locked:false},
-  {id:6,title:"AI 수업자료 생성기",url:"#",desc:"ChatGPT 교육용 프롬프트",cat:"webapp",clicks:42,author:"관리자",secret:false,locked:false},
-  {id:7,title:"한컴오피스 웹 에디터",url:"#",desc:"브라우저에서 바로 편집",cat:"tool",clicks:31,author:"관리자",secret:false,locked:false},
-  {id:8,title:"PDF 병합/분할 도구",url:"#",desc:"iLovePDF 바로가기",cat:"tool",clicks:27,author:"관리자",secret:false,locked:false},
-  {id:9,title:"학급 랜덤 뽑기",url:"#",desc:"이름 룰렛 / 번호 추첨",cat:"tool",clicks:35,author:"관리자",secret:false,locked:false},
-  {id:10,title:"Canva 포스터 제작",url:"#",desc:"무료 디자인 템플릿",cat:"tool",clicks:19,author:"관리자",secret:false,locked:false},
-  {id:11,title:"QR코드 생성기",url:"#",desc:"무료 QR코드 만들기",cat:"tool",clicks:10,author:"관리자",secret:false,locked:false},
-  {id:12,title:"타이머 / 스톱워치",url:"#",desc:"수업용 온라인 타이머",cat:"tool",clicks:22,author:"관리자",secret:false,locked:false},
-  {id:13,title:"미리캔버스",url:"#",desc:"한국형 디자인 플랫폼",cat:"tool",clicks:16,author:"관리자",secret:false,locked:false},
-  {id:14,title:"교직원 복무 안내",url:"#",desc:"연가·병가·특별휴가 규정",cat:"personal",clicks:18,author:"관리자",secret:false,locked:false},
-  {id:15,title:"교사 커뮤니티 인디스쿨",url:"#",desc:"수업·업무 나눔 커뮤니티",cat:"personal",clicks:17,author:"관리자",secret:false,locked:false},
-];
+function persist() {
+  LS.set('s_cats', state.cats);
+  LS.set('s_links', state.links);
+  LS.set('s_pw', state.adminPw);
+  LS.set('s_user', state.user);
+  LS.set('s_nid', state.nextId);
+}
 
-const DEFAULT_ADMIN_PW = '1234';
-
-function load(key, def) { try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def} }
-function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
-
-let categories = load('cats', DEFAULT_CATS);
-let links = load('links', DEFAULT_LINKS);
-let adminPw = load('adminPw', DEFAULT_ADMIN_PW);
-let currentUser = load('currentUser', '');
-let isAdmin = false;
-let activeFilter = 'all';
-let nextId = load('nextId', 100);
-
-// ══════════════════════════════════════
-//  사용자 관리
-// ══════════════════════════════════════
-
-function checkUser() {
-  if (!currentUser) {
-    document.getElementById('modalUsername').classList.add('show');
-  } else {
-    document.getElementById('userBadge').textContent = '👤 ' + currentUser;
+// ====== Helpers ======
+function $(id) { return document.getElementById(id); }
+function openM(id) { $(id).classList.add('show'); }
+function closeM(id) { $(id).classList.remove('show'); }
+function getCat(id) {
+  for (var i = 0; i < state.cats.length; i++) {
+    if (state.cats[i].id === id) return state.cats[i];
   }
+  return {label:'기타',color:'#888',bg:'#f0f0f0'};
+}
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ====== Visible Links ======
+function visibleLinks() {
+  return state.links.filter(function(l) {
+    if (state.isAdmin) return true;
+    if (l.secret && l.author !== state.user) return false;
+    return true;
+  });
 }
 
-function setUsername() {
-  const v = document.getElementById('usernameInput').value.trim();
-  if (!v) { alert('닉네임을 입력해주세요.'); return; }
-  currentUser = v;
-  save('currentUser', currentUser);
-  document.getElementById('userBadge').textContent = '👤 ' + currentUser;
-  closeModal('modalUsername');
+// ====== Render Tabs ======
+function renderTabs() {
+  var bar = $('tabBar');
+  var vis = visibleLinks();
+  var h = '';
+
+  h += '<button class="tab-btn' + (state.filter === 'all' ? ' active' : '') + '" data-filter="all">전체 <span class="cnt">' + vis.length + '</span></button>';
+
+  for (var i = 0; i < state.cats.length; i++) {
+    var c = state.cats[i];
+    var cnt = 0;
+    for (var j = 0; j < vis.length; j++) { if (vis[j].cat === c.id) cnt++; }
+    h += '<button class="tab-btn' + (state.filter === c.id ? ' active' : '') + '" data-filter="' + c.id + '">' + esc(c.label) + ' <span class="cnt">' + cnt + '</span></button>';
+  }
+
+  h += '<button class="tab-edit-btn" id="btnCatManage" title="분야 관리">⚙</button>';
+
+  if (state.isAdmin) {
+    h += '<button class="tab-btn settings" id="btnSettings">⚙ 설정</button>';
+  }
+
+  bar.innerHTML = h;
 }
 
-// ══════════════════════════════════════
-//  관리자 모드
-// ══════════════════════════════════════
+// ====== Render Cards ======
+function renderCards() {
+  var grid = $('grid');
+  var vis = visibleLinks();
+  var total = vis.length;
 
-function toggleAdminMode() {
-  if (isAdmin) {
-    isAdmin = false;
-    document.body.classList.remove('admin-active');
-    document.getElementById('btnAdminToggle').classList.remove('active');
-    document.getElementById('btnAdminToggle').textContent = '🔑 관리자';
+  if (state.filter !== 'all') {
+    vis = vis.filter(function(l) { return l.cat === state.filter; });
+  }
+
+  $('subTitle').textContent = '등록순 정렬 · 총 ' + total + '건' + (state.isAdmin ? ' (관리자 모드)' : '');
+
+  if (vis.length === 0) {
+    grid.innerHTML = '<div class="empty-state">등록된 링크가 없습니다.</div>';
+    return;
+  }
+
+  var h = '';
+  for (var i = 0; i < vis.length; i++) {
+    var item = vis[i];
+    var c = getCat(item.cat);
+    var isMine = (item.author === state.user);
+    var canEdit = state.isAdmin || isMine;
+
+    var cls = 'card';
+    if (item.secret) cls += ' secret';
+    if (item.locked && !state.isAdmin) cls += ' locked';
+
+    var icons = '';
+    if (item.secret) icons += '<span title="비밀링크">🔒</span> ';
+    if (item.locked) icons += '<span title="잠금">🔐</span> ';
+
+    h += '<div class="' + cls + '" data-linkid="' + item.id + '">';
+
+    // 수정 버튼
+    h += '<div class="card-actions' + (canEdit ? ' can-edit' : '') + '">';
+    h += '<button data-edit="' + item.id + '" title="수정">✏️</button>';
+    h += '</div>';
+
+    h += '<div class="card-top">';
+    h += '<span class="card-num">#' + (i + 1) + '</span>';
+    h += '<div class="card-icons">' + icons + '<span class="card-clicks">👁 ' + item.clicks + '</span></div>';
+    h += '</div>';
+    h += '<div class="card-title">' + esc(item.title) + '</div>';
+    h += '<div class="card-desc">' + esc(item.desc) + '</div>';
+    h += '<div class="card-bottom">';
+    h += '<span class="cat-badge" style="background:' + c.bg + ';color:' + c.color + '">' + esc(c.label) + '</span>';
+    h += '<span class="card-author">' + esc(item.author) + '</span>';
+    h += '</div>';
+    h += '</div>';
+  }
+  grid.innerHTML = h;
+}
+
+function renderAll() { renderTabs(); renderCards(); }
+
+// ====== Populate Category Select ======
+function fillCatSelect() {
+  var sel = $('iCat');
+  var h = '';
+  for (var i = 0; i < state.cats.length; i++) {
+    h += '<option value="' + state.cats[i].id + '">' + esc(state.cats[i].label) + '</option>';
+  }
+  sel.innerHTML = h;
+}
+
+// ====== Render Category Manager ======
+function renderCatList() {
+  var ul = $('catList');
+  var h = '';
+  for (var i = 0; i < state.cats.length; i++) {
+    var c = state.cats[i];
+    h += '<li>';
+    h += '<input type="color" value="' + c.color + '" data-catidx="' + i + '" data-field="color">';
+    h += '<input type="text" value="' + esc(c.label) + '" data-catidx="' + i + '" data-field="label">';
+    h += '<button data-delcat="' + i + '">삭제</button>';
+    h += '</li>';
+  }
+  ul.innerHTML = h;
+}
+
+// ====== Event Listeners ======
+
+// Banner close
+$('bannerClose').addEventListener('click', function() { $('banner').style.display = 'none'; });
+
+// Close modals with data-close
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-close]');
+  if (btn) { closeM(btn.getAttribute('data-close')); return; }
+
+  // Close modal on overlay click
+  var overlay = e.target.closest('.modal-overlay');
+  if (overlay && e.target === overlay && overlay.id !== 'mUser') {
+    closeM(overlay.id);
+  }
+});
+
+// Tab click
+$('tabBar').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-filter]');
+  if (btn) {
+    state.filter = btn.getAttribute('data-filter');
     renderAll();
     return;
   }
-  document.getElementById('adminPwInput').value = '';
-  document.getElementById('modalAdminLogin').classList.add('show');
-  setTimeout(()=>document.getElementById('adminPwInput').focus(),100);
-}
+  if (e.target.closest('#btnCatManage')) { renderCatList(); openM('mCat'); return; }
+  if (e.target.closest('#btnSettings')) { $('iNewPw').value = ''; $('iNewPwC').value = ''; openM('mSettings'); return; }
+});
 
-function adminLogin() {
-  const pw = document.getElementById('adminPwInput').value;
-  if (pw === adminPw) {
-    isAdmin = true;
-    document.body.classList.add('admin-active');
-    document.getElementById('btnAdminToggle').classList.add('active');
-    document.getElementById('btnAdminToggle').textContent = '🔓 관리자 ON';
-    closeModal('modalAdminLogin');
+// Card click
+$('grid').addEventListener('click', function(e) {
+  // Edit button
+  var editBtn = e.target.closest('[data-edit]');
+  if (editBtn) {
+    e.stopPropagation();
+    var id = Number(editBtn.getAttribute('data-edit'));
+    var item = null;
+    for (var i = 0; i < state.links.length; i++) { if (state.links[i].id === id) { item = state.links[i]; break; } }
+    if (!item) return;
+
+    $('mLinkTitle').textContent = '링크 수정';
+    $('iLinkId').value = id;
+    $('iTitle').value = item.title;
+    $('iUrl').value = item.url;
+    $('iDesc').value = item.desc;
+    $('iSecret').checked = item.secret;
+    $('iLock').checked = item.locked;
+    $('lockRow').style.display = state.isAdmin ? 'flex' : 'none';
+    $('btnDelLink').style.display = 'inline-block';
+    fillCatSelect();
+    $('iCat').value = item.cat;
+    openM('mLink');
+    return;
+  }
+
+  // Card click → open link
+  var card = e.target.closest('.card');
+  if (card) {
+    var lid = Number(card.getAttribute('data-linkid'));
+    var lnk = null;
+    for (var i = 0; i < state.links.length; i++) { if (state.links[i].id === lid) { lnk = state.links[i]; break; } }
+    if (!lnk) return;
+    if (lnk.locked && !state.isAdmin) { alert('🔐 이 링크는 잠겨 있습니다.\n관리자만 열 수 있습니다.'); return; }
+    lnk.clicks++;
+    persist();
+    renderCards();
+    if (lnk.url && lnk.url !== '#') window.open(lnk.url, '_blank');
+  }
+});
+
+// FAB - add link
+$('fabAdd').addEventListener('click', function() {
+  $('mLinkTitle').textContent = '새 링크 추가';
+  $('iLinkId').value = '';
+  $('iTitle').value = '';
+  $('iUrl').value = '';
+  $('iDesc').value = '';
+  $('iSecret').checked = false;
+  $('iLock').checked = false;
+  $('lockRow').style.display = state.isAdmin ? 'flex' : 'none';
+  $('btnDelLink').style.display = 'none';
+  fillCatSelect();
+  openM('mLink');
+  setTimeout(function(){ $('iTitle').focus(); }, 150);
+});
+
+// Save link
+$('btnSaveLink').addEventListener('click', function() {
+  var editId = $('iLinkId').value;
+  var title = $('iTitle').value.trim();
+  var url = $('iUrl').value.trim();
+  var desc = $('iDesc').value.trim();
+  var cat = $('iCat').value;
+  var secret = $('iSecret').checked;
+  var locked = $('iLock').checked;
+  if (!title) { alert('제목을 입력해주세요.'); return; }
+  if (!url) { alert('URL을 입력해주세요.'); return; }
+
+  if (editId) {
+    var id = Number(editId);
+    for (var i = 0; i < state.links.length; i++) {
+      if (state.links[i].id === id) {
+        state.links[i].title = title;
+        state.links[i].url = url;
+        state.links[i].desc = desc;
+        state.links[i].cat = cat;
+        state.links[i].secret = secret;
+        state.links[i].locked = locked;
+        break;
+      }
+    }
+  } else {
+    state.links.push({id: state.nextId++, title: title, url: url, desc: desc, cat: cat, clicks: 0, author: state.user, secret: secret, locked: locked});
+  }
+  persist();
+  closeM('mLink');
+  renderAll();
+});
+
+// Delete link
+$('btnDelLink').addEventListener('click', function() {
+  var id = Number($('iLinkId').value);
+  if (!id) return;
+  var item = null;
+  for (var i = 0; i < state.links.length; i++) { if (state.links[i].id === id) { item = state.links[i]; break; } }
+  if (!item) return;
+  if (!confirm('"' + item.title + '"\n이 링크를 삭제하시겠습니까?')) return;
+  state.links = state.links.filter(function(l) { return l.id !== id; });
+  persist();
+  closeM('mLink');
+  renderAll();
+});
+
+// Admin toggle
+$('btnAdmin').addEventListener('click', function() {
+  if (state.isAdmin) {
+    state.isAdmin = false;
+    document.body.classList.remove('admin-on');
+    $('btnAdmin').classList.remove('active');
+    $('btnAdmin').textContent = '🔑 관리자';
+    renderAll();
+    return;
+  }
+  $('iAdminPw').value = '';
+  openM('mAdminLogin');
+  setTimeout(function(){ $('iAdminPw').focus(); }, 150);
+});
+
+// Admin login
+$('btnAdminLogin').addEventListener('click', doAdminLogin);
+$('iAdminPw').addEventListener('keydown', function(e) { if (e.key === 'Enter') doAdminLogin(); });
+function doAdminLogin() {
+  if ($('iAdminPw').value === state.adminPw) {
+    state.isAdmin = true;
+    document.body.classList.add('admin-on');
+    $('btnAdmin').classList.add('active');
+    $('btnAdmin').textContent = '🔓 관리자 ON';
+    closeM('mAdminLogin');
     renderAll();
   } else {
     alert('비밀번호가 올바르지 않습니다.');
   }
 }
 
-// ══════════════════════════════════════
-//  탭 렌더링
-// ══════════════════════════════════════
-
-function renderTabs() {
-  const bar = document.getElementById('tabBar');
-  const visible = getVisibleLinks();
-  const allCount = visible.length;
-
-  let html = '<button class="tab-btn'+(activeFilter==='all'?' active':'')+'" onclick="filterTab(this,\\'all\\')">전체 <span class="count">'+allCount+'</span></button>';
-
-  categories.forEach(c => {
-    const cnt = visible.filter(l=>l.cat===c.id).length;
-    html += '<button class="tab-btn'+(activeFilter===c.id?' active':'')+'" onclick="filterTab(this,\\''+c.id+'\\')">'+c.label+' <span class="count">'+cnt+'</span></button>';
-  });
-
-  html += '<button class="tab-edit-btn" onclick="openCatManage()" title="분야 관리">⚙</button>';
-
-  // 관리자 설정 버튼
-  if (isAdmin) {
-    html += '<button class="tab-btn" style="margin-left:auto;border-color:#fdcb6e;color:#e67e22" onclick="openAdminSettings()">⚙ 설정</button>';
-  }
-
-  bar.innerHTML = html;
-}
-
-function filterTab(btn, cat) {
-  activeFilter = cat;
-  renderAll();
-}
-
-// ══════════════════════════════════════
-//  링크 필터링 (비밀/잠금 처리)
-// ══════════════════════════════════════
-
-function getVisibleLinks() {
-  return links.filter(l => {
-    // 관리자는 모든 링크 표시
-    if (isAdmin) return true;
-    // 비밀 링크: 작성자 본인만
-    if (l.secret && l.author !== currentUser) return false;
-    return true;
-  });
-}
-
-// ══════════════════════════════════════
-//  카드 렌더링
-// ══════════════════════════════════════
-
-function renderCards() {
-  const grid = document.getElementById('cardGrid');
-  let visible = getVisibleLinks();
-  if (activeFilter !== 'all') visible = visible.filter(l => l.cat === activeFilter);
-
-  const total = getVisibleLinks().length;
-  document.getElementById('headerSubtitle').textContent = '등록순 정렬 · 총 ' + total + '건' + (isAdmin ? ' (관리자 모드)' : '');
-
-  if (!visible.length) {
-    grid.innerHTML = '<div class="empty-state">등록된 링크가 없습니다.</div>';
-    return;
-  }
-
-  grid.innerHTML = visible.map((item, idx) => {
-    const c = categories.find(ct=>ct.id===item.cat) || {label:'기타',color:'#888',bg:'#f0f0f0'};
-    const isMine = item.author === currentUser;
-    const canEdit = isAdmin || isMine;
-
-    let icons = '';
-    if (item.secret) icons += '<span title="비밀링크">🔒</span>';
-    if (item.locked) icons += '<span title="잠금">🔐</span>';
-
-    let cls = 'card';
-    if (item.secret) cls += ' secret';
-    if (item.locked && !isAdmin) cls += ' locked';
-
-    let actions = '';
-    if (canEdit) {
-      actions = '<div class="card-actions">' +
-        '<button onclick="event.stopPropagation();openEditModal('+item.id+')" title="수정">✏️</button>' +
-      '</div>';
-    }
-
-    return '<div class="'+cls+'" onclick="handleClick('+item.id+')">' +
-      actions +
-      '<div class="card-top">' +
-        '<span class="card-num">#'+(idx+1)+'</span>' +
-        '<div class="card-icons">'+icons+' <span class="card-clicks">👁 '+item.clicks+'</span></div>' +
-      '</div>' +
-      '<div class="card-title">'+item.title+'</div>' +
-      '<div class="card-desc">'+item.desc+'</div>' +
-      '<div class="card-bottom">' +
-        '<span class="category-badge" style="background:'+c.bg+';color:'+c.color+'">'+c.label+'</span>' +
-        '<span class="card-author">'+item.author+'</span>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-function handleClick(id) {
-  const item = links.find(l=>l.id===id);
-  if (!item) return;
-  if (item.locked && !isAdmin) {
-    alert('🔐 이 링크는 잠겨 있습니다. 관리자만 열 수 있습니다.');
-    return;
-  }
-  item.clicks++;
-  save('links', links);
-  renderCards();
-  if (item.url && item.url !== '#') window.open(item.url, '_blank');
-}
-
-function renderAll() {
-  renderTabs();
-  renderCards();
-}
-
-// ══════════════════════════════════════
-//  링크 추가 / 수정 / 삭제
-// ══════════════════════════════════════
-
-function populateCatSelect() {
-  const sel = document.getElementById('linkCatSelect');
-  sel.innerHTML = categories.map(c=>'<option value="'+c.id+'">'+c.label+'</option>').join('');
-}
-
-function openAddModal() {
-  document.getElementById('modalLinkTitle').textContent = '새 링크 추가';
-  document.getElementById('linkEditId').value = '';
-  document.getElementById('linkTitleInput').value = '';
-  document.getElementById('linkUrlInput').value = '';
-  document.getElementById('linkDescInput').value = '';
-  document.getElementById('linkSecretCheck').checked = false;
-  document.getElementById('linkLockCheck').checked = false;
-  document.getElementById('btnDeleteLink').style.display = 'none';
-  document.getElementById('lockRow').style.display = isAdmin ? 'flex' : 'none';
-  populateCatSelect();
-  document.getElementById('modalLink').classList.add('show');
-  setTimeout(()=>document.getElementById('linkTitleInput').focus(),100);
-}
-
-function openEditModal(id) {
-  const item = links.find(l=>l.id===id);
-  if (!item) return;
-  const isMine = item.author === currentUser;
-  if (!isAdmin && !isMine) return;
-
-  document.getElementById('modalLinkTitle').textContent = '링크 수정';
-  document.getElementById('linkEditId').value = id;
-  document.getElementById('linkTitleInput').value = item.title;
-  document.getElementById('linkUrlInput').value = item.url;
-  document.getElementById('linkDescInput').value = item.desc;
-  document.getElementById('linkSecretCheck').checked = item.secret;
-  document.getElementById('linkLockCheck').checked = item.locked;
-  document.getElementById('btnDeleteLink').style.display = 'inline-block';
-  document.getElementById('lockRow').style.display = isAdmin ? 'flex' : 'none';
-  populateCatSelect();
-  document.getElementById('linkCatSelect').value = item.cat;
-  document.getElementById('modalLink').classList.add('show');
-}
-
-function saveLink() {
-  const id = document.getElementById('linkEditId').value;
-  const title = document.getElementById('linkTitleInput').value.trim();
-  const url = document.getElementById('linkUrlInput').value.trim();
-  const desc = document.getElementById('linkDescInput').value.trim();
-  const cat = document.getElementById('linkCatSelect').value;
-  const secret = document.getElementById('linkSecretCheck').checked;
-  const locked = document.getElementById('linkLockCheck').checked;
-
-  if (!title) { alert('제목을 입력해주세요.'); return; }
-  if (!url) { alert('URL을 입력해주세요.'); return; }
-
-  if (id) {
-    // 수정
-    const item = links.find(l=>l.id===Number(id));
-    if (item) {
-      item.title = title; item.url = url; item.desc = desc;
-      item.cat = cat; item.secret = secret; item.locked = locked;
-    }
-  } else {
-    // 추가
-    links.push({id:nextId++, title, url, desc, cat, clicks:0, author:currentUser, secret, locked});
-    save('nextId', nextId);
-  }
-  save('links', links);
-  closeModal('modalLink');
-  renderAll();
-}
-
-function deleteLink() {
-  const id = Number(document.getElementById('linkEditId').value);
-  if (!id) return;
-  const item = links.find(l=>l.id===id);
-  if (!item) return;
-  if (!confirm('"'+item.title+'" 링크를 삭제하시겠습니까?')) return;
-  links = links.filter(l=>l.id!==id);
-  save('links', links);
-  closeModal('modalLink');
-  renderAll();
-}
-
-// ══════════════════════════════════════
-//  분야 관리 (관리자 전용)
-// ══════════════════════════════════════
-
-function openCatManage() {
-  const list = document.getElementById('catManageList');
-  list.innerHTML = categories.map((c,i) =>
-    '<li>' +
-      '<input type="color" class="color-dot" value="'+c.color+'" onchange="updateCat('+i+',\\'color\\',this.value)">' +
-      '<input type="text" value="'+c.label+'" onchange="updateCat('+i+',\\'label\\',this.value)">' +
-      '<button class="btn-del-cat" onclick="deleteCat('+i+')">삭제</button>' +
-    '</li>'
-  ).join('');
-  document.getElementById('modalCatManage').classList.add('show');
-}
-
-function updateCat(idx, field, val) {
-  if (field === 'label') categories[idx].label = val;
-  if (field === 'color') {
-    categories[idx].color = val;
-    categories[idx].bg = val + '18';
-  }
-  save('cats', categories);
-  renderAll();
-}
-
-function deleteCat(idx) {
-  const c = categories[idx];
-  const count = links.filter(l=>l.cat===c.id).length;
-  if (count > 0 && !confirm('"'+c.label+'" 분야에 '+count+'개의 링크가 있습니다. 해당 링크들은 첫 번째 분야로 이동됩니다. 삭제하시겠습니까?')) return;
-  if (count > 0) {
-    const fallback = categories[0]?.id || 'etc';
-    links.forEach(l=>{ if(l.cat===c.id) l.cat=fallback; });
-    save('links', links);
-  }
-  categories.splice(idx,1);
-  save('cats', categories);
-  openCatManage();
-  renderAll();
-}
-
-function addCategory() {
-  const name = document.getElementById('newCatName').value.trim();
-  const color = document.getElementById('newCatColor').value;
-  if (!name) { alert('분야 이름을 입력해주세요.'); return; }
-  const id = 'cat_' + Date.now();
-  categories.push({id, label:name, color, bg:color+'18'});
-  save('cats', categories);
-  document.getElementById('newCatName').value = '';
-  openCatManage();
-  renderAll();
-}
-
-// ══════════════════════════════════════
-//  관리자 설정
-// ══════════════════════════════════════
-
-function openAdminSettings() {
-  document.getElementById('newPwInput').value = '';
-  document.getElementById('newPwConfirm').value = '';
-  document.getElementById('modalAdminSettings').classList.add('show');
-}
-
-function changeAdminPw() {
-  const pw = document.getElementById('newPwInput').value;
-  const confirm_ = document.getElementById('newPwConfirm').value;
+// Change admin password
+$('btnChangePw').addEventListener('click', function() {
+  var pw = $('iNewPw').value;
+  var pwc = $('iNewPwC').value;
   if (!pw) { alert('비밀번호를 입력해주세요.'); return; }
-  if (pw !== confirm_) { alert('비밀번호가 일치하지 않습니다.'); return; }
-  adminPw = pw;
-  save('adminPw', adminPw);
+  if (pw !== pwc) { alert('비밀번호가 일치하지 않습니다.'); return; }
+  state.adminPw = pw;
+  persist();
   alert('✅ 비밀번호가 변경되었습니다.');
-  closeModal('modalAdminSettings');
-}
-
-// ══════════════════════════════════════
-//  모달 유틸
-// ══════════════════════════════════════
-
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-
-// 배경 클릭으로 모달 닫기
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => {
-    if (e.target === el && el.id !== 'modalUsername') el.classList.remove('show');
-  });
+  closeM('mSettings');
 });
 
-// ══════════════════════════════════════
-//  초기화
-// ══════════════════════════════════════
+// Set username
+$('btnSetUser').addEventListener('click', doSetUser);
+$('iUserName').addEventListener('keydown', function(e) { if (e.key === 'Enter') doSetUser(); });
+function doSetUser() {
+  var name = $('iUserName').value.trim();
+  if (!name) { alert('닉네임을 입력해주세요.'); return; }
+  state.user = name;
+  persist();
+  $('userBadge').textContent = '👤 ' + name;
+  closeM('mUser');
+  renderAll();
+}
 
-checkUser();
+// Category management
+$('catList').addEventListener('change', function(e) {
+  var el = e.target;
+  var idx = Number(el.getAttribute('data-catidx'));
+  var field = el.getAttribute('data-field');
+  if (field === 'label') state.cats[idx].label = el.value;
+  if (field === 'color') { state.cats[idx].color = el.value; state.cats[idx].bg = el.value + '18'; }
+  persist();
+  renderAll();
+});
+$('catList').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-delcat]');
+  if (!btn) return;
+  var idx = Number(btn.getAttribute('data-delcat'));
+  var c = state.cats[idx];
+  var cnt = 0;
+  for (var i = 0; i < state.links.length; i++) { if (state.links[i].cat === c.id) cnt++; }
+  if (cnt > 0 && !confirm('"' + c.label + '" 분야에 ' + cnt + '개의 링크가 있습니다.\n해당 링크는 첫 번째 분야로 이동됩니다. 삭제하시겠습니까?')) return;
+  if (cnt > 0) {
+    var fb = state.cats[0] ? state.cats[0].id : 'etc';
+    for (var i = 0; i < state.links.length; i++) { if (state.links[i].cat === c.id) state.links[i].cat = fb; }
+  }
+  state.cats.splice(idx, 1);
+  persist();
+  renderCatList();
+  renderAll();
+});
+$('btnAddCat').addEventListener('click', function() {
+  var name = $('iNewCatName').value.trim();
+  var color = $('iNewCatColor').value;
+  if (!name) { alert('분야 이름을 입력해주세요.'); return; }
+  state.cats.push({id: 'cat_' + Date.now(), label: name, color: color, bg: color + '18'});
+  persist();
+  $('iNewCatName').value = '';
+  renderCatList();
+  renderAll();
+});
+
+// ====== Init ======
+if (!state.user) {
+  openM('mUser');
+  setTimeout(function(){ $('iUserName').focus(); }, 150);
+} else {
+  $('userBadge').textContent = '👤 ' + state.user;
+}
 renderAll();
 </script>
 </body>
-</html>
+</html>"""
+
+with open("/home/user/school_links_v2.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
+
+print("✅ 완료!")
+print(f"파일 크기: {len(html_code):,} bytes")
