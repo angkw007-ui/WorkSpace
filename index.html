@@ -235,6 +235,11 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .drag-ghost-el .dg-icon{font-size:1.3rem}
 .drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600}
 .drag-mode-hint.on{display:flex}
+.cat-section.cat-dragging{opacity:.35;pointer-events:none}
+.cat-section.cat-drag-over{outline:2px dashed var(--purple);outline-offset:4px;border-radius:var(--radius);background:rgba(124,58,237,.03)}
+.cat-drag-handle{cursor:grab;color:var(--muted);padding:4px 6px;border-radius:4px;font-size:1rem;transition:color .15s;user-select:none;display:none}
+.cat-drag-handle:hover{color:var(--purple);background:var(--purple-light)}
+.cat-drag-handle.show{display:inline-flex;align-items:center}
 .cat-lock-badge{display:inline-flex;align-items:center;gap:3px;font-size:.65rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 7px;border-radius:100px;border:1px solid #fbbf24;margin-left:4px}
 .lock-overlay-card{position:relative}
 .lock-overlay-card::after{content:'🔒';position:absolute;inset:0;background:rgba(255,251,235,.85);display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:var(--radius);backdrop-filter:blur(2px)}
@@ -370,10 +375,10 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   <div class="stats-panel" id="statsPanel"><div class="stats-panel-title">📊 링크 사용 현황 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:auto">클릭 많은 순</span></div><div id="statsTableWrap"></div></div>
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap">
     <div class="tab-bar" id="tabBar" style="margin-bottom:0;flex:1;min-width:0;overflow-x:auto"></div>
-    <span class="drag-mode-hint" id="dragHint">✋ 편집모드: 카드를 드래그해서 분야 이동</span>
+    <span class="drag-mode-hint" id="dragHint">✋ 편집모드: 카드·분야 드래그로 이동/순서 변경</span>
     <div class="view-toggle-wrap">
-      <button class="view-btn active" id="vBtnCard" onclick="setView('card')">⊞ 카드</button>
-      <button class="view-btn" id="vBtnBoard" onclick="setView('board')">☰ 목록</button>
+      <button class="view-btn" id="vBtnCard" onclick="setView('card')">⊞ 카드</button>
+      <button class="view-btn active" id="vBtnBoard" onclick="setView('board')">☰ 목록</button>
     </div>
   </div>
   <div id="content"></div>
@@ -393,7 +398,16 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
   <div class="form-group"><label class="form-label">아이콘</label><div class="emoji-grid" id="emojiGrid"></div></div>
   <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('linkModal')">취소</button><button class="btn btn-primary" onclick="saveLink()">저장</button></div>
 </div></div>
-<div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="form-group"><label class="form-label">🔒 분야 잠금 비밀번호 <span style="color:var(--muted);font-weight:400">(선택 — 설정 시 링크 클릭에 비밀번호 필요)</span></label><input class="form-input" type="text" id="fCatPw" placeholder="비밀번호 입력 (없으면 공개)" maxlength="30"/><div style="font-size:.75rem;color:var(--muted);margin-top:4px">비워두면 잠금 없음. 관리자는 항상 열람 가능.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
+<div class="modal-overlay" id="catModal"><div class="modal"><div class="modal-header"><div class="modal-title" id="catModalTitle">업무 분야 추가</div><button class="modal-close" onclick="closeModal('catModal')">✕</button></div><div class="form-group"><label class="form-label">분야 이름 <span style="color:var(--accent3)">*</span></label><input class="form-input" id="fCatName" placeholder="예: 교무, 행정…"/></div><div class="form-group"><label class="form-label">색상</label><div class="color-row" id="colorRow"></div></div><div class="form-group">
+  <label style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#fefce8,#fef3c7);border:1.5px solid #fbbf24;border-radius:10px;cursor:pointer;user-select:none">
+    <input type="checkbox" id="fCatPersonal" style="width:16px;height:16px;accent-color:#f59e0b;flex-shrink:0"/>
+    <div>
+      <div style="font-size:.85rem;font-weight:700;color:#92400e">👤 개인 분야</div>
+      <div style="font-size:.74rem;color:#b45309;margin-top:2px">체크 시, 이 분야에 올린 링크는 올린 본인과 관리자만 볼 수 있습니다</div>
+    </div>
+  </label>
+</div>
+<div class="form-group"><label class="form-label">🔒 분야 잠금 비밀번호 <span style="color:var(--muted);font-weight:400">(선택 — 설정 시 링크 클릭에 비밀번호 필요)</span></label><input class="form-input" type="text" id="fCatPw" placeholder="비밀번호 입력 (없으면 공개)" maxlength="30"/><div style="font-size:.75rem;color:var(--muted);margin-top:4px">비워두면 잠금 없음. 관리자는 항상 열람 가능.</div></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('catModal')">취소</button><button class="btn btn-primary" onclick="saveCat()">저장</button></div></div></div>
 <div class="modal-overlay" id="promptModal"><div class="modal" style="max-width:540px"><div class="modal-header"><div class="modal-title">💬 프롬프트 상세보기</div><button class="modal-close" onclick="closeModal('promptModal')">✕</button></div><div class="prompt-modal-content"><div class="prompt-detail-section" id="promptAiSection"><div class="prompt-detail-label ai-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 014 4c0 1.95-2 3-2 8h-4c0-5-2-6.05-2-8a4 4 0 014-4z"/><path d="M10 22h4"/><path d="M10 18h4"/></svg>제작 AI</div><div class="prompt-detail-box" id="promptAiText"></div></div><div class="prompt-detail-section"><div class="prompt-detail-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>프롬프트</div><div class="prompt-detail-box" id="promptText"></div></div><div style="display:flex;gap:8px;margin-top:1rem"><button class="prompt-copy-btn" onclick="copyPrompt()">📋 프롬프트 복사</button></div></div></div></div>
 <div class="modal-overlay" id="pwChangeModal"><div class="modal" style="max-width:400px"><div class="modal-header"><div class="modal-title">🔑 관리자 비밀번호 변경</div><button class="modal-close" onclick="closeModal('pwChangeModal')">✕</button></div>
 <div class="form-group"><label class="form-label">현재 비밀번호</label><div class="pw-input-wrap"><input class="form-input" type="password" id="pwOld" placeholder="현재 비밀번호"/></div></div>
@@ -414,7 +428,7 @@ const CAT_BG={'#7c3aed':'#f3eeff','#2554c7':'#eef1fc','#0ea87e':'#e8f8f3','#e05c
 const getBg=c=>CAT_BG[c]||'#f0f2f8';
 const EMOJIS=['🏫','📋','📝','📊','📁','🗂️','💼','🖥️','📱','🌐','🔗','📧','📞','📡','🔧','⚙️','🔑','🔒','📌','📅','✅','🚀','💡','🎯','👨‍🏫','👩‍🏫','📚','🏆','📜','🖨️','📠','💰','🎓','🧾','🔔','📣','🗒️','📯','🗳️','📬','🖊️','📐','🧮','🎒'];
 let currentUser=null,isAdmin=false,editMode=false,activeTab='all',showStats=false,selColor=PALETTE[0],selEmoji=EMOJIS[0];
-let viewMode='card';
+let viewMode='board';
 let _dragLinkId=null,_dragCatId=null,_ghostEl=null,_sourceEl=null;
 let catUnlocked={};
 let _pendingCatPwCb=null,_pendingCatId=null;
@@ -459,12 +473,26 @@ function renderAll(){
 function getClicks(id){return clickData[id]||0}
 function escHtml(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 
+function isPersonalCat(catId){
+  const cat=categories.find(c=>c.id===catId);
+  return cat && (cat.name==='개인' || cat.isPersonal===true);
+}
+
 function visibleLinks(){
   return links.filter(l=>{
-    if(!l.isSecret) return true;
-    if(isAdmin) return true;
-    if(currentUser && currentUser.uid===l.uploaderId) return true;
-    return false;
+    // 개인 분야: 본인 + 관리자만
+    if(isPersonalCat(l.catId)){
+      if(isAdmin) return true;
+      if(currentUser && currentUser.uid===l.uploaderId) return true;
+      return false;
+    }
+    // 비밀 링크: 본인 + 관리자만
+    if(l.isSecret){
+      if(isAdmin) return true;
+      if(currentUser && currentUser.uid===l.uploaderId) return true;
+      return false;
+    }
+    return true;
   });
 }
 
@@ -490,12 +518,13 @@ function renderContent(){
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
     const gridClass=isAdmin&&editMode?'link-grid edit-mode-grid':'link-grid';
-    const lockBadge=cat.lockPw?`<span class="cat-lock-badge">🔒 잠금</span>`:'';
+    const lockBadge=cat.lockPw?`<span class="cat-lock-badge">🔒 잠금</span>`:'';const personalBadge=cat.isPersonal?`<span class="cat-lock-badge" style="background:#fef3c7;color:#92400e;border-color:#fbbf24">👤 개인</span>`:'';;
     h+=`<div class="cat-section" style="animation-delay:${ci*.05}s" data-cat-id="${cat.id}">
       <div class="cat-header">
-        <div class="cat-title-row">
+        <div class="cat-title-row" ${isAdmin&&editMode?`draggable="true" data-cat-drag-id="${cat.id}" ondragstart="catDragStart(event,'${cat.id}')" ondragover="catDragOver(event)" ondrop="catDrop(event,'${cat.id}')" ondragend="catDragEnd(event)"`:""}>
+          ${isAdmin&&editMode?`<div class="cat-drag-handle show" title="드래그해서 순서 변경">⠿</div>`:""}
           <div class="cat-stripe" style="background:${cat.color}"></div>
-          <span class="cat-name">${cat.name}${lockBadge}</span>
+          <span class="cat-name">${cat.name}${lockBadge}${personalBadge}</span>
           <span class="cat-count">${catLinks.length}개</span>
         </div>
         ${isAdmin?`<div class="cat-actions">
@@ -653,9 +682,9 @@ window.deleteAdminLink=async id=>{const l=adminLinks.find(x=>x.id===id);if(!l||!
 function buildColorRow(){document.getElementById('colorRow').innerHTML=PALETTE.map(c=>`<div class="swatch ${c===selColor?'selected':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`).join('')}
 window.pickColor=c=>{selColor=c;buildColorRow()};
 let editingCatId=null;
-window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';document.getElementById('fCatPw').value='';buildColorRow();openM('catModal')};
-window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;document.getElementById('fCatPw').value=c.lockPw||'';buildColorRow();openM('catModal')};
-window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('이름 필요','error');return}const lockPw=document.getElementById('fCatPw').value.trim();try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw},{merge:true});if(!lockPw)delete catUnlocked[editingCatId];toast('수정 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw});toast('추가 ✓')}closeModal('catModal')}catch(e){toast('오류','error')}};
+window.openAddCat=()=>{if(!isAdmin)return;editingCatId=null;selColor=PALETTE[0];document.getElementById('catModalTitle').textContent='업무 분야 추가';document.getElementById('fCatName').value='';document.getElementById('fCatPw').value='';document.getElementById('fCatPersonal').checked=false;buildColorRow();openM('catModal')};
+window.openEditCat=id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);if(!c)return;editingCatId=id;selColor=c.color;document.getElementById('catModalTitle').textContent='업무 분야 수정';document.getElementById('fCatName').value=c.name;document.getElementById('fCatPw').value=c.lockPw||'';document.getElementById('fCatPersonal').checked=!!c.isPersonal;buildColorRow();openM('catModal')};
+window.saveCat=async()=>{if(!isAdmin)return;const name=document.getElementById('fCatName').value.trim();if(!name){toast('이름 필요','error');return}const lockPw=document.getElementById('fCatPw').value.trim();const isPersonal=document.getElementById('fCatPersonal').checked;try{if(editingCatId){await setDoc(doc(db,'categories',editingCatId),{name,color:selColor,lockPw,isPersonal},{merge:true});if(!lockPw)delete catUnlocked[editingCatId];toast('수정 ✓')}else{await addDoc(collection(db,'categories'),{name,color:selColor,order:categories.length,lockPw,isPersonal});toast('추가 ✓')}closeModal('catModal')}catch(e){toast('오류','error')}};
 window.deleteCat=async id=>{if(!isAdmin)return;const c=categories.find(x=>x.id===id);const n=links.filter(l=>l.catId===id).length;if(!confirm(`"${c?.name}" 삭제?\n링크 ${n}개도 삭제`))return;try{await deleteDoc(doc(db,'categories',id));for(const l of links.filter(l=>l.catId===id))await deleteDoc(doc(db,'links',l.id));if(activeTab===id)activeTab='all';toast('삭제')}catch(e){toast('오류','error')}};
 
 window.setTab=id=>{activeTab=id;renderAll()};
@@ -674,8 +703,8 @@ function renderBoardView(){
     const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
     if(!catLinks.length)return;
     total+=catLinks.length;
-    const lockBadge=cat.lockPw?'🔒 ':'';
-    rows+=`<tr class="board-sec-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>${lockBadge}${escHtml(cat.name)}</td></tr>`;
+    const lockBadge=cat.lockPw?'🔒 ':'';const personalBadge2=cat.isPersonal?'👤 ':'';
+    rows+=`<tr class="board-sec-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>${lockBadge}${personalBadge2}${escHtml(cat.name)}</td></tr>`;
     catLinks.forEach((l,i)=>{
       const n=getClicks(l.id);const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';const ic=n>=20?'🔥':n>=5?'✨':'👁️';
       const isOwner=currentUser&&currentUser.uid===l.uploaderId,canEdit=isAdmin||isOwner,canDel=isAdmin||isOwner;
@@ -691,6 +720,55 @@ function renderBoardView(){
   });
   document.getElementById('content').innerHTML=total?`<div class="board-wrap"><table class="board-table"><thead><tr><th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
 }
+
+
+// ── 분야 순서 드래그 ─────────────────────────────────
+let _catDragId = null;
+window.catDragStart = (e, catId) => {
+  _catDragId = catId;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', catId);
+  setTimeout(() => {
+    const sec = document.querySelector(`.cat-section[data-cat-id="${catId}"]`);
+    if (sec) sec.classList.add('cat-dragging');
+  }, 0);
+};
+window.catDragOver = (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const row = e.currentTarget.closest('.cat-section');
+  if (row && row.dataset.catId !== _catDragId) {
+    document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('cat-drag-over'));
+    row.classList.add('cat-drag-over');
+  }
+};
+window.catDragEnd = (e) => {
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.classList.remove('cat-dragging', 'cat-drag-over');
+  });
+};
+window.catDrop = async (e, targetCatId) => {
+  e.preventDefault();
+  document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('cat-drag-over', 'cat-dragging'));
+  if (!_catDragId || _catDragId === targetCatId) { _catDragId = null; return; }
+  const fromIdx = categories.findIndex(c => c.id === _catDragId);
+  const toIdx   = categories.findIndex(c => c.id === targetCatId);
+  if (fromIdx === -1 || toIdx === -1) { _catDragId = null; return; }
+  // 순서 배열 재정렬
+  const reordered = [...categories];
+  const [moved] = reordered.splice(fromIdx, 1);
+  reordered.splice(toIdx, 0, moved);
+  // Firestore 일괄 업데이트
+  try {
+    await Promise.all(reordered.map((cat, i) =>
+      setDoc(doc(db, 'categories', cat.id), { order: i }, { merge: true })
+    ));
+    toast('분야 순서가 변경되었습니다 ✓');
+  } catch(err) {
+    toast('순서 변경 실패: ' + err.message, 'error');
+  }
+  _catDragId = null;
+};
 
 function initDragDrop(){cleanupDrag();document.querySelectorAll('#content .link-card').forEach(card=>{if(card.classList.contains('add-card'))return;card.classList.add('edit-draggable');const onDown=e=>{if(e.target.closest('button'))return;e.preventDefault();startDrag(e,card)};card._dragDown=onDown;card.addEventListener('mousedown',onDown)})}
 function cleanupDrag(){document.querySelectorAll('#content .link-card').forEach(card=>{if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown}card.classList.remove('edit-draggable','drag-source')});if(_ghostEl){_ghostEl.remove();_ghostEl=null}}
