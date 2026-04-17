@@ -230,7 +230,10 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .cat-manage-btn.delete:hover{border-color:var(--accent3);color:var(--accent3);background:var(--accent3-light)}
 .link-grid.edit-mode-grid{outline:2px dashed var(--border2);outline-offset:4px;border-radius:var(--radius);min-height:80px;transition:outline-color .2s,background .2s}
 .link-grid.edit-mode-grid.drag-over-grid{outline-color:var(--purple);background:rgba(124,58,237,.04)}
-.link-card.drag-source{opacity:.3;pointer-events:none}
+.link-card.drag-source{opacity:.25;pointer-events:none;transform:scale(.97)}
+.link-card.drag-over-card{outline:2px solid var(--purple);outline-offset:2px;transform:translateY(-3px)}
+.drop-before-indicator{height:3px;background:var(--purple);border-radius:4px;margin-bottom:4px;animation:indPulse .6s ease infinite alternate}
+@keyframes indPulse{from{opacity:.5;transform:scaleX(.95)}to{opacity:1;transform:scaleX(1)}}
 .drag-ghost-el{position:fixed;z-index:99999;pointer-events:none;background:var(--white);border:2px solid var(--purple);border-radius:var(--radius);padding:12px 14px;box-shadow:0 8px 32px rgba(124,58,237,.25);width:260px;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);transform:rotate(2deg) scale(1.04)}
 .drag-ghost-el .dg-icon{font-size:1.3rem}
 .drag-mode-hint{display:none;align-items:center;gap:6px;font-size:.75rem;color:var(--purple);background:var(--purple-light);border:1px solid #ddd0ff;padding:5px 13px;border-radius:100px;font-weight:600}
@@ -255,6 +258,9 @@ main{max-width:1280px;margin:0 auto;padding:2rem 2rem 4rem}
 .board-table tr:last-child td{border-bottom:none}
 .board-table tbody tr:hover td{background:var(--accent-light);cursor:pointer}
 .board-sec-row td{background:var(--bg)!important;padding:6px 14px;font-size:.72rem;font-weight:800;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;cursor:default!important}
+.board-add-row td{background:var(--bg)!important;padding:4px 14px 8px;cursor:default!important;border-bottom:2px solid var(--border)!important}
+.board-add-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;border:1.5px dashed var(--border2);background:transparent;color:var(--muted);font-family:'Noto Sans KR',sans-serif;transition:all .18s}
+.board-add-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-light)}
 .btd-name{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--text)}
 .btd-icon{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
 .btd-url{font-size:.7rem;color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -535,6 +541,13 @@ function visibleLinks(){
   });
 }
 
+function linksForCat(catId, q) {
+  // 해당 분야 링크를 order 순으로 정렬
+  return visibleLinks()
+    .filter(l => l.catId === catId && matchQ(l, q))
+    .sort((a, b) => (a.linkOrder ?? a.createdAt ?? 0) - (b.linkOrder ?? b.createdAt ?? 0));
+}
+
 function renderTabs(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const vLinks=visibleLinks();
@@ -553,7 +566,7 @@ function renderContent(){
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
   let h='',total=0;
   cats.forEach((cat,ci)=>{
-    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
+    const catLinks=linksForCat(cat.id,q);
     if(!isAdmin&&!editMode&&catLinks.length===0)return;
     total+=catLinks.length;
     const gridClass=isAdmin&&editMode?'link-grid edit-mode-grid':'link-grid';
@@ -603,7 +616,7 @@ function cardHTML(l,cat){
   const dragHandle=isAdmin&&editMode?`<div class="drag-handle-icon" title="드래그해서 분야 이동">⠿</div>`:'';
   return `<a class="link-card ${secretClass}" href="${l.url}" target="_blank" rel="noopener"
     style="--cat-color:${cat.color};--cat-bg:${getBg(cat.color)}"
-    data-link-id="${l.id}" data-cat-id="${cat.id}"
+    data-link-id="${l.id}" data-cat-id="${cat.id}" data-link-order="${l.linkOrder??0}"
     onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
     <div class="card-header-row">
       <div class="card-icon">${l.emoji||'🔗'}</div>
@@ -777,29 +790,95 @@ window.setView=mode=>{viewMode=mode;document.getElementById('vBtnCard').classLis
 
 function renderBoardView(){
   const q=document.getElementById('searchInput').value.toLowerCase();
-  const vLinks=visibleLinks();
   const cats=activeTab==='all'?categories:categories.filter(c=>c.id===activeTab);
-  let rows='',total=0;
+  let rows='', total=0, shownCats=0;
+
   cats.forEach(cat=>{
-    const catLinks=vLinks.filter(l=>l.catId===cat.id&&matchQ(l,q));
-    if(!catLinks.length)return;
-    total+=catLinks.length;
-    const lockBadge=cat.lockPw?'🔒 ':'';const personalBadge2=cat.isPersonal?'👤 ':'';
-    rows+=`<tr class="board-sec-row"><td colspan="6"><span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>${lockBadge}${personalBadge2}${escHtml(cat.name)}</td></tr>`;
+    const catLinks = linksForCat(cat.id, q);
+    const showAddBtn = !!currentUser; // 로그인한 사람은 누구나 추가 가능
+    if(!catLinks.length && !showAddBtn) return;
+    shownCats++;
+    total += catLinks.length;
+
+    const lockBadge=cat.lockPw?'🔒 ':'';
+    const personalBadge2=cat.isPersonal?'👤 ':'';
+
+    // 분야 헤더 행
+    rows+=`<tr class="board-sec-row">
+      <td colspan="6">
+        <span style="width:8px;height:8px;border-radius:50%;background:${cat.color};display:inline-block;margin-right:6px;vertical-align:middle"></span>
+        ${lockBadge}${personalBadge2}${escHtml(cat.name)}
+        <span style="font-weight:500;opacity:.6;margin-left:4px">(${catLinks.length})</span>
+      </td>
+    </tr>`;
+
+    // 링크 행들
     catLinks.forEach((l,i)=>{
-      const n=getClicks(l.id);const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';const ic=n>=20?'🔥':n>=5?'✨':'👁️';
-      const isOwner=currentUser&&currentUser.uid===l.uploaderId,canEdit=isAdmin||isOwner,canDel=isAdmin||isOwner;
+      const n=getClicks(l.id);
+      const style=n>=20?'color:var(--accent3)':n>=5?'color:var(--accent2)':'color:var(--muted)';
+      const ic=n>=20?'🔥':n>=5?'✨':'👁️';
+      const isOwner=currentUser&&currentUser.uid===l.uploaderId;
+      const canEdit=isAdmin||isOwner, canDel=isAdmin||isOwner;
       rows+=`<tr onclick="catLockedClick(event,'${l.id}','${cat.id}','${l.url}')">
         <td style="color:var(--muted);font-size:.78rem;font-weight:600;width:36px">${i+1}</td>
-        <td><div class="btd-name"><div class="btd-icon" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div><div><div>${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div><div class="btd-url">${escHtml(l.url)}</div></div></div></td>
+        <td><div class="btd-name">
+          <div class="btd-icon" style="background:${getBg(cat.color)}">${l.emoji||'🔗'}</div>
+          <div>
+            <div>${escHtml(l.name)}${l.isSecret?` <span class="secret-badge">🔐</span>`:''}</div>
+            <div class="btd-url">${escHtml(l.url)}</div>
+          </div>
+        </div></td>
         <td style="max-width:160px;font-size:.78rem;color:var(--text2)">${escHtml((l.desc||'').substring(0,45))}${(l.desc||'').length>45?'…':''}</td>
         <td><span class="btd-cat" style="background:${getBg(cat.color)};color:${cat.color}">${escHtml(cat.name)}</span></td>
         <td class="btd-clicks" style="${style}">${ic} ${n}</td>
-        <td style="text-align:right;white-space:nowrap" onclick="event.stopPropagation()">${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''} ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}</td>
+        <td style="text-align:right;white-space:nowrap" onclick="event.stopPropagation()">
+          ${canEdit?`<button class="card-edit-btn" onclick="openEditLink('${l.id}')">수정</button>`:''}
+          ${canDel?`<button class="card-edit-btn" style="color:var(--accent3)" onclick="deleteLink('${l.id}')">삭제</button>`:''}
+        </td>
       </tr>`;
     });
+
+    // 링크 추가 버튼 행 (로그인한 사람 누구나)
+    if(showAddBtn){
+      rows+=`<tr class="board-add-row">
+        <td colspan="6">
+          <button class="board-add-btn" onclick="openAddLinkFor('${cat.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            ${escHtml(cat.name)}에 링크 추가
+          </button>
+        </td>
+      </tr>`;
+    }
   });
-  document.getElementById('content').innerHTML=total?`<div class="board-wrap"><table class="board-table"><thead><tr><th>#</th><th>링크</th><th>설명</th><th>분야</th><th style="text-align:right">클릭</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`;
+
+  // 로그인했는데 검색 결과 없을 때 — 전체 추가 유도
+  if(!total && currentUser && !q){
+    const firstCat = cats[0];
+    if(firstCat){
+      rows=`<tr class="board-sec-row"><td colspan="6">아직 등록된 링크가 없습니다</td></tr>
+      <tr class="board-add-row"><td colspan="6">
+        <button class="board-add-btn" onclick="openAddLink()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          첫 번째 링크 추가하기
+        </button>
+      </td></tr>`;
+      shownCats=1;
+    }
+  }
+
+  const tableHTML = shownCats
+    ? `<div class="board-wrap"><table class="board-table">
+        <thead><tr>
+          <th>#</th><th>링크</th><th>설명</th>
+          <th>분야</th><th style="text-align:right">클릭</th><th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>`
+    : q
+      ? `<div class="no-results"><div class="nr-icon">🔍</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">검색 결과가 없습니다</div></div>`
+      : `<div class="no-results"><div class="nr-icon">📭</div><div style="font-weight:700;margin-bottom:.4rem;color:var(--text2)">등록된 링크가 없습니다</div>${currentUser?`<button class="board-add-btn" style="margin-top:.75rem" onclick="openAddLink()">+ 첫 링크 추가</button>`:''}</div>`;
+
+  document.getElementById('content').innerHTML = tableHTML;
 }
 
 
@@ -851,18 +930,147 @@ window.catDrop = async (e, targetCatId) => {
   _catDragId = null;
 };
 
-function initDragDrop(){cleanupDrag();document.querySelectorAll('#content .link-card').forEach(card=>{if(card.classList.contains('add-card'))return;card.classList.add('edit-draggable');const onDown=e=>{if(e.target.closest('button'))return;e.preventDefault();startDrag(e,card)};card._dragDown=onDown;card.addEventListener('mousedown',onDown)})}
-function cleanupDrag(){document.querySelectorAll('#content .link-card').forEach(card=>{if(card._dragDown){card.removeEventListener('mousedown',card._dragDown);delete card._dragDown}card.classList.remove('edit-draggable','drag-source')});if(_ghostEl){_ghostEl.remove();_ghostEl=null}}
-function startDrag(e,card){
-  _dragLinkId=card.dataset.linkId;_dragCatId=card.dataset.catId;if(!_dragLinkId)return;_sourceEl=card;
-  const name=card.querySelector('.card-name')?.textContent?.trim()||'링크';const icon=card.querySelector('.card-icon')?.textContent?.trim()||'🔗';
-  _ghostEl=document.createElement('div');_ghostEl.className='drag-ghost-el';_ghostEl.innerHTML=`<span class="dg-icon">${icon}</span><span>${name}</span>`;
-  _ghostEl.style.left=(e.clientX-130)+'px';_ghostEl.style.top=(e.clientY-20)+'px';document.body.appendChild(_ghostEl);card.classList.add('drag-source');
-  const onMove=ev=>{_ghostEl.style.left=(ev.clientX-130)+'px';_ghostEl.style.top=(ev.clientY-20)+'px';document.querySelectorAll('.edit-mode-grid').forEach(g=>{const r=g.getBoundingClientRect();const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;g.classList.toggle('drag-over-grid',inside&&g.dataset.catId!==_dragCatId)})};
-  const onUp=ev=>{document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);if(_ghostEl){_ghostEl.remove();_ghostEl=null}_sourceEl&&_sourceEl.classList.remove('drag-source');document.querySelectorAll('.edit-mode-grid').forEach(g=>{g.classList.remove('drag-over-grid');const r=g.getBoundingClientRect();const inside=ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom;if(inside&&g.dataset.catId&&g.dataset.catId!==_dragCatId)moveLinkToCat(_dragLinkId,g.dataset.catId)});_dragLinkId=null;_dragCatId=null;_sourceEl=null};
-  document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+// ── 드래그&드롭: 같은 분야 내 순서변경 + 다른 분야 이동 ──────────
+function initDragDrop(){
+  cleanupDrag();
+  document.querySelectorAll('#content .link-card').forEach(card=>{
+    if(card.classList.contains('add-card'))return;
+    card.classList.add('edit-draggable');
+    // HTML5 drag
+    card.setAttribute('draggable','true');
+    card._dStart = e => onCardDragStart(e, card);
+    card._dOver  = e => onCardDragOver(e, card);
+    card._dLeave = e => card.classList.remove('drag-over-card');
+    card._dDrop  = e => onCardDrop(e, card);
+    card._dEnd   = e => cleanupCardDrag();
+    card.addEventListener('dragstart', card._dStart);
+    card.addEventListener('dragover',  card._dOver);
+    card.addEventListener('dragleave', card._dLeave);
+    card.addEventListener('drop',      card._dDrop);
+    card.addEventListener('dragend',   card._dEnd);
+  });
+  // 분야 그리드도 drop 대상 (빈 공간에 드롭)
+  document.querySelectorAll('.edit-mode-grid').forEach(grid=>{
+    grid._gOver  = e => { e.preventDefault(); grid.classList.add('drag-over-grid'); };
+    grid._gLeave = e => grid.classList.remove('drag-over-grid');
+    grid._gDrop  = e => onGridDrop(e, grid);
+    grid.addEventListener('dragover',  grid._gOver);
+    grid.addEventListener('dragleave', grid._gLeave);
+    grid.addEventListener('drop',      grid._gDrop);
+  });
 }
-async function moveLinkToCat(linkId,newCatId){const link=links.find(l=>l.id===linkId);const newCat=categories.find(c=>c.id===newCatId);if(!link||!newCat)return;try{await setDoc(doc(db,'links',linkId),{catId:newCatId},{merge:true});toast(`"${link.name}" → [${newCat.name}] 이동 ✓`,'success')}catch(err){toast('이동 실패: '+err.message,'error')}}
+
+function cleanupDrag(){
+  document.querySelectorAll('#content .link-card').forEach(card=>{
+    ['_dStart','_dOver','_dLeave','_dDrop','_dEnd'].forEach(ev=>{
+      const type = ev==='_dStart'?'dragstart':ev==='_dOver'?'dragover':ev==='_dLeave'?'dragleave':ev==='_dDrop'?'drop':'dragend';
+      if(card[ev]){card.removeEventListener(type,card[ev]);delete card[ev];}
+    });
+    card.removeAttribute('draggable');
+    card.classList.remove('edit-draggable','drag-source','drag-over-card');
+  });
+  document.querySelectorAll('.edit-mode-grid').forEach(grid=>{
+    if(grid._gOver) grid.removeEventListener('dragover', grid._gOver);
+    if(grid._gLeave) grid.removeEventListener('dragleave', grid._gLeave);
+    if(grid._gDrop) grid.removeEventListener('drop', grid._gDrop);
+    grid.classList.remove('drag-over-grid');
+    delete grid._gOver; delete grid._gLeave; delete grid._gDrop;
+  });
+  if(_ghostEl){_ghostEl.remove();_ghostEl=null;}
+}
+
+function cleanupCardDrag(){
+  document.querySelectorAll('.link-card').forEach(c=>{
+    c.classList.remove('drag-source','drag-over-card');
+  });
+  document.querySelectorAll('.edit-mode-grid').forEach(g=>g.classList.remove('drag-over-grid'));
+}
+
+function onCardDragStart(e, card){
+  _dragLinkId = card.dataset.linkId;
+  _dragCatId  = card.dataset.catId;
+  _sourceEl   = card;
+  if(!_dragLinkId){e.preventDefault();return;}
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', _dragLinkId);
+  setTimeout(()=>card.classList.add('drag-source'),0);
+}
+
+function onCardDragOver(e, card){
+  if(!_dragLinkId) return;
+  if(card.dataset.linkId === _dragLinkId) return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.link-card').forEach(c=>c.classList.remove('drag-over-card'));
+  card.classList.add('drag-over-card');
+}
+
+function onCardDrop(e, targetCard){
+  e.preventDefault();
+  e.stopPropagation();
+  if(!_dragLinkId) return;
+  const targetLinkId  = targetCard.dataset.linkId;
+  const targetCatId   = targetCard.dataset.catId;
+  if(targetLinkId === _dragLinkId){cleanupCardDrag();_dragLinkId=null;_dragCatId=null;return;}
+
+  if(_dragCatId === targetCatId){
+    // 같은 분야 내 순서 변경
+    reorderLinksInCat(_dragLinkId, targetLinkId, targetCatId);
+  } else {
+    // 다른 분야로 이동 (맨 앞으로)
+    moveLinkToCat(_dragLinkId, targetCatId);
+  }
+  cleanupCardDrag();
+  _dragLinkId=null; _dragCatId=null;
+}
+
+function onGridDrop(e, grid){
+  e.preventDefault();
+  grid.classList.remove('drag-over-grid');
+  if(!_dragLinkId) return;
+  const newCatId = grid.dataset.catId;
+  if(!newCatId || newCatId === _dragCatId){_dragLinkId=null;_dragCatId=null;return;}
+  moveLinkToCat(_dragLinkId, newCatId);
+  cleanupCardDrag();
+  _dragLinkId=null; _dragCatId=null;
+}
+
+async function reorderLinksInCat(dragId, targetId, catId){
+  // 현재 그 분야의 링크를 order 순으로
+  const catLinks = links
+    .filter(l=>l.catId===catId)
+    .sort((a,b)=>(a.linkOrder??a.createdAt??0)-(b.linkOrder??b.createdAt??0));
+  const fromIdx = catLinks.findIndex(l=>l.id===dragId);
+  const toIdx   = catLinks.findIndex(l=>l.id===targetId);
+  if(fromIdx===-1||toIdx===-1) return;
+  const reordered = [...catLinks];
+  const [moved] = reordered.splice(fromIdx,1);
+  reordered.splice(toIdx,0,moved);
+  // order 값 일괄 저장 (간격 1000씩)
+  try{
+    await Promise.all(reordered.map((l,i)=>
+      setDoc(doc(db,'links',l.id),{linkOrder:i*1000},{merge:true})
+    ));
+    const link = links.find(l=>l.id===dragId);
+    const cat  = categories.find(c=>c.id===catId);
+    toast(`"${link?.name}" 순서 변경 ✓`);
+  }catch(err){toast('순서 변경 실패: '+err.message,'error');}
+}
+
+async function moveLinkToCat(linkId,newCatId){
+  const link=links.find(l=>l.id===linkId);
+  const newCat=categories.find(c=>c.id===newCatId);
+  if(!link||!newCat)return;
+  // 이동 시 해당 분야의 마지막 순서로
+  const maxOrder = links
+    .filter(l=>l.catId===newCatId)
+    .reduce((mx,l)=>Math.max(mx,(l.linkOrder??0)),0);
+  try{
+    await setDoc(doc(db,'links',linkId),{catId:newCatId,linkOrder:maxOrder+1000},{merge:true});
+    toast(`"${link.name}" → [${newCat.name}] 이동 ✓`,'success');
+  }catch(err){toast('이동 실패: '+err.message,'error');}
+}
 
 window.toast=(msg,type='success')=>{const w=document.getElementById('toastWrap'),t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;w.appendChild(t);setTimeout(()=>t.remove(),3000)};
 </script>
